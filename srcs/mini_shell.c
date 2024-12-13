@@ -2,8 +2,10 @@
 
 int	main()
 {
-	char *rd;
+	char	*rd;
+	char	**args;
 
 	rd = readline("Mini_nas_shell :");
-	return 0;
+	args = ft_parse()
+	return (0);
 }
