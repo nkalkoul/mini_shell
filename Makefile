@@ -1,4 +1,4 @@
-SRCS =	$(addprefix srcs/, mini_shell.c)
+SRCS =	$(addprefix srcs/, minishell.c)
 CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft
 
