@@ -1,4 +1,4 @@
-#include "../mini_shell.h"
+#include "../minishell.h"
 
 int	main()
 {
@@ -6,7 +6,7 @@ int	main()
 	char	**args;
 
 	rd = readline("Mini_nas_shell :");
-	args = ft_parse()
+	printf("%s\n", rd);
+	// args = ft_parse()
 	return (0);
 }
-
