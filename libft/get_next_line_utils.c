@@ -47,7 +47,7 @@ char	*ft_re_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	if (!s2)
-		return (free(s1), s1);
+		return (free(s1), NULL);
 	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!new || !s1)
 		return (free(s1), NULL);

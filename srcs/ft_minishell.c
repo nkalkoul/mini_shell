@@ -15,7 +15,7 @@
 int	main(void)
 {
 	char	*rd;
-	t_taken	taken;
+	t_taken	*taken;
 
 	rd = readline("Mouninashell :");
 	ft_initaken(&taken, rd);

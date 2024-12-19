@@ -19,18 +19,19 @@ void	ft_printaken(t_taken *taken)
 	curent = taken;
 	while (curent != NULL)
 	{
-		ft_printf(" chaine = == %s\n", curent->token);
+		ft_printf(" chaine = == %s§\n", curent->token);
 		curent = curent->next;
 	}
 }
 
-int	ft_lst_ongbak(t_taken *taken, char *src, char fin)
+int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 {
 	int		i;
 	t_taken	*new;
 	t_taken	*current;
 
 	i = 0;
+	printf("fin = %c\n", fin);
 	new = malloc(sizeof(t_taken));
 	while (src[i] != fin)
 		i++;
@@ -40,51 +41,30 @@ int	ft_lst_ongbak(t_taken *taken, char *src, char fin)
 		new->token[i] = src[i];
 	new->token[i] = '\0';
 	new->next = NULL;
-	if (taken == NULL)
+	if (*taken == NULL)
 	{
-		taken = new;
-		printf("taken = %s\n", taken->token);
-		return (i + 1);
+		*taken = new;
+		return (i);
 	}
-	printf("je suis la");
-	current = taken;
+	current = *taken;
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
-	return (i + 1);
+	return (i);
 }
 
 //il est le test
 
-int	ft_copy_rd(t_taken *taken, char *src)
+int	ft_copy_rd(t_taken **taken, char *src)
 {
 	int		i;
-	char	fin;
-	int		len;
 
 	i = 0;
-	if (src[i] == '"')
-	{
-		fin = '"';
+	if (src[i] == '"' || src[i] == 44)
+		return (ft_lst_ongbak(taken, src + 1, src[i]) + 2);
+	while (src[i] && ft_isprint(src[i]) == 1)
 		i++;
-	}
-	else if (src[i] == 44)
-	{
-		fin = 44;
-		i++;
-	}
-	else
-	{
-		while (src[i] && ft_isprint(src[i]) == 1)
-			i++;
-		fin = src[i];
-		i = 0;
-	}
-	if (fin == 44 || fin == '"')
-		len = ft_lst_ongbak(taken, src + i, fin) + 1;
-	else
-		len = ft_lst_ongbak(taken, src + i, fin);
-	return (len);
+	return (ft_lst_ongbak(taken, src, src[i]));
 }
 
 int	ft_space(char c)
@@ -94,12 +74,12 @@ int	ft_space(char c)
 	return (0);
 }
 
-void	ft_initaken(t_taken *taken, char *rd)
+void	ft_initaken(t_taken **taken, char *rd)
 {
 	int	i;
 
 	i = 0;
-	taken = NULL;
+	*taken = NULL;
 	while (rd[i])
 	{
 		while (rd[i] && ft_space(rd[i]) == 1)
@@ -107,5 +87,5 @@ void	ft_initaken(t_taken *taken, char *rd)
 		if (rd[i])
 			i += ft_copy_rd(taken, rd + i);
 	}
-	printf("taken = %s", taken->token);
+	ft_printaken((*taken));
 }
