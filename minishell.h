@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/16 19:22:13 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/18 23:51:54 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,26 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_taken
+{
+    char            *token;
+    int             index;
+    int             type;
+    struct s_taken  *next;
+}                   t_taken;
+
 typedef struct s_data
 {
-    char            *cmd;
-    char            *arg_cmd;
-    int             type;
-    struct s_data   *next;
-}   t_data;
+    char    **env;
+}           t_data;
+
+typedef struct  s_cmd
+{
+	char			**cmd;
+	int				index;
+	struct s_cmd	*next;
+}					t_cmd;
+
+void	ft_initaken(t_taken *taken, char *rd);
 
 #endif
