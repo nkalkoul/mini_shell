@@ -6,7 +6,7 @@
 /*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/19 01:27:14 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2024/12/20 00:23:15 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,36 +24,46 @@ void	ft_printaken(t_taken *taken)
 	}
 }
 
+void	ft_lstbackadd(t_taken **lst, t_taken *new)
+{
+	t_taken	*temp;
+
+	if ((*lst) == NULL)
+	{
+		(*lst) = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp -> next != NULL)
+		temp = temp -> next;
+	temp -> next = new;
+}
+
 int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 {
 	int		i;
+	int		len;
 	t_taken	*new;
 	t_taken	*current;
 
 	i = 0;
-	printf("fin = %c\n", fin);
 	new = malloc(sizeof(t_taken));
-	while (src[i] != fin)
+	if (!new)
+		return (-1);
+	while (src[i + 1] && src[i + 1] != fin)
 		i++;
-	new->token = malloc(sizeof(char) * (i + 1));
+	len = i + 1;
+	if (fin == '\'' || fin == '"')
+		len = i + 2;
+	new->token = malloc(sizeof(char) * (len + 1));
 	i = -1;
-	while (src[++i] != fin)
+	while (++i < len)
 		new->token[i] = src[i];
 	new->token[i] = '\0';
 	new->next = NULL;
-	if (*taken == NULL)
-	{
-		*taken = new;
-		return (i);
-	}
-	current = *taken;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new;
-	return (i);
+	ft_lstbackadd(taken, new);
+	return (len);
 }
-
-//il est le test
 
 int	ft_copy_rd(t_taken **taken, char *src)
 {
@@ -61,7 +71,7 @@ int	ft_copy_rd(t_taken **taken, char *src)
 
 	i = 0;
 	if (src[i] == '"' || src[i] == 44)
-		return (ft_lst_ongbak(taken, src + 1, src[i]) + 2);
+		return (ft_lst_ongbak(taken, src, src[i]));
 	while (src[i] && ft_isprint(src[i]) == 1)
 		i++;
 	return (ft_lst_ongbak(taken, src, src[i]));

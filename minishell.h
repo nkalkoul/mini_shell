@@ -6,7 +6,7 @@
 /*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/18 23:51:54 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2024/12/20 00:36:23 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ typedef struct s_cmd
 }					t_cmd;
 
 void	ft_initaken(t_taken **taken, char *rd);
+int		ft_parse_rd(char *rd);
 
 #endif

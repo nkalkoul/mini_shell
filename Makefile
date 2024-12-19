@@ -1,4 +1,4 @@
-SRCS =	$(addprefix srcs/, ft_minishell.c ft_initaken.c)
+SRCS =	$(addprefix srcs/, ft_minishell.c ft_initaken.c ft_parse_rd.c)
 CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft
 
