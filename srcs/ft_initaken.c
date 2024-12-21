@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initaken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/20 00:23:15 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:24:46 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ void	ft_printaken(t_taken *taken)
 	{
 		ft_printf(" chaine = == %s§\n", curent->token);
 		curent = curent->next;
+	}
+}
+
+void	ft_initype(t_taken **taken)
+{
+	t_taken	*current;
+
+	current = *taken;
+	while (current != NULL)
+	{
+		if (current->token[0] == '|')
+			current->type = PIPE;
+		else if (current->token[0] == '>' || current->token[0] == '<')
+			current->type = REDIR;
+		else
+			current->type = WORD;
+		current = current->next;
 	}
 }
 
@@ -44,7 +61,6 @@ int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 	int		i;
 	int		len;
 	t_taken	*new;
-	t_taken	*current;
 
 	i = 0;
 	new = malloc(sizeof(t_taken));
@@ -53,8 +69,12 @@ int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 	while (src[i + 1] && src[i + 1] != fin)
 		i++;
 	len = i + 1;
-	if (fin == '\'' || fin == '"')
+	if ((fin == '\'' || fin == '"') && (src[0] == '\'' || src[0] == '"'))
 		len = i + 2;
+	if (src[0] == '|' || src[0] == '>' || src[0] == '<')
+		len = 1;
+	if ((src[0] == '>' && src[1] == '>') || (src[0] == '<' && src[1] == '<'))
+		len = 2;
 	new->token = malloc(sizeof(char) * (len + 1));
 	i = -1;
 	while (++i < len)
@@ -72,7 +92,8 @@ int	ft_copy_rd(t_taken **taken, char *src)
 	i = 0;
 	if (src[i] == '"' || src[i] == 44)
 		return (ft_lst_ongbak(taken, src, src[i]));
-	while (src[i] && ft_isprint(src[i]) == 1)
+	while (src[i] && ft_isprint(src[i]) == 1 && src[i] != '|'
+		&& src[i] != '"' && src[i] != '\'' && src[i] != '>' && src[i] != '<')
 		i++;
 	return (ft_lst_ongbak(taken, src, src[i]));
 }
@@ -97,5 +118,6 @@ void	ft_initaken(t_taken **taken, char *rd)
 		if (rd[i])
 			i += ft_copy_rd(taken, rd + i);
 	}
+	ft_initype(taken);
 	ft_printaken((*taken));
 }

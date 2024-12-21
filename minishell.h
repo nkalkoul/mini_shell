@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/20 00:36:23 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:08:54 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# define WORD 1
+# define PIPE 2
+# define REDIR 3
 
 typedef struct s_taken
 {
