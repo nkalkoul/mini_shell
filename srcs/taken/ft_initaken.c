@@ -34,20 +34,20 @@ int	ft_lencopy(char *src)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (src[i])
 	{
-		if (ft_isquote(src[0]) == 1)
-		{
-			while (ft_isquote(src[i]) == 0)
-				i++;
-			return (i);
-		}
 		if (ft_isoperator(src[0]) == 1)
 		{
 			while (ft_isoperator(src[i]) == 1)
 				i++;
 			return (i);
+		}
+		if (ft_isquote(src[i]) == 1)
+		{
+			i++;
+			while (ft_isquote(src[i]) == 0)
+				i++;
 		}
 		if (ft_isoperator(src[i]) == 1)
 			return (i);
@@ -72,8 +72,8 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 	t_taken	*new;
 
 	len = ft_lencopy(src);
-	if (ft_isquote(src[0]) == 1)
-		len++;
+	// if (ft_isquote(src[0]) == 1)
+	// 	len++;
 	new = malloc(sizeof(t_taken));
 	if (!new)
 		return (-1);
