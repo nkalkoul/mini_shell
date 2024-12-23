@@ -30,29 +30,29 @@ void	ft_initype(t_taken **taken)
 	}
 }
 
-int	ft_lencopy(char *src, char fin)
+int	ft_lencopy(char *src)
 {
 	int	i;
 
 	i = 1;
-	while (src[i] && src[i] != fin)
+	while (src[i])
 	{
-		if (ft_isquote(fin) == 0 && src[0] == fin)
+		if (ft_isquote(src[0]) == 1)
 		{
-			if (ft_isquote(src[i]) == 1)
-			{
-				while (ft_isquote(src[++i]) == 0)
-					i++;
-			}
-			if (ft_isoperator(src[0]) == 0 && ft_isoperator(src[i]) == 1)
-				return (i);
-			if (ft_isoperator(src[i]) == 1)
-			{
-				while (ft_isoperator(src[i]) == 1)
-					i++;
-				return (i);
-			}
+			while (ft_isquote(src[i]) == 0)
+				i++;
+			return (i);
 		}
+		if (ft_isoperator(src[0]) == 1)
+		{
+			while (ft_isoperator(src[i]) == 1)
+				i++;
+			return (i);
+		}
+		if (ft_isoperator(src[i]) == 1)
+			return (i);
+		if (ft_isprint(src[i]) == 0)
+			return (i);
 		i++;
 	}
 	return (i);
@@ -65,14 +65,14 @@ int	ft_lencopy(char *src, char fin)
 	// 	i = 1;
 	// if ((src[0] == '>' && src[1] == '>') || (src[0] == '<' && src[1] == '<'))
 	// 	i = 2;
-int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
+int	ft_lst_ongbak(t_taken **taken, char *src)
 {
 	int		i;
 	int		len;
 	t_taken	*new;
 
-	len = ft_lencopy(src, fin);
-	if (ft_isquote(fin) == 1 && src[0] == fin)
+	len = ft_lencopy(src);
+	if (ft_isquote(src[0]) == 1)
 		len++;
 	new = malloc(sizeof(t_taken));
 	if (!new)
@@ -87,18 +87,6 @@ int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 	return (len);
 }
 
-int	ft_copy_rd(t_taken **taken, char *src)
-{
-	int		i;
-
-	i = 0;
-	if (src[i] == '"' || src[i] == 44)
-		return (ft_lst_ongbak(taken, src, src[i]));
-	while (src[i] && ft_isprint(src[i]) == 1)
-		i++;
-	return (ft_lst_ongbak(taken, src, src[i]));
-}
-
 void	ft_initaken(t_taken **taken, char *rd)
 {
 	int	i;
@@ -110,7 +98,7 @@ void	ft_initaken(t_taken **taken, char *rd)
 		while (rd[i] && ft_space(rd[i]) == 1)
 			i++;
 		if (rd[i])
-			i += ft_copy_rd(taken, rd + i);
+			i += ft_lst_ongbak(taken, rd + i);
 	}
 	ft_initype(taken);
 	ft_printaken((*taken));
