@@ -10,19 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_printaken(t_taken *taken)
-{
-	t_taken	*curent;
-
-	curent = taken;
-	while (curent != NULL)
-	{
-		ft_printf(" chaine = == %s§\n", curent->token);
-		curent = curent->next;
-	}
-}
 
 void	ft_initype(t_taken **taken)
 {
@@ -41,40 +30,53 @@ void	ft_initype(t_taken **taken)
 	}
 }
 
-void	ft_lstbackadd(t_taken **lst, t_taken *new)
+int	ft_lencopy(char *src, char fin)
 {
-	t_taken	*temp;
+	int	i;
 
-	if ((*lst) == NULL)
+	i = 1;
+	while (src[i] && src[i] != fin)
 	{
-		(*lst) = new;
-		return ;
+		if (ft_isquote(fin) == 0 && src[0] == fin)
+		{
+			if (ft_isquote(src[i]) == 1)
+			{
+				while (ft_isquote(src[++i]) == 0)
+					i++;
+			}
+			if (ft_isoperator(src[0]) == 0 && ft_isoperator(src[i]) == 1)
+				return (i);
+			if (ft_isoperator(src[i]) == 1)
+			{
+				while (ft_isoperator(src[i]) == 1)
+					i++;
+				return (i);
+			}
+		}
+		i++;
 	}
-	temp = *lst;
-	while (temp -> next != NULL)
-		temp = temp -> next;
-	temp -> next = new;
+	return (i);
 }
 
+	// i = i + 1;
+	// if ((fin == '\'' || fin == '"'))
+	// 	i = i + 2;
+	// if (src[0] == '|' || src[0] == '>' || src[0] == '<')
+	// 	i = 1;
+	// if ((src[0] == '>' && src[1] == '>') || (src[0] == '<' && src[1] == '<'))
+	// 	i = 2;
 int	ft_lst_ongbak(t_taken **taken, char *src, char fin)
 {
 	int		i;
 	int		len;
 	t_taken	*new;
 
-	i = 0;
+	len = ft_lencopy(src, fin);
+	if (ft_isquote(fin) == 1 && src[0] == fin)
+		len++;
 	new = malloc(sizeof(t_taken));
 	if (!new)
 		return (-1);
-	while (src[i + 1] && src[i + 1] != fin)
-		i++;
-	len = i + 1;
-	if ((fin == '\'' || fin == '"') && (src[0] == '\'' || src[0] == '"'))
-		len = i + 2;
-	if (src[0] == '|' || src[0] == '>' || src[0] == '<')
-		len = 1;
-	if ((src[0] == '>' && src[1] == '>') || (src[0] == '<' && src[1] == '<'))
-		len = 2;
 	new->token = malloc(sizeof(char) * (len + 1));
 	i = -1;
 	while (++i < len)
@@ -92,17 +94,9 @@ int	ft_copy_rd(t_taken **taken, char *src)
 	i = 0;
 	if (src[i] == '"' || src[i] == 44)
 		return (ft_lst_ongbak(taken, src, src[i]));
-	while (src[i] && ft_isprint(src[i]) == 1 && src[i] != '|'
-		&& src[i] != '"' && src[i] != '\'' && src[i] != '>' && src[i] != '<')
+	while (src[i] && ft_isprint(src[i]) == 1)
 		i++;
 	return (ft_lst_ongbak(taken, src, src[i]));
-}
-
-int	ft_space(char c)
-{
-	if ((c <= 13 && c >= 9) || c == 32)
-		return (1);
-	return (0);
 }
 
 void	ft_initaken(t_taken **taken, char *rd)

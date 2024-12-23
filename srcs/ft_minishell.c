@@ -17,9 +17,13 @@ int	main(void)
 	char	*rd;
 	t_taken	*taken;
 
-	rd = readline("Mouninashell :");
-	if (ft_parse_rd(rd) == 1)
-		return (ft_putendl_fd("Error Parsing", 1), 1);
-	ft_initaken(&taken, rd);
+	while (1)
+	{
+		rd = readline("Mouninashell :");
+		if (ft_parse_rd(rd) == 1)
+			ft_putendl_fd("Error", 1);
+		else
+			ft_initaken(&taken, rd);
+	}
 	return (0);
 }

@@ -41,7 +41,17 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-void	ft_initaken(t_taken **taken, char *rd);
+		// FONCTION DE TOKEN 
 int		ft_parse_rd(char *rd);
+int		ft_parse_operator(char *rd);
+void	ft_initaken(t_taken **taken, char *rd);
+void	ft_printaken(t_taken *taken);
+void	ft_lstbackadd(t_taken **lst, t_taken *new);
+
+		// FONCTION DE IF
+int		ft_space(char c);
+int		ft_isquote(char c);
+int		ft_isoperator(char c);
+int		ft_isredir(char c);
 
 #endif

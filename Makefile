@@ -1,4 +1,5 @@
-SRCS =	$(addprefix srcs/, ft_minishell.c ft_initaken.c ft_parse_rd.c)
+SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_utils.c ft_is.c) \
+		$(addprefix srcs/, ft_minishell.c)
 CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft
 
@@ -22,8 +23,8 @@ $(LIBFT) :
 	#echo "compiling: $<"
 
 clean :
-	@make fclean -sC $(DIRLIB)
-	@rm -f $(OBJS)
+	make fclean -sC $(DIRLIB)
+	rm -f $(OBJS)
 
 fclean : clean
 	@rm -f $(NAME)
