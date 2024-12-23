@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/21 20:24:46 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/23 21:15:40 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,34 @@ void	ft_initype(t_taken **taken)
 		current = current->next;
 	}
 }
+int	ft_findquote(char *src, int i)
+{
+	char beefquot;
+	
+	beefquot = src[i];
+	i++;
+	while (src[i] != beefquot)
+		i++;
+	return (i);
+}
 
 int	ft_lencopy(char *src)
 {
 	int	i;
+	char beefquot;
 
 	i = 0;
 	while (src[i])
 	{
 		if (ft_isoperator(src[0]) == 1)
 		{
-			while (ft_isoperator(src[i]) == 1)
+			while (src[i] == src[i + 1])
 				i++;
+			i++;
 			return (i);
 		}
 		if (ft_isquote(src[i]) == 1)
-		{
-			i++;
-			while (ft_isquote(src[i]) == 0)
-				i++;
-		}
+			i += ft_findquote(src + i, i);
 		if (ft_isoperator(src[i]) == 1)
 			return (i);
 		if (ft_isprint(src[i]) == 0)
@@ -58,13 +66,6 @@ int	ft_lencopy(char *src)
 	return (i);
 }
 
-	// i = i + 1;
-	// if ((fin == '\'' || fin == '"'))
-	// 	i = i + 2;
-	// if (src[0] == '|' || src[0] == '>' || src[0] == '<')
-	// 	i = 1;
-	// if ((src[0] == '>' && src[1] == '>') || (src[0] == '<' && src[1] == '<'))
-	// 	i = 2;
 int	ft_lst_ongbak(t_taken **taken, char *src)
 {
 	int		i;

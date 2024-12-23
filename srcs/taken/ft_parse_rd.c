@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_rd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 00:20:35 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/20 00:35:05 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2024/12/23 19:44:16 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,6 @@ int	ft_isdouble(char rd)
 	return (1);
 }
 
-int	ft_parse_operator(char *rd)
-{
-	int	i;
-
-	i = 0;
-	while (rd[i])
-	{
-		if (ft_isquote(rd[i]) == 1)
-		{
-			i++;
-			while (ft_isquote(rd[i]) == 0)
-				i++;
-		}
-		while (rd[i + 1]
-			&& ft_isoperator(rd[i]) == 1 && ft_isoperator(rd[i + 1]) == 1)
-		{
-			if (rd[i] != rd[i + 1])
-				return (1);
-			if (rd[i] == '|')
-				return (1);
-			i++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int	ft_parse_redir(char *rd)
 {
 	int	i;
@@ -68,7 +41,6 @@ int	ft_parse_redir(char *rd)
 			while (ft_isquote(rd[i]) == 0)
 				i++;
 		}
-		i++;
 		while (ft_isredir(rd[i]) == 1)
 		{
 			count++;
@@ -76,6 +48,8 @@ int	ft_parse_redir(char *rd)
 		}
 		if (count > 2)
 			return (1);
+		if (rd[i])
+			i++;
 	}
 	return (0);
 }
@@ -112,10 +86,7 @@ int	ft_parse_rd(char *rd)
 {
 	if (ft_parse_quote(rd) == 1)
 		return (ft_putendl_fd("Quote not closed", 1), 1);
-	if (ft_parse_operator(rd) == 1)
-		return (ft_putendl_fd
-			("bad operator a la suite", 1), 1);
-	if (ft_parse_redir(rd) == 1)
-		return (ft_putendl_fd("too many redir a la suite", 1), 1);
+	// if (ft_parse_redir(rd) == 1)
+	// 	return (ft_putendl_fd("too many redir a la suite", 1), 1);
 	return (0);
 }
