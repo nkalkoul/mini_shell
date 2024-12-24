@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/24 00:24:43 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/24 20:36:40 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,38 @@ void	ft_initype(t_taken **taken)
 			current->type = WORD;
 		current = current->next;
 	}
+}
+
+void	ft_check_cmd(t_taken **taken, t_cmd **cmd)
+{
+	t_taken	*current;
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = malloc(sizeof(t_cmd));
+	current = *taken;
+	if (current->next && current->type == REDIR)
+	{
+		tmp->redir = ft_strdup(current->token);
+		tmp->files = ft_strdup(current->next->token);
+		
+	}
+	else if (current->type == WORD)
+	{
+		i = 0;
+		tmp->arg_cmd = malloc(sizeof(char *) * 5000);
+		tmp->arg_cmd[i] = ft_strdup(current->token);
+		while (current->next && current->next->type != PIPE )
+		{
+			tmp->arg_cmd[++i] = ft_strdup(current->next->token);
+			current = current->next;
+		}
+		tmp->arg_cmd[++i] = NULL;
+	}
+	else
+		tmp->pipe = ft_strdup(current->token);
+	tmp->next = NULL;
+	*cmd = tmp;
 }
 
 int	ft_findquote(char *src, int i)
@@ -88,12 +120,13 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 	return (len);
 }
 
-void	ft_initaken(t_taken **taken, char *rd)
+void	ft_initaken(t_taken **taken, char *rd, t_cmd **cmd)
 {
 	int	i;
 
 	i = 0;
 	*taken = NULL;
+	*cmd = NULL;
 	while (rd[i])
 	{
 		while (rd[i] && ft_space(rd[i]) == 1)
@@ -102,5 +135,7 @@ void	ft_initaken(t_taken **taken, char *rd)
 			i += ft_lst_ongbak(taken, rd + i);
 	}
 	ft_initype(taken);
+	ft_check_cmd(taken, cmd);
 	ft_printaken((*taken));
+	ft_printcmd(*cmd);
 }
