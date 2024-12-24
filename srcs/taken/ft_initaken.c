@@ -6,12 +6,11 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/23 21:15:40 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/24 00:24:43 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
 
 void	ft_initype(t_taken **taken)
 {
@@ -29,21 +28,22 @@ void	ft_initype(t_taken **taken)
 		current = current->next;
 	}
 }
+
 int	ft_findquote(char *src, int i)
 {
-	char beefquot;
-	
+	char	beefquot;
+
 	beefquot = src[i];
 	i++;
-	while (src[i] != beefquot)
+	while (src[i] && src[i] != beefquot)
 		i++;
 	return (i);
 }
 
 int	ft_lencopy(char *src)
 {
-	int	i;
-	char beefquot;
+	int		i;
+	char	beefquot;
 
 	i = 0;
 	while (src[i])
@@ -56,7 +56,7 @@ int	ft_lencopy(char *src)
 			return (i);
 		}
 		if (ft_isquote(src[i]) == 1)
-			i += ft_findquote(src + i, i);
+			i = ft_findquote(src, i);
 		if (ft_isoperator(src[i]) == 1)
 			return (i);
 		if (ft_isprint(src[i]) == 0)

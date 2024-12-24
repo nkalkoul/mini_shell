@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_taken_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas91 <kalkoul.nassim@gmail.com>           #+#  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-12-23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2024-12-23 06:26:48 by nas91            ###   ########.fr       */
+/*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
+/*   Updated: 2024/12/23 23:40:54 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_printaken(t_taken *taken)
 	curent = taken;
 	while (curent != NULL)
 	{
-		ft_printf(" chaine = == %s§\n", curent->token);
+		ft_printf(" chaine = == %s$\n", curent->token);
 		curent = curent->next;
 	}
 }

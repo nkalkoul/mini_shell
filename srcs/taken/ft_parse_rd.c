@@ -6,11 +6,25 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 00:20:35 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/23 19:44:16 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/24 01:00:34 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	ft_check_cmd(t_taken **taken, t_cmd *cmd)
+{
+	t_taken	*current;
+	
+	current = *taken;
+	while (current->next != NULL)
+	{
+		current->token = cmd->cmd;
+		if (cmd->cmd == )
+		current->next;
+		cmd->next;
+	}
+}
 
 int	ft_isimple(char rd)
 {

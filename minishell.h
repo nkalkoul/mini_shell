@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/21 20:08:54 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/24 00:12:15 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 typedef struct s_taken
 {
 	char			*token;
-	int				index;
 	int				type;
 	struct s_taken	*next;
 }					t_taken;
@@ -37,11 +36,12 @@ typedef struct s_data
 typedef struct s_cmd
 {
 	char			**cmd;
-	int				index;
+	char			*redir;
+	char			*pipe;
 	struct s_cmd	*next;
 }					t_cmd;
 
-		// FONCTION DE TOKEN 
+		// FONCTION DE TOKEN
 int		ft_parse_rd(char *rd);
 int		ft_parse_operator(char *rd);
 void	ft_initaken(t_taken **taken, char *rd);
