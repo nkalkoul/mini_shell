@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/24 18:59:50 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/26 00:49:51 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_cmd
 		// FONCTION DE TOKEN
 int		ft_parse_rd(char *rd);
 int		ft_parse_operator(char *rd);
-void	ft_initaken(t_taken **taken, char *rd, t_cmd **cmd);
+int		ft_initaken(t_taken **taken, char *rd);
 void	ft_printaken(t_taken *taken);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
 void	ft_printcmd(t_cmd *cmd);
@@ -56,5 +56,8 @@ int		ft_space(char c);
 int		ft_isquote(char c);
 int		ft_isoperator(char c);
 int		ft_isredir(char c);
+
+		// FONCTION DE UTILS
+void	ft_free_lst(t_taken **taken);
 
 #endif
