@@ -17,7 +17,7 @@ void	ft_initype(t_taken **taken)
 	t_taken	*current;
 
 	current = *taken;
-	while (current != NULL)
+	while (current ->next != NULL)
 	{
 		if (current->token[0] == '|')
 			current->type = PIPE;
@@ -41,7 +41,6 @@ void	ft_check_cmd(t_taken **taken, t_cmd **cmd)
 	{
 		tmp->redir = ft_strdup(current->token);
 		tmp->files = ft_strdup(current->next->token);
-		
 	}
 	else if (current->type == WORD)
 	{
@@ -123,7 +122,9 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 void	ft_initaken(t_taken **taken, char *rd, t_cmd **cmd)
 {
 	int	i;
+	int	j;
 
+	j = 0;
 	i = 0;
 	*taken = NULL;
 	*cmd = NULL;
@@ -132,7 +133,12 @@ void	ft_initaken(t_taken **taken, char *rd, t_cmd **cmd)
 		while (rd[i] && ft_space(rd[i]) == 1)
 			i++;
 		if (rd[i])
-			i += ft_lst_ongbak(taken, rd + i);
+		{
+			j = ft_lst_ongbak(taken, rd + i);
+			if (j == -1)
+				return ;
+			i = i + j;
+		}
 	}
 	ft_initype(taken);
 	ft_check_cmd(taken, cmd);

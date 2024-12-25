@@ -20,6 +20,7 @@
 # define WORD 1
 # define PIPE 2
 # define REDIR 3
+# define FILES 4
 
 typedef struct s_taken
 {
