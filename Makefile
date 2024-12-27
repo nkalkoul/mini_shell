@@ -1,4 +1,4 @@
-SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_utils.c) \
+SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_utils.c ft_parse_taken.c) \
 		$(addprefix srcs/, ft_minishell.c) \
 		$(addprefix srcs/utils/, ft_free.c ft_is.c)
 

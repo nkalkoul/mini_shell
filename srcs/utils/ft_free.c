@@ -3,13 +3,14 @@
 void	ft_free_lst(t_taken **taken)
 {
 	t_taken	*tmp;
+	t_taken	*next;
 
-	while ((*taken) != NULL)
+	tmp = *taken;
+	while (tmp != NULL)
 	{
-		tmp = (*taken)->next;
-		free((*taken)->token);
-		free(*taken);
-		*taken = tmp;
+		next = tmp->next;
+		free(tmp->token);
+		free(tmp);
+		tmp = next;
 	}
-	free(taken);
 }

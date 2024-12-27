@@ -6,34 +6,11 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/26 00:52:34 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/27 21:57:45 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	parse_token(t_taken **taken)
-{
-	t_taken	*current;
-
-	current = *taken;
-	if (current->type == PIPE)
-		return (1);
-	current = current->next;
-	while (current != NULL)
-	{
-		if (current->type == REDIR && current->next->type != FILES)
-			return (1);
-		if (current->type == PIPE && (current->next->type != REDIR
-			|| current->next->type != WORD))
-			return (1);
-		if (current->type == WORD && (current->next->type != WORD
-			|| current->next->type != PIPE))
-			return (1);
-		current = current->next;
-	}
-	return (0);
-}
 
 int	ft_initype(t_taken **taken)
 {
@@ -48,50 +25,13 @@ int	ft_initype(t_taken **taken)
 			current->type = REDIR;
 		else
 			current->type = WORD;
-		if (current->next && current->token[1] == '\0'
-			&& (current->token[0] == '>' || current->token[0] == '<'))
-		{
-			current = current->next;
-			current->type = FILES;
-		}
 		printf("TYpe = %d\n", current->type);
 		current = current->next;
 	}
-	if (parse_token(taken) == 1)
-		return (1);
+	// if (ft_parse_lst_taken(taken) == 1)
+	// 	return (1);
 	return (0);
 }
-
-// void	ft_check_cmd(t_taken **taken, t_cmd **cmd)
-// {
-// 	t_taken	*current;
-// 	t_cmd	*tmp;
-// 	int		i;
-
-// 	tmp = malloc(sizeof(t_cmd));
-// 	current = *taken;
-// 	if (current->next && current->type == REDIR)
-// 	{
-// 		tmp->redir = ft_strdup(current->token);
-// 		tmp->files = ft_strdup(current->next->token);
-// 	}
-// 	else if (current->type == WORD)
-// 	{
-// 		i = 0;
-// 		tmp->arg_cmd = malloc(sizeof(char *) * 5000);
-// 		tmp->arg_cmd[i] = ft_strdup(current->token);
-// 		while (current->next && current->next->type != PIPE )
-// 		{
-// 			tmp->arg_cmd[++i] = ft_strdup(current->next->token);
-// 			current = current->next;
-// 		}
-// 		tmp->arg_cmd[++i] = NULL;
-// 	}
-// 	else
-// 		tmp->pipe = ft_strdup(current->token);
-// 	tmp->next = NULL;
-// 	*cmd = tmp;
-// }
 
 int	ft_findquote(char *src, int i)
 {
@@ -141,7 +81,7 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 		return (ft_free_lst(taken), -1);
 	new->token = malloc(sizeof(char) * (len + 1));
 	if (!new->token)
-		return (ft_free_lst(taken), -1);
+		return (free(new), ft_free_lst(taken), -1);
 	i = -1;
 	while (++i < len)
 		new->token[i] = src[i];
@@ -173,6 +113,6 @@ int	ft_initaken(t_taken **taken, char *rd)
 	}
 	ft_printaken((*taken));
 	if (ft_initype(taken) == 1)
-		return (1);
+		return (ft_free_lst(taken), 1);
 	return (0);
 }
