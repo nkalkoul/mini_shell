@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/26 00:49:38 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/30 01:13:02 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	main(void)
 		else
 		{
 			if (ft_initaken(&taken, rd) == 1)
+				return (ft_putendl_fd("Error Parsing", 2), 1);
+			if (ft_parse_lst_taken(&taken) == 1)
 				return (ft_putendl_fd("Error Parsing", 2), 1);
 		}
 	}

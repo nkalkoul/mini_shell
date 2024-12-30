@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/27 22:24:32 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/30 01:10:13 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_files
 typedef struct s_cmd
 {
 	char			**arg_cmd;
-	struct s_files	*files;
+	struct s_files	**files;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -51,6 +51,8 @@ void	ft_printaken(t_taken *taken);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
 void	ft_printcmd(t_cmd *cmd);
 int		ft_parse_lst_taken(t_taken **taken);
+void	ft_lstbackadd_files(t_files **lst, t_files *new);
+void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
 
 		// FONCTION DE IF
 int		ft_space(char c);
