@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mounir <mounir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/30 01:13:02 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/30 21:45:51 by mounir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(void)
 {
 	char	*rd;
 	t_taken	*taken;
+	t_cmd	*cmd;
 
 	while (1)
 	{
@@ -27,7 +28,7 @@ int	main(void)
 		{
 			if (ft_initaken(&taken, rd) == 1)
 				return (ft_putendl_fd("Error Parsing", 2), 1);
-			if (ft_parse_lst_taken(&taken) == 1)
+			if (ft_parse_lst_taken(&taken, &cmd) == 1)
 				return (ft_putendl_fd("Error Parsing", 2), 1);
 		}
 	}

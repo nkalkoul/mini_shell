@@ -20,7 +20,7 @@ int	ft_token_to_word(t_taken *current, t_cmd **cmd)
 	tmp_cmd = strdup("");
 	if (!tmp_cmd)
 		return (1);		//  free tmp_cmd
-	while (current->type == WORD)
+	while (current != NULL && current->type == WORD)
 	{
 		tmp_cmd = ft_re_strjoin(tmp_cmd, current->token);
 		tmp_cmd = ft_re_strjoin(tmp_cmd, " ");
@@ -53,7 +53,7 @@ int	ft_token_to_files(t_taken *current, t_cmd **cmd)
 	return (0);
 }
 
-int	ft_token_to_cmd(t_taken *current, t_cmd **cmd, t_cmd *new)
+int	ft_token_to_cmd(t_taken *current, t_cmd **cmd)
 {
 	if (current->type == REDIR)
 	{
@@ -65,35 +65,36 @@ int	ft_token_to_cmd(t_taken *current, t_cmd **cmd, t_cmd *new)
 		if (ft_token_to_word(current, cmd) == 1)
 			return (1); 	 // free path   //  free redir
 	}
-	new->next = NULL;
+	(*cmd)->next = NULL;
 	return (0);
 }
 
-int	ft_parse_lst_taken(t_taken **taken)
+int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd)
 {
 	t_taken	*current;
-	t_cmd	**cmd;
 	t_cmd	*new;
 
 	current = *taken;
+	*cmd = NULL;
 	if (current->type == PIPE)
 		return (1);
 	*cmd = malloc(sizeof(t_cmd));
-	if (!new)
+	if (!cmd)
 		return (1);
+	(*cmd)->files = NULL;
 	while (current != NULL)
 	{
 		if (current->type == PIPE)
 		{
-			*cmd = (*cmd)->next;
 			new = malloc(sizeof(t_cmd));
 			if (!new)
 				return (1);	// free new & path & redir
 			ft_lstbackadd_cmd(cmd, new);
+			*cmd = (*cmd)->next;
 		}
 		if (ft_check_operator(current) == 1)
 			return (1);
-		if (ft_token_to_cmd(current, cmd, new) == 1)
+		if (ft_token_to_cmd(current, cmd) == 1)
 			return (1);
 		current = current->next;
 	}
