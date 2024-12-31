@@ -1,0 +1,10 @@
+total 68
+-rw-r--r-- 1 nkalkoul 2024_paris     0 Dec 31 16:16 ,
+drwxr-xr-x 2 nkalkoul 2024_paris  4096 Dec 31 15:25 libft
+-rw-r--r-- 1 nkalkoul 2024_paris   593 Dec 31 15:15 Makefile
+-rwxr-xr-x 1 nkalkoul 2024_paris 46008 Dec 31 16:43 minishell
+-rw-r--r-- 1 nkalkoul 2024_paris  1973 Dec 31 15:25 minishell.h
+-rw-r--r-- 1 nkalkoul 2024_paris    44 Dec 31 15:15 o
+-rw-r--r-- 1 nkalkoul 2024_paris     0 Dec 31 16:54 out
+-rw-r--r-- 1 nkalkoul 2024_paris     0 Dec 31 16:53 outfile
+drwxr-xr-x 4 nkalkoul 2024_paris  4096 Dec 31 16:33 srcs

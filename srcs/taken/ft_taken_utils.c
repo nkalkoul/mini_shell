@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_taken_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2024/12/30 01:16:01 by modavid          ###   ########.fr       */
+/*   Updated: 2024/12/31 18:27:57 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ void	ft_printcmd(t_cmd *cmd)
 	int		i;
 
 	curent = cmd;
-	i = 0;
 	while (curent != NULL)
 	{
-		ft_printf("------cmd---- = %s$\n", curent->arg_cmd[i++]);
+		i = 0;
+	while (curent->arg_cmd[i])
+		{
+			if (curent->arg_cmd)
+				ft_printf("------cmd---- = %s$\n", curent->arg_cmd[i]);
+			i++;
+		}
+		printf("ensuite\n");
 		curent = curent->next;
 	}
 }

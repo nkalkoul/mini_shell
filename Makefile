@@ -13,8 +13,8 @@ OBJS =	$(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
-	@echo "done !"
+	@$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	@echo "minishell done !"
 
 $(LIBFT) :
 	@make -sC $(DIRLIB)
@@ -22,11 +22,12 @@ $(LIBFT) :
 
 %.o : %.c
 	@$(CC) -c $< -o $@ 
-	#echo "compiling: $<"
+	@echo "compiling: $<"
 
 clean :
-	make fclean -sC $(DIRLIB)
-	rm -f $(OBJS)
+	@make fclean -sC $(DIRLIB)
+	@rm -f $(OBJS)
+	@echo "refreeeesh baby"
 
 fclean : clean
 	@rm -f $(NAME)
