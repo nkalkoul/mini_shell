@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_taken_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2024/12/31 18:27:57 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:56:54 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	ft_printfiles(t_files *files)
+{
+	t_files	*current;
+	int		i;
+
+	i = 0;
+	while (current)
+	{
+		printf("redir[%d] = %s\n", i, current->redir);
+		printf("files[%d] = %s\n", i, current->path);
+		i++;
+		current = current->next;
+	}
+}
 
 void	ft_printcmd(t_cmd *cmd)
 {
@@ -21,7 +36,7 @@ void	ft_printcmd(t_cmd *cmd)
 	while (curent != NULL)
 	{
 		i = 0;
-	while (curent->arg_cmd[i])
+		while (curent->arg_cmd[i])
 		{
 			if (curent->arg_cmd)
 				ft_printf("------cmd---- = %s$\n", curent->arg_cmd[i]);

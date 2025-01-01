@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/31 18:29:08 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:57:10 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_files
 typedef struct s_cmd
 {
 	char			**arg_cmd;
-	struct s_files	**files;
+	struct s_files	*files;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -50,7 +50,8 @@ int		ft_initaken(t_taken **taken, char *rd);
 void	ft_printaken(t_taken *taken);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
 void	ft_printcmd(t_cmd *cmd);
-int		ft_parse_lst_taken(t_taken **taken, t_cmd **cmd);
+void	ft_printfiles(t_files *files);
+int		ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
 

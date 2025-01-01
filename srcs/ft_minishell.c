@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/12/31 17:54:59 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/01/01 16:34:28 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(void)
 	char	*rd;
 	t_taken	*taken;
 	t_cmd	*cmd;
+	t_files	*files;
 
 	while (1)
 	{
@@ -28,7 +29,7 @@ int	main(void)
 		{
 			if (ft_initaken(&taken, rd) == 1)
 				return (ft_putendl_fd("Error", 2), 1);
-			if (ft_parse_lst_taken(&taken, &cmd) == 1)
+			if (ft_parse_lst_taken(&taken, &cmd, &files) == 1)
 				return (ft_putendl_fd("Error Parsing", 2), 1);
 		}
 	}

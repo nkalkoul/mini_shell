@@ -1,5 +1,31 @@
 #include "../../minishell.h"
 
+int	ft_check_error_parse(t_taken *current)
+{
+	if (current->type == PIPE)
+		return (1);
+	while (current != NULL)
+	{
+		if (current->type == PIPE && (current->next == NULL
+			|| current->next->type == PIPE))
+			return (1);
+		if (current->token[0] == '|' && current->token[1] == '|'
+			&& current->token[2] == '|')
+			return (1);
+		if (current->token[0] == '>' && current->token[1] == '>'
+			&& current->token[2] == '>')
+			return (1);
+		if (current->token[0] == '<' && current->token[1] == '<'
+			&& current->token[2] == '<')
+			return (1);
+		if (current->type == REDIR && (current->next == NULL
+			|| current->next->type != WORD))
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
 int	ft_check_operator(t_taken *current)
 {
 	if (current->token[0] == '>' && current->token[1] == '>'
@@ -51,7 +77,8 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 		return (1); 		// free path  //  free redir || free lst_files
 	new->next = NULL;
 	*current = (*current)->next;
-	ft_lstbackadd_files((*cmd)->files, new);
+	ft_lstbackadd_files(&((*cmd)->files), new);
+	(*cmd)->files = (*cmd)->files->next;
 	return (0);
 }
 
@@ -71,20 +98,23 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 	return (0);
 }
 
-int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd)
+int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files)
 {
 	t_taken	*current;
 	t_cmd	*new;
 	t_cmd	*tmp;
 
 	current = *taken;
-	*cmd = NULL;
-	if (current->type == PIPE)
+	if (ft_check_error_parse(current) == 1)
 		return (1);
+	*files = NULL;
 	*cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (1);
-	*(*cmd)->files = NULL;
+	// ft_bzero((void **)*files, sizeof(t_files));
+	// ft_bzero(*cmd, sizeof(t_cmd));
+	printf("files %p\n", *files);
+	(*cmd)->files = *files;
 	tmp = *cmd;
 	while (current != NULL)
 	{
@@ -102,6 +132,7 @@ int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd)
 			current = current->next;
 		}
 	}
-	ft_printcmd(*cmd);
+	ft_printfiles(*files);
+	// ft_printcmd(*cmd);
 	return (0);
 }
