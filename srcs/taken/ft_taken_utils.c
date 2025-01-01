@@ -6,18 +6,19 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/01/01 19:56:54 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/01 23:37:57 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_printfiles(t_files *files)
+void	ft_printfiles(t_cmd *cmd)
 {
 	t_files	*current;
 	int		i;
 
 	i = 0;
+	current = cmd->files;
 	while (current)
 	{
 		printf("redir[%d] = %s\n", i, current->redir);

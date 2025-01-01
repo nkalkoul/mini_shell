@@ -26,36 +26,39 @@ int	ft_check_error_parse(t_taken *current)
 	return (0);
 }
 
-int	ft_check_operator(t_taken *current)
-{
-	if (current->token[0] == '>' && current->token[1] == '>'
-		&& current->token[2] == '>')
-		return (1);
-	if (current->token[0] == '<' && current->token[1] == '<'
-		&& current->token[2] == '<')
-		return (1);
-	if (current->token[0] == '|' && current->token[1] == '|')
-		return (1);
-	return (0);
-}
-
 int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 {
-	char	*tmp_cmd;
+	int		i;
+	t_taken	*tmp;
 
-	tmp_cmd = strdup("");
-	if (!tmp_cmd)
-		return (1);		//  free tmp_cmd
-	while (*current != NULL && (*current)->type == WORD)
+	tmp = *current;
+	i = 0;
+	while (tmp && tmp->type != PIPE)
 	{
-		tmp_cmd = ft_re_strjoin(tmp_cmd, (*current)->token);
-		tmp_cmd = ft_re_strjoin(tmp_cmd, " ");
-		*current = (*current)->next;
+		if (tmp->type == REDIR)
+			tmp = tmp->next;
+		else if (tmp->type == WORD)
+			i++;
+		tmp = tmp->next;
 	}
-	printf("\n\ntmp cmd ====== %s\n\n", tmp_cmd);
-	(*cmd)->arg_cmd = ft_split(tmp_cmd, ' ');
+	(*cmd)->arg_cmd = malloc(sizeof(char *) * (i + 1));
 	if ((*cmd)->arg_cmd == NULL)
-		return (1);		//  free arg_cmd
+		return (1);		// free
+	tmp = *current;
+	i = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == REDIR)
+			tmp = tmp->next;
+		else if (tmp->type == WORD)
+		{
+			(*cmd)->arg_cmd[i] = ft_strdup(tmp->token);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	(*cmd)->arg_cmd[i] = NULL;
+	*current = (*current)->next;
 	return (0);
 }
 
@@ -78,7 +81,6 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 	new->next = NULL;
 	*current = (*current)->next;
 	ft_lstbackadd_files(&((*cmd)->files), new);
-	(*cmd)->files = (*cmd)->files->next;
 	return (0);
 }
 
@@ -89,7 +91,7 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 		if (ft_token_to_files(current, cmd) == 1)
 			return (1);
 	}
-	else if ((*current)->type == WORD)
+	else if ((*current)->type == WORD && (*cmd)->arg_cmd == NULL)
 	{
 		if (ft_token_to_word(current, cmd) == 1)
 			return (1); 	 // free path   //  free redir
@@ -98,30 +100,25 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 	return (0);
 }
 
-int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files)
+int	ft_parse_lst_taken(t_taken *taken, t_cmd **cmd)
 {
 	t_taken	*current;
 	t_cmd	*new;
 	t_cmd	*tmp;
 
-	current = *taken;
+	current = taken;
 	if (ft_check_error_parse(current) == 1)
 		return (1);
-	*files = NULL;
 	*cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (1);
-	// ft_bzero((void **)*files, sizeof(t_files));
-	// ft_bzero(*cmd, sizeof(t_cmd));
-	printf("files %p\n", *files);
-	(*cmd)->files = *files;
+	// printf("files %p\n", *files);
 	tmp = *cmd;
 	while (current != NULL)
 	{
-		if (ft_check_operator(current) == 1)
-			return (1);
 		if (ft_token_to_cmd(&current, &tmp) == 1)
 			return (1);
+		ft_printfiles(tmp);
 		if (current && current->type == PIPE)
 		{
 			new = ft_calloc(1, sizeof(t_cmd));
@@ -132,7 +129,6 @@ int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files)
 			current = current->next;
 		}
 	}
-	ft_printfiles(*files);
-	// ft_printcmd(*cmd);
+	ft_printcmd(*cmd);
 	return (0);
 }
