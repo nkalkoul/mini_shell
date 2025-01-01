@@ -108,7 +108,7 @@ int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files)
 	if (ft_check_error_parse(current) == 1)
 		return (1);
 	*files = NULL;
-	*cmd = malloc(sizeof(t_cmd));
+	*cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (1);
 	// ft_bzero((void **)*files, sizeof(t_files));
@@ -124,7 +124,7 @@ int	ft_parse_lst_taken(t_taken **taken, t_cmd **cmd, t_files **files)
 			return (1);
 		if (current && current->type == PIPE)
 		{
-			new = malloc(sizeof(t_cmd));
+			new = ft_calloc(1, sizeof(t_cmd));
 			if (!new)
 				return (1);	// free new & path & redir
 			ft_lstbackadd_cmd(&tmp, new);
