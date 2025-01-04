@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/01 23:37:39 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/04 01:15:40 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,36 @@ typedef struct s_cmd
 	char			**arg_cmd;
 	struct s_files	*files;
 	struct s_cmd	*next;
+	int				type;
 }					t_cmd;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_global
+{
+	t_env	*my_env;
+}	t_global;
 
 		// FONCTION DE TOKEN
 int		ft_parse_rd(char *rd);
+int		ft_parse_quote(char *rd);
 int		ft_parse_operator(char *rd);
-int		ft_initaken(t_taken **taken, char *rd);
+t_taken	*ft_initaken(char *rd);
 void	ft_printaken(t_taken *taken);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
 void	ft_printcmd(t_cmd *cmd);
 void	ft_printfiles(t_cmd *cmd);
-int		ft_parse_lst_taken(t_taken *taken, t_cmd **cmd);
+t_cmd	*ft_parse_lst_taken(t_taken *taken);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
+t_env	*ft_taken_to_env(char **env);
+void	ft_lstbackadd_env(t_env **lst, t_env *new);
+void	ft_printenv(t_env *my_env);
 
 		// FONCTION DE IF
 int		ft_space(char c);
@@ -62,5 +79,8 @@ int		ft_isredir(char c);
 
 		// FONCTION DE UTILS
 void	ft_free_lst(t_taken **taken);
+void	ft_free_files(t_files **files);
+void	ft_free_cmd(t_cmd *cmd);
+void	ft_free2d(char **str);
 
 #endif
