@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_taken_utils.c                                   :+:      :+:    :+:   */
+/*   ft_printlist.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/01/04 00:08:36 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/04 22:25:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,74 +68,15 @@ void	ft_printenv(t_env *my_env)
 	}
 }
 
-// void	ft_printaken(t_taken *taken)
-// {
-// 	t_taken	*current;
-
-// 	current = taken;
-// 	while (current != NULL)
-// 	{
-// 		// ft_printf(" chaine = == %s$\n", current->token);
-// 		current = current->next;
-// 	}
-// }
-
-void	ft_lstbackadd(t_taken **lst, t_taken *new)
+void	ft_printaken(t_taken *taken)
 {
-	t_taken	*temp;
+	t_taken	*current;
 
-	if ((*lst) == NULL)
+	current = taken;
+	while (current != NULL)
 	{
-		(*lst) = new;
-		return ;
+		ft_printf("\ntoken ==== %s$\n", current->token);
+		current = current->next;
 	}
-	temp = *lst;
-	while (temp -> next != NULL)
-		temp = temp -> next;
-	temp -> next = new;
 }
 
-void	ft_lstbackadd_files(t_files **lst, t_files *new)
-{
-	t_files	*temp;
-
-	if ((*lst) == NULL)
-	{
-		(*lst) = new;
-		return ;
-	}
-	temp = *lst;
-	while (temp -> next != NULL)
-		temp = temp -> next;
-	temp -> next = new;
-}
-
-void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new)
-{
-	t_cmd	*temp;
-
-	if ((*lst) == NULL)
-	{
-		(*lst) = new;
-		return ;
-	}
-	temp = *lst;
-	while (temp -> next != NULL)
-		temp = temp -> next;
-	temp -> next = new;
-}
-
-void	ft_lstbackadd_env(t_env **lst, t_env *new)
-{
-	t_env	*temp;
-
-	if ((*lst) == NULL)
-	{
-		(*lst) = new;
-		return ;
-	}
-	temp = *lst;
-	while (temp -> next != NULL)
-		temp = temp -> next;
-	temp -> next = new;
-}

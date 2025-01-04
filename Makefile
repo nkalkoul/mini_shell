@@ -1,6 +1,7 @@
-SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_utils.c ft_parse_taken.c ft_taken_to_env.c) \
+SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c) \
 		$(addprefix srcs/, ft_minishell.c) \
-		$(addprefix srcs/utils/, ft_free.c ft_is.c)
+		$(addprefix srcs/utils/, ft_free.c ft_is.c ft_lstbackadd.c ft_printlist.c) \
+		$(addprefix srcs/env/, ft_init_env.c ft_expand.c)
 
 CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft

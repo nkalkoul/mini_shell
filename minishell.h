@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/04 01:15:40 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/04 22:24:28 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,18 @@ int		ft_parse_rd(char *rd);
 int		ft_parse_quote(char *rd);
 int		ft_parse_operator(char *rd);
 t_taken	*ft_initaken(char *rd);
-void	ft_printaken(t_taken *taken);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
-void	ft_printcmd(t_cmd *cmd);
-void	ft_printfiles(t_cmd *cmd);
 t_cmd	*ft_parse_lst_taken(t_taken *taken);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
-t_env	*ft_taken_to_env(char **env);
+t_env	*ft_take_myenv(char **env);
 void	ft_lstbackadd_env(t_env **lst, t_env *new);
+int		ft_expand_key(t_taken *taken, t_global *global);
+
+		// FONCTION DE PRINT
+void	ft_printaken(t_taken *taken);
+void	ft_printcmd(t_cmd *cmd);
+void	ft_printfiles(t_cmd *cmd);
 void	ft_printenv(t_env *my_env);
 
 		// FONCTION DE IF

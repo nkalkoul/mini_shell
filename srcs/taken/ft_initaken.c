@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/04 01:13:17 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/04 22:24:55 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_taken	*ft_initaken(char *rd)
 			i = i + j;
 		}
 	}
-	// ft_printaken((*taken));
+	ft_printaken(taken);
 	if (ft_initype(taken) == 1)
 		return (ft_free_lst(&taken), NULL);
 	return (taken);

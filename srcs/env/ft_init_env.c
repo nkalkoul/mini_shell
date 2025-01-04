@@ -45,7 +45,7 @@ int	ft_init_env(char *env, t_env **my_env)
 	return (0);
 }
 
-t_env	*ft_taken_to_env(char **env)
+t_env	*ft_take_myenv(char **env)
 {
 	int		i;
 	t_env	*my_env;
