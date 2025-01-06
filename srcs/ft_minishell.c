@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/04 21:06:42 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/06 17:46:53 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	minishell(t_global *global)
 		rd = readline("Mouninashell :");
 		add_history(rd);
 		taken = ft_initaken(rd);
-		if (taken == NULL || ft_expand_key(taken, global) == 1)
+		if (taken == NULL || ft_expandables(taken, global) == 1)
 		{
 			ft_putendl_fd("Error", 2);
 			continue ;
