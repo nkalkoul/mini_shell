@@ -354,3 +354,19 @@ int	ft_expand_simple(char *token, char quote, int i)
 // 	}
 // 	return (0);
 // }
+
+
+
+
+
+/*
+
+fn {
+	if '&&' -> fork a gauche, attendre, etc...
+	if '||' -> fork a gauche, attendre, etc...
+	if '|' -> fork a gauche, attendre, etc...
+	if CMD -> exec
+}
+*/
+
+
