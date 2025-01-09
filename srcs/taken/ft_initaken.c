@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/04 22:24:55 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:53:07 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ int	ft_initype(t_taken *taken)
 	{
 		if (current->token[0] == '|')
 			current->type = PIPE;
+		else if (current->token[0] == '|' && current->token[1] == '|')
+			current->type = OR;
 		else if (current->token[0] == '>' || current->token[0] == '<')
 			current->type = REDIR;
+		else if (current->token[0] == '&' && current->token[1] == '&')
+			current->type = AND;
 		else
 			current->type = WORD;
 		current = current->next;
@@ -48,7 +52,7 @@ int	ft_lencopy(char *src)
 	i = 0;
 	while (src[i])
 	{
-		if (ft_isoperator(src[0]) == 1)
+		if (ft_isoperator(src[0]) == 1 || (src[0] == '&' && src[1] == '&'))
 		{
 			while (src[i] == src[i + 1])
 				i++;
@@ -57,7 +61,7 @@ int	ft_lencopy(char *src)
 		}
 		if (ft_isquote(src[i]) == 1)
 			i = ft_findquote(src, i);
-		if (ft_isoperator(src[i]) == 1)
+		if (ft_isoperator(src[i]) == 1 || (src[i] == '&' && src[i + 1] == '&'))
 			return (i);
 		if (ft_isprint(src[i]) == 0)
 			return (i);

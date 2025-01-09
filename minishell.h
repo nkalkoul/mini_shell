@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/09 00:26:39 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:24:09 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define WORD 1
 # define PIPE 2
 # define REDIR 3
+# define OR 4
+# define AND 5
 
 typedef struct s_taken
 {

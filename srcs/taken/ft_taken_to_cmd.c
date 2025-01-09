@@ -2,7 +2,7 @@
 
 int	ft_check_error_parse(t_taken *current)
 {
-	if (current->type == PIPE)
+	if (current->type == PIPE && current->type == OR && current->type == AND)
 		return (1);
 	while (current != NULL)
 	{
@@ -108,7 +108,6 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 		}
 		*current = (*current)->next;
 	}
-	// ft_printfiles(*cmd);
 	(*cmd)->next = NULL;
 	return (0);
 }

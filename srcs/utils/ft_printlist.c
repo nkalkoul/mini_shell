@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/01/08 16:53:12 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:22:00 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_printcmd(t_cmd *cmd)
 	int		i;
 
 	current = cmd;
-	// printf("\n");
 	while (current != NULL)
 	{
 		i = 0;
@@ -51,7 +50,6 @@ void	ft_printcmd(t_cmd *cmd)
 		}
 		current = current->next;
 	}
-	// printf("\n");
 }
 
 void	ft_printenv(t_env *my_env)
@@ -75,7 +73,7 @@ void	ft_printaken(t_taken *taken)
 	current = taken;
 	while (current != NULL)
 	{
-		// ft_printf("\ntoken ==== %s$\n", current->token);
+		ft_printf("\ntoken ==== %s$\n", current->token);
 		current = current->next;
 	}
 }

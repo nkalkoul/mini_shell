@@ -58,7 +58,6 @@ char	*add_simple_quotes(char *token, int *i, char *result)
 	int		quotes_size;
 	char	*quotes;
 
-	// quotes_start = *i;
 	quotes_size = quotes_len(token, *i, '\'');
 	quotes = ft_substr(token, *i, quotes_size);
 	if (quotes == NULL)
@@ -360,7 +359,6 @@ int	ft_expand_simple(char *token, char quote, int i)
 
 
 /*
-
 fn {
 	if '&&' -> fork a gauche, attendre, etc...
 	if '||' -> fork a gauche, attendre, etc...
@@ -368,5 +366,3 @@ fn {
 	if CMD -> exec
 }
 */
-
-
