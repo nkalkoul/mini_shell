@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/06 18:37:26 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/09 00:26:39 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
 t_env	*ft_take_myenv(char **env);
 void	ft_lstbackadd_env(t_env **lst, t_env *new);
-int		ft_expandables(t_taken *taken, t_global *global);
+int		ft_expandables(t_taken **taken, t_global *global);
+char	*ft_getenv(char *key, t_global *global);
+int		ft_expand_token(t_taken	*current, t_global *global);
+int		ft_expand_simple(char *token, char quote, int i);
 
 		// FONCTION DE PRINT
 void	ft_printaken(t_taken *taken);

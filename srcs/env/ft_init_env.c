@@ -58,6 +58,22 @@ t_env	*ft_take_myenv(char **env)
 			return (NULL);
 		i++;
 	}
-	ft_printenv(my_env);
+	// ft_printenv(my_env);
 	return (my_env);
+}
+
+char	*ft_getenv(char *key, t_global *global)
+{
+	t_env	*env;
+
+	env = global->my_env;
+	while (env)
+	{
+		if (env->key != NULL && ft_strcmp(key, env->key) == 0)
+		{
+			return ft_strdup(env->value);
+		}
+		env = env->next;
+	}
+	return NULL;
 }

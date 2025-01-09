@@ -108,7 +108,7 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 		}
 		*current = (*current)->next;
 	}
-	ft_printfiles(*cmd);
+	// ft_printfiles(*cmd);
 	(*cmd)->next = NULL;
 	return (0);
 }

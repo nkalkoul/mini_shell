@@ -1,178 +1,144 @@
 #include "../../minishell.h"
 
-// char	*ft_strdup_dollar(char *dollar)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*key;
-
-// 	i = 0;
-// 	while (dollar[i] != '\0' && dollar[i] != '\'' && dollar[i] != '"')
-// 		i++;
-// 	key = malloc(sizeof(char) * i);
-// 	if (!key)
-// 		return (NULL);
-// 	j = 0;
-// 	i = 1;
-// 	while (dollar[i] != '\0')
-// 		key[j++] = dollar[i++];
-// 	key[j] = '\0';
-// 	return (key);
-// }
-
-// int	ft_expand_key(t_taken *taken, t_global *global)
-// {
-// 	t_taken	*current;
-// 	char	*dollar;
-
-// 	current = taken;
-// 	while (current != NULL)
-// 	{
-// 		if (current->token[0] == '$')
-// 		{
-// 			dollar = ft_strdup_dollar(current->token);
-// 			if (!dollar)
-// 				return (1);
-// 			while (global->my_env)
-// 			{
-// 				if (ft_strcmp(global->my_env->key, dollar) == 0)
-// 					current->token = ft_strdup(global->my_env->value);
-// 				global->my_env = global->my_env->next;
-// 			}
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (0);
-// }
-
-int	ft_strcmp(const char *s1, const char *s2)
+void	skip_current(t_taken *previous, t_taken **taken)
 {
-	size_t	i;
+	t_taken	*tmp;
 
-	i = 0;
-	while (s1[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-int	ft_count_dollar(char *dollar, int i)
-{
-	int	count;
-
-	count = 0;
-	while (dollar[i] != '"' && dollar[i] != '\'' && dollar[i] != '\0')
+	if (previous == NULL)
+		*taken = (*taken)->next;
+	else
 	{
-		count++;
-		i++;
-		if (dollar[i] == '$')
-			return (count);
+		tmp = previous->next;
+		previous->next = previous->next->next;
 	}
-	return (count);
 }
 
-char	*ft_strdup_dollar2(char	*dollar, int i)
+int	ft_expandables(t_taken **taken, t_global *global)
 {
-	char	*key;
-	int		j;
+	t_taken	*current;
+	t_taken	*previous;
+	t_taken	*tmp;
 
-	key = malloc(sizeof(char) * ft_count_dollar(dollar, i));
-	if (!key)
-		return (NULL);
-	j = 0;
-	i++;
-	while (dollar[i] != '"' && dollar[i] != '\''
-		&& dollar[i] != '\0' && dollar[i] != '$')
-		key[j++] = dollar[i++]; 
-	key[j] = '\0';
-	return (key);
-}
-
-char	*ft_key_to_value(char *token, char *value)
-{
-	char	*new;
-	int		i;
-	int		count;
-	int		index;
-	char	*tmp;
-
-	i = 0;
-	count = 0;
-	while (token[i] != '$')
-		i++;
-	new = malloc(sizeof(char) * i);
-	if (!new)
-		return (NULL);		// free
-	i = -1;
-	while (token[++i] != '$')
-		new[i] = token[i];
-	new[i] = '\0';
-	new = ft_strjoin(new, value);
-	if (!new)
-		return (NULL);
-	while (token[i] != '\'' && token[i] != '"' && token[i] != '\0')
+	previous = NULL;
+	tmp = NULL;
+	current = *taken;
+	while (current != NULL)
 	{
-		i++;
-		if (token[i] == '$')
-			break;
-	}
-	index = i;
-	while (token[++i] != '\0')
-		count++;
-	tmp = malloc(sizeof(char) * count + 1);
-	if (!tmp)
-		return (NULL);
-	count = 0;
-	while (token[index] != '\0')
-		tmp[count++] = token[index++];
-	tmp[count] = '\0';
-	new = ft_re_strjoin(new, tmp);
-	if (!new)
-		return (NULL);
-	return (new);
-}
-
-int	ft_expandollar(t_taken *current, t_global *global, int i)
-{
-	char	*dollar;
-	t_env	*tmp;
-
-	dollar = ft_strdup_dollar2(current->token, i);
-	if (!dollar)
-		return (1);
-	tmp = global->my_env;
-	while (tmp)
-	{
-		if (ft_strcmp(dollar, tmp->key) == 0)
+		if (ft_expand_token(current, global) == 1)
+			return (1);
+		if (current->token[0] == '\0')
 		{
-			current->token = ft_key_to_value(current->token,
-				tmp->value);
-			if (!current->token)
-				return (1);
+			skip_current(previous, taken);
+			tmp = current;
+			current = current->next;
+			free(tmp);
 		}
-		tmp = tmp->next;
+		else
+		{
+			previous = current;
+			current = current->next;
+		}
 	}
 	return (0);
 }
 
-int	ft_expand_double(t_taken *current, char quote, int i, t_global *global)
+int	quotes_len(char *token, int i, char quote)
 {
-	char	*dollar;
-	t_env	*tmp;
+	int	j;
 
-	i++;
-	tmp = global->my_env;
-	if (current->token[i] == quote)
-		i++;
-	while (current->token[i] && current->token[i] != quote)
+	j = 1;
+	while (token[i + j] && token[i + j] != quote)
+		++j;
+	return (j + 1);
+}
+
+char	*add_simple_quotes(char *token, int *i, char *result)
+{
+	int		quotes_start;
+	int		quotes_size;
+	char	*quotes;
+
+	// quotes_start = *i;
+	quotes_size = quotes_len(token, *i, '\'');
+	quotes = ft_substr(token, *i, quotes_size);
+	if (quotes == NULL)
+		return (NULL);
+	*i += quotes_size;
+	result = ft_re_strjoin(result, quotes);
+	return (result);
+}
+
+char	*add_other_chars(char *token, int *i, char *result)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (token[*i + j] != '\0' && token[*i + j] != '$' && token[*i + j] != '\'')
+		++j;
+	temp = ft_substr(token, *i, j);
+	if (temp == NULL)
+		return (NULL);
+	*i += j;
+	result = ft_re_strjoin(result, temp);
+	return (result);
+}
+
+char	*get_dollar_key(char *token, int *i)
+{
+	int	j;
+	char	*key;
+
+	++(*i);
+	j = 0;
+	while (ft_isalnum(token[*i + j]) == 1 || token[*i + j] == '_')
+		++j;
+	if (j == 0)
+		key = ft_strdup("$");
+	else
+		key = ft_substr(token, *i, j);
+	*i += j;
+	return (key);
+}
+
+char	*add_environment_variable(char *token, int *i, char *result, t_global *global)
+{
+	char	*key;
+	char	*value;
+
+	key = get_dollar_key(token, i);
+	if (key == NULL)
+		return (NULL);
+	value = ft_getenv(key, global);
+	if (value != NULL)
+		result = ft_re_strjoin(result, value);
+	return (result);	
+}
+
+int	ft_expand_token(t_taken	*current, t_global *global)
+{
+	int		i;
+	char	*token;
+	char	*result;
+
+	i = 0;
+	result = ft_strdup("");
+	if (result == NULL)
+		return EXIT_FAILURE;
+	token = current->token;
+	while (token[i])
 	{
-		if (current->token[i] == '$')
-		{
-			if (ft_expandollar(current, global, i) == 1)
-				return (-1);
-		}
-		i++;
+		if (token[i] == '\'')
+			result = add_simple_quotes(token, &i, result);
+		else if (token[i] == '$')
+			result = add_environment_variable(token, &i, result, global);
+		else
+			result = add_other_chars(token, &i, result);
+		if (result == NULL)
+			return (EXIT_FAILURE);
 	}
-	return (i);
+	current->token = result;
+	return (0);
 }
 
 int	ft_expand_simple(char *token, char quote, int i)
@@ -183,59 +149,208 @@ int	ft_expand_simple(char *token, char quote, int i)
 	return (i + 1);
 }
 
-int	ft_expand_quote(t_taken *current, t_global *global, int i)
-{
-	int	j;
+// int	ft_count_dollar(char *dollar, int i)
+// {
+// 	int	count;
 
-	j = 0;
-	if (current->token[i] == '\'')
-		i += ft_expand_simple(current->token, current->token[i], i);
-	else if (current->token[i] == '"')
-	{
-		j = ft_expand_double(current, current->token[i], i, global);
-		if (j == -1)
-			return (-1);
-		i += j;
-	}
-	else
-	{
-		if (current->token[i] == '$')
-		{
-			if (ft_expandollar(current, global, i) == 1)
-				return (-1);
-		}
-		i++;
-	}
-	return (i);
-}
+// 	count = 0;
+// 	while (dollar[i] != '"' && dollar[i] != '\'' && dollar[i] != '\0')
+// 	{
+// 		count++;
+// 		i++;
+// 		if (dollar[i] == '$')
+// 			return (count);
+// 	}
+// 	return (count);
+// }
 
-int	ft_expand_token(t_taken	*current, t_global *global)
-{
-	int	i;
-	int	j;
+// char	*ft_strdup_dollar2(char	*dollar, int i)
+// {
+// 	char	*key;
+// 	int		j;
 
-	i = 0;
-	j = 0;
-	while (current->token[i])
-	{
-		j = ft_expand_quote(current, global, i);
-		if (j == -1)
-			return (1);
-		i += j;
-	}
-	return (0);
-}
+// 	key = malloc(sizeof(char) * ft_count_dollar(dollar, i));
+// 	if (!key)
+// 		return (NULL);
+// 	j = 0;
+// 	i++;
+// 	while (ft_isalnum(dollar[i]) == 1)
+// 		key[j++] = dollar[i++]; 
+// 	key[j] = '\0';
+// 	return (key);
+// }
 
-int	ft_expandables(t_taken *taken, t_global *global)
-{
-	t_taken	*current;
+// char	*ft_key_to_value(char *token, char *value)
+// {
+// 	char	*new;
+// 	int		i;
+// 	int		count;
+// 	int		index;
+// 	char	*tmp;
 
-	current = taken;
-	while (current != NULL)
-	{
-		if (ft_expand_token(current, global) == 1)
-			return (1);
-		current = current->next;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (token[i] != '$')
+// 	{
+// 		if (token[i] == '\'')
+// 			i = ft_expand_simple(token, '\'', i);
+// 		else
+// 			i++;
+// 	}
+// 	new = malloc(sizeof(char) * (i + 1));
+// 	if (!new)
+// 		return (NULL);		// free
+// 	i = 0;
+// 	while (token[i] != '$')
+// 	{
+// 		if (token[i] == '\'')
+// 		{
+// 			new[i] = token[i];
+// 			++i;
+// 			while (token[i] != '\'')
+// 			{
+// 				new[i] = token[i];
+// 				++i;
+// 			}
+// 			new[i] = token[i];
+// 			++i;
+// 		}
+// 		else
+// 		{
+// 			new[i] = token[i];
+// 			++i;
+// 		}
+// 	}
+// 	new[i] = '\0';
+// 	new = ft_strjoin(new, value);
+// 	if (!new)
+// 		return (NULL);
+// 	++i;
+// 	while (ft_isalnum(token[i]) == 1)
+// 		++i;
+
+// 	index = i;
+// 	while (token[i] != '\0')
+// 	{
+// 		++i;
+// 		count++;
+// 	}	
+// 	tmp = malloc(sizeof(char) * (count + 1));
+// 	if (!tmp)
+// 		return (NULL);
+// 	count = 0;
+// 	while (token[index] != '\0')
+// 		tmp[count++] = token[index++];
+// 	tmp[count] = '\0';
+// 	new = ft_re_strjoin(new, tmp);
+// 	if (!new)
+// 		return (NULL);
+// 	return (new);
+// }
+
+// int	ft_expandollar(t_taken *current, t_global *global, int i)
+// {
+// 	char	*dollar;
+// 	t_env	*tmp;
+
+// 	dollar = ft_strdup_dollar2(current->token, i);
+// 	if (!dollar)
+// 		return (1);
+// 	tmp = global->my_env;
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp(dollar, tmp->key) == 0)
+// 		{
+// 			current->token = ft_key_to_value(current->token,
+// 				tmp->value);int	ft_expand_simple(char *token, char quote, int i)
+// {
+// 	i++;
+// 	while (token[i] && token[i] != quote)
+// 		i++;
+// 	return (i + 1);
+// }
+
+// 			if (current->token == NULL)
+// 				return -1;
+// 			return ft_strlen(tmp->value);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	current->token = ft_key_to_value(current->token, "");
+// 	if (current->token == NULL)
+// 		return -1;
+// 	return 0;
+// }
+
+// int	ft_expand_double(t_taken *current, char quote, int i, t_global *global)
+// {
+// 	int		j;
+// 	char	*dollar;
+// 	t_env	*tmp;
+
+// 	i++;
+// 	j = 0;
+// 	tmp = global->my_env;
+// 	if (current->token[i] == quote)
+// 		i++;
+// 	while (current->token[i] && current->token[i] != quote)
+// 	{
+// 		if (current->token[i] == '$')
+// 		{
+// 			j = ft_expandollar(current, global, i);
+// 			if (j == -1)
+// 				return (-1);
+// 			i += j;
+// 		}
+// 		else {
+// 			++i;
+// 		}
+// 		// printf("MDR: %s\n", current->token);
+// 	}
+// 	return (i);
+// }
+
+// int	ft_expand_quote(t_taken *current, t_global *global, int i)
+// {
+// 	int	j;
+
+// 	j = 0;
+// 	if (current->token[i] == '\'')
+// 		i = ft_expand_simple(current->token, current->token[i], i);
+// 	else if (current->token[i] == '"')
+// 	{
+// 		j = ft_expand_double(current, current->token[i], i, global);
+// 		if (j == -1)
+// 			return (-1);
+// 		i = j;
+// 	}
+// 	else
+// 	{
+// 		if (current->token[i] == '$')
+// 		{
+// 			j = ft_expandollar(current, global, i);
+// 			if (j == -1)
+// 				return (-1);
+// 			i += j;
+// 		}
+// 		else { ++i; }
+// 	}
+// 	return (i);
+// }
+
+// int	ft_expand_token(t_taken	*current, t_global *global)
+// {
+// 	int		i;
+// 	int		j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (current->token[i])
+// 	{
+// 		j = ft_expand_quote(current, global, i);
+// 		if (j == -1)
+// 			return (1);
+// 		i = j;
+// 	}
+// 	return (0);
+// }

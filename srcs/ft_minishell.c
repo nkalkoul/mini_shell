@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/06 17:46:53 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/09 00:31:30 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,28 @@ void	minishell(t_global *global)
 	while (1)
 	{
 		rd = readline("Mouninashell :");
+		if (rd == NULL)
+			return ;
+		if (rd[0] == '\0')
+			continue;
 		add_history(rd);
 		taken = ft_initaken(rd);
-		if (taken == NULL || ft_expandables(taken, global) == 1)
+		if (taken == NULL || ft_expandables(&taken, global) == 1)
 		{
 			ft_putendl_fd("Error", 2);
 			continue ;
 		}
+		if (taken == NULL) {
+			continue;
+		}
 		cmd = ft_parse_lst_taken(taken);
+		ft_free_lst(&taken);
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing", 2);
 			continue ;
 		}
 	}
-	ft_free_lst(&taken);
 }
 
 int	main(int ac, char **av, char **env)
