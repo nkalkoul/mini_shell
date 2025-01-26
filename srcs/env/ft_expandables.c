@@ -13,6 +13,129 @@ void	skip_current(t_taken *previous, t_taken **taken)
 	}
 }
 
+int	ft_expand_simple(char *token, char quote, int i)
+{
+	i++;
+	while (token[i] && token[i] != quote)
+		i++;
+	return (i + 1);
+}
+
+int	quotes_len(char *token, int i, char quote)
+{
+	int	j;
+
+	j = 1;
+	while (token[i + j] && token[i + j] != quote)
+		++j;
+	return (j + 1);
+}
+
+char	*add_simple_quotes(char *token, int *i, char *result)
+{
+	int		quotes_start;
+	int		quotes_size;
+	char	*quotes;
+
+	quotes_size = quotes_len(token, *i, '\'');
+	quotes = ft_substr(token, *i, quotes_size);
+	if (quotes == NULL)
+		return (NULL);
+	*i += quotes_size;
+	result = ft_re_strjoin(result, quotes);
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+char	*add_other_chars(char *token, int *i, char *result)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (token[*i + j] != '\0' && token[*i + j] != '$' && token[*i + j] != '\'')
+		++j;
+	temp = ft_substr(token, *i, j);
+	if (temp == NULL)
+		return (NULL);
+	*i += j;
+	result = ft_re_strjoin(result, temp);
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+char	*get_dollar_key(char *token, int *i)
+{
+	int	j;
+	char	*key;
+
+	++(*i);
+	j = 0;
+	while (ft_isalnum(token[*i + j]) == 1 || token[*i + j] == '_')
+		++j;
+	if (j == 0)
+	{
+		key = ft_strdup("$");
+		if (!key)
+			return (NULL);
+	}
+	else
+	{
+		key = ft_substr(token, *i, j);
+		if (!key)
+			return (NULL);
+	}
+	*i += j;
+	return (key);
+}
+
+char	*add_environment_variable(char *token, int *i, char *result, t_global *global)
+{
+	char	*key;
+	char	*value;
+
+	key = get_dollar_key(token, i);
+	if (key == NULL)
+		return (NULL);
+	value = ft_getenv(key, global);
+	free(key);
+	if (value != NULL)
+	{
+		result = ft_re_strjoin(result, value);
+		if (!result)
+			return (NULL);
+	}
+	return (result);	
+}
+
+int	ft_expand_token(t_taken	*current, t_global *global)
+{
+	int		i;
+	char	*token;
+	char	*result;
+
+	i = 0;
+	result = ft_strdup("");
+	if (result == NULL)
+		return (EXIT_FAILURE);
+	token = current->token;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+			result = add_simple_quotes(token, &i, result);
+		else if (token[i] == '$')
+			result = add_environment_variable(token, &i, result, global);
+		else
+			result = add_other_chars(token, &i, result);
+		if (result == NULL)
+			return (EXIT_FAILURE);
+	}
+	current->token = result;
+	return (0);
+}
+
 int	ft_expandables(t_taken **taken, t_global *global)
 {
 	t_taken	*current;
@@ -42,112 +165,6 @@ int	ft_expandables(t_taken **taken, t_global *global)
 	return (0);
 }
 
-int	quotes_len(char *token, int i, char quote)
-{
-	int	j;
-
-	j = 1;
-	while (token[i + j] && token[i + j] != quote)
-		++j;
-	return (j + 1);
-}
-
-char	*add_simple_quotes(char *token, int *i, char *result)
-{
-	int		quotes_start;
-	int		quotes_size;
-	char	*quotes;
-
-	quotes_size = quotes_len(token, *i, '\'');
-	quotes = ft_substr(token, *i, quotes_size);
-	if (quotes == NULL)
-		return (NULL);
-	*i += quotes_size;
-	result = ft_re_strjoin(result, quotes);
-	return (result);
-}
-
-char	*add_other_chars(char *token, int *i, char *result)
-{
-	int		j;
-	char	*temp;
-
-	j = 0;
-	while (token[*i + j] != '\0' && token[*i + j] != '$' && token[*i + j] != '\'')
-		++j;
-	temp = ft_substr(token, *i, j);
-	if (temp == NULL)
-		return (NULL);
-	*i += j;
-	result = ft_re_strjoin(result, temp);
-	return (result);
-}
-
-char	*get_dollar_key(char *token, int *i)
-{
-	int	j;
-	char	*key;
-
-	++(*i);
-	j = 0;
-	while (ft_isalnum(token[*i + j]) == 1 || token[*i + j] == '_')
-		++j;
-	if (j == 0)
-		key = ft_strdup("$");
-	else
-		key = ft_substr(token, *i, j);
-	*i += j;
-	return (key);
-}
-
-char	*add_environment_variable(char *token, int *i, char *result, t_global *global)
-{
-	char	*key;
-	char	*value;
-
-	key = get_dollar_key(token, i);
-	if (key == NULL)
-		return (NULL);
-	value = ft_getenv(key, global);
-	if (value != NULL)
-		result = ft_re_strjoin(result, value);
-	return (result);	
-}
-
-int	ft_expand_token(t_taken	*current, t_global *global)
-{
-	int		i;
-	char	*token;
-	char	*result;
-
-	i = 0;
-	result = ft_strdup("");
-	if (result == NULL)
-		return EXIT_FAILURE;
-	token = current->token;
-	while (token[i])
-	{
-		if (token[i] == '\'')
-			result = add_simple_quotes(token, &i, result);
-		else if (token[i] == '$')
-			result = add_environment_variable(token, &i, result, global);
-		else
-			result = add_other_chars(token, &i, result);
-		if (result == NULL)
-			return (EXIT_FAILURE);
-	}
-	current->token = result;
-	return (0);
-}
-
-int	ft_expand_simple(char *token, char quote, int i)
-{
-	i++;
-	while (token[i] && token[i] != quote)
-		i++;
-	return (i + 1);
-}
-
 // int	ft_count_dollar(char *dollar, int i)
 // {
 // 	int	count;
@@ -174,7 +191,7 @@ int	ft_expand_simple(char *token, char quote, int i)
 // 	j = 0;
 // 	i++;
 // 	while (ft_isalnum(dollar[i]) == 1)
-// 		key[j++] = dollar[i++]; 
+// 		key[j++] = dollar[i++];
 // 	key[j] = '\0';
 // 	return (key);
 // }

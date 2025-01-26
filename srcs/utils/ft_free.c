@@ -61,3 +61,21 @@ void	ft_free_cmd(t_cmd *cmd)
 		tmp = next;
 	}
 }
+
+void	ft_free_env(t_env *my_env)
+{
+	t_env	*tmp;
+	t_env	*next;
+
+	tmp = my_env;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (tmp->key)
+			free(tmp->key);
+		if (tmp->value)
+			free(tmp->value);
+		free(tmp);
+		tmp = next;
+	}
+}

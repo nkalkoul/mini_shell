@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/09 19:24:09 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/26 16:56:37 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	ft_printaken(t_taken *taken);
 void	ft_printcmd(t_cmd *cmd);
 void	ft_printfiles(t_cmd *cmd);
 void	ft_printenv(t_env *my_env);
+int		ft_export(t_taken *taken);
+void	ft_print_export(t_global *global, t_taken *taken);
 
 		// FONCTION DE IF
 int		ft_space(char c);
@@ -90,5 +92,6 @@ void	ft_free_lst(t_taken **taken);
 void	ft_free_files(t_files **files);
 void	ft_free_cmd(t_cmd *cmd);
 void	ft_free2d(char **str);
+void	ft_free_env(t_env *my_env);
 
 #endif
