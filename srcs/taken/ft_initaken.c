@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/09 19:53:07 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/29 02:44:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	ft_initype(t_taken *taken)
 	current = taken;
 	while (current != NULL)
 	{
-		if (current->token[0] == '|')
-			current->type = PIPE;
-		else if (current->token[0] == '|' && current->token[1] == '|')
+		if (current->token[0] == '|' && current->token[1] == '|')
 			current->type = OR;
+		else if (current->token[0] == '|')
+			current->type = PIPE;
 		else if (current->token[0] == '>' || current->token[0] == '<')
 			current->type = REDIR;
 		else if (current->token[0] == '&' && current->token[1] == '&')

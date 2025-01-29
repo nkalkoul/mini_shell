@@ -54,7 +54,8 @@ int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 		return (1);
 	tmp = *current;
 	i = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp && tmp->type != PIPE
+		&& tmp->type != OR && tmp->type != AND)
 	{
 		if (tmp->type == REDIR)
 			tmp = tmp->next;
@@ -94,7 +95,8 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 
 int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 {
-	while (*current && (*current)->type != PIPE)
+	while (*current && (*current)->type != PIPE
+		&& (*current)->type != OR && (*current)->type != AND)
 	{
 		if ((*current)->type == REDIR)
 		{
@@ -112,12 +114,25 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 	return (0);
 }
 
+int	ft_operator_to_cmd(t_cmd **tmp, t_taken **current)
+{
+	t_cmd	*new;
+
+	new = ft_calloc(1, sizeof(t_cmd));
+	if (!new)
+		return (1);
+	new->type = (*current)->type;
+	ft_lstbackadd_cmd(tmp, new);
+	(*tmp) = (*tmp)->next;
+	(*current) = (*current)->next;
+	return (0);
+}
+
 t_cmd	*ft_parse_lst_taken(t_taken *taken)
 {
 	t_taken	*current;
 	t_cmd	*cmd;
 	t_cmd	*tmp;
-	t_cmd	*new;
 
 	if (ft_check_error_parse(taken) == 1)
 		return (NULL);
@@ -130,14 +145,11 @@ t_cmd	*ft_parse_lst_taken(t_taken *taken)
 	{
 		if (ft_token_to_cmd(&current, &tmp) == 1)
 			return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
-		else if (current && current->type == PIPE)
+		else if (current && (current->type == PIPE
+			|| current->type == OR || current->type == AND))
 		{
-			new = ft_calloc(1, sizeof(t_cmd));
-			if (!new)
+			if (ft_operator_to_cmd(&tmp, &current) == 1)
 				return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
-			ft_lstbackadd_cmd(&tmp, new);
-			tmp = tmp->next;
-			current = current->next;
 		}
 	}
 	ft_printcmd(cmd);

@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/01/09 19:22:00 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/29 02:42:43 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_printcmd(t_cmd *cmd)
 			i++;
 		}
 		ft_printf("\n");
+		if (current->type)
+			ft_printf("operator is %d\n", current->type);
 		if (current->next)
 		{
 			printf("|\n");
