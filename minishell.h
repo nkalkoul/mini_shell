@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/29 01:33:16 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/31 01:18:39 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define WORD 1
+# define WORD 13
 # define PIPE 2
 # define REDIR 3
 # define OR 4
