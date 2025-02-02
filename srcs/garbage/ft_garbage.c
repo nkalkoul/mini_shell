@@ -50,4 +50,5 @@ void	*ft_malloc(long int l)
 	if (!ptr)
 		return (free(garbage), NULL);
 	ft_lstbackadd_garbage(ptr, &garbage);
+	return (ptr);
 }
