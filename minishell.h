@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/01 23:55:39 by modavid          ###   ########.fr       */
+/*   Updated: 2025/01/31 05:25:24 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,31 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define WORD 12
+# define WORD 1
 # define PIPE 2
 # define REDIR 3
 # define OR 4
 # define AND 5
+
+typedef struct s_garbage
+{
+	void				*ptr;
+	struct s_garbage	*next;	
+}	t_garbage;
 
 typedef struct s_taken
 {
 	char			*token;
 	int				type;
 	struct s_taken	*next;
-}					t_taken;
+}	t_taken;
 
 typedef struct s_files
 {
 	char			*redir;
 	char			*path;
 	struct s_files	*next;
-}					t_files;
+}	t_files;
 
 typedef struct s_cmd
 {
@@ -44,14 +50,14 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*top;
 	int				type;
-}					t_cmd;
+}	t_cmd;
 
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
-}					t_env;
+}	t_env;
 
 typedef struct s_global
 {
@@ -96,5 +102,11 @@ void	ft_free_files(t_files **files);
 void	ft_free_cmd(t_cmd *cmd);
 void	ft_free2d(char **str);
 void	ft_free_env(t_env *my_env);
+
+		// FONCTION DE GARBAGE
+void	*ft_malloc(size_t t);
+int		ft_lstbackadd_garbage(void *ptr, t_garbage **garbage);
+void	ft_killnode(t_garbage **garbage, void *ptr);
+
 
 #endif
