@@ -36,11 +36,14 @@ void	minishell(t_global *global)
 			continue ;
 		add_history(rd);
 		taken = ft_initaken(rd);
+		if (!taken)
+			continue ;
 		if (ft_strcmp(taken->token, "exit") == 0)
-			exit(0);
+			(ft_free(((void *) -1)), exit(0));
 		if (taken == NULL || ft_expandables(&taken, global) == 1)
 		{
 			ft_putendl_fd("Error", 2);
+			ft_free(((void *) -1));
 			continue ;
 		}
 		if (!taken->next && ft_strncmp(taken->token, "env", 3) == 0)
@@ -54,6 +57,7 @@ void	minishell(t_global *global)
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing", 2);
+			ft_free(((void *) -1));
 			continue ;
 		}
 		ft_free(((void *) -1));

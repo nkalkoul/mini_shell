@@ -117,6 +117,6 @@ t_taken	*ft_initaken(char *rd)
 	}
 	ft_printaken(taken);
 	if (ft_initype(taken) == 1)
-		return (ft_free(taken), NULL);
+		return (ft_free(((void *) -1)), NULL);
 	return (taken);
 }
