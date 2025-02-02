@@ -33,7 +33,7 @@ void	minishell(t_global *global)
 		if (rd == NULL)
 			return ;
 		if (rd[0] == '\0')
-			continue;
+			continue ;
 		add_history(rd);
 		taken = ft_initaken(rd);
 		if (ft_strcmp(taken->token, "exit") == 0)
@@ -49,14 +49,14 @@ void	minishell(t_global *global)
 		if (taken->next && ft_strncmp(taken->token, "unset", 5) == 0)
 			ft_unset(taken, global);
 		if (taken == NULL)
-			continue;
+			continue ;
 		cmd = ft_parse_lst_taken(taken);
-		ft_free_lst(&taken);
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing", 2);
 			continue ;
 		}
+		ft_free(((void *) -1));
 	}
 }
 

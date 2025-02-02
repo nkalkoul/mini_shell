@@ -18,7 +18,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (start >= ft_strlen(s))
 	{
-		new = malloc(1);
+		new = ft_malloc(1);
 		if (new == NULL)
 			return (NULL);
 		new[0] = '\0';
@@ -26,7 +26,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	new = malloc(sizeof(char) * len + 1);
+	new = ft_malloc(sizeof(char) * len + 1);
 	if (new == NULL)
 		return (NULL);
 	new = (char *)ft_memcpy(new, (s + start), len);

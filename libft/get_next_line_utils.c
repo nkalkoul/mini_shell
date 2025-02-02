@@ -47,10 +47,10 @@ char	*ft_re_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	if (!s2)
-		return (free(s1), NULL);
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+		return (ft_free(s1), NULL);
+	new = ft_malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (!new || !s1)
-		return (free(s1), NULL);
+		return (ft_free(s1), NULL);
 	while (s1[i])
 	{
 		new[i] = s1[i];
@@ -62,7 +62,7 @@ char	*ft_re_strjoin(char *s1, char *s2)
 		j++;
 	}
 	new[i + j] = 0;
-	return (free(s1), new);
+	return (ft_free(s1), new);
 }
 
 char	*fts_substr(char *s, size_t start, size_t len)

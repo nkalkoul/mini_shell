@@ -77,12 +77,12 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 	t_taken	*new;
 
 	len = ft_lencopy(src);
-	new = malloc(sizeof(t_taken));
+	new = ft_malloc(sizeof(t_taken));
 	if (!new)
 		return (ft_free_lst(taken), -1);
-	new->token = malloc(sizeof(char) * (len + 1));
+	new->token = ft_malloc(sizeof(char) * (len + 1));
 	if (!new->token)
-		return (free(new), ft_free_lst(taken), -1);
+		return (free(new), ft_free(taken), -1);
 	i = -1;
 	while (++i < len)
 		new->token[i] = src[i];
@@ -117,6 +117,6 @@ t_taken	*ft_initaken(char *rd)
 	}
 	ft_printaken(taken);
 	if (ft_initype(taken) == 1)
-		return (ft_free_lst(&taken), NULL);
+		return (ft_free(taken), NULL);
 	return (taken);
 }

@@ -107,7 +107,7 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 		if (!result)
 			return (NULL);
 	}
-	return (result);	
+	return (result);
 }
 
 int	ft_expand_token(t_taken	*current, t_global *global)
@@ -154,7 +154,7 @@ int	ft_expandables(t_taken **taken, t_global *global)
 			skip_current(previous, taken);
 			tmp = current;
 			current = current->next;
-			free(tmp);
+			ft_free(tmp);
 		}
 		else
 		{

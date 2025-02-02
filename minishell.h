@@ -108,5 +108,6 @@ void	*ft_malloc(long int l);
 int		ft_lstbackadd_garbage(void *ptr, t_garbage **garbage);
 void	ft_killnode(t_garbage **garbage, void *ptr);
 void	ft_finishbag(t_garbage *garbage);
+void	ft_free(void *ptr);
 
 #endif

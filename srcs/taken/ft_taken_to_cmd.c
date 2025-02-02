@@ -49,7 +49,7 @@ int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 	int		i;
 	t_taken	*tmp;
 
-	(*cmd)->arg_cmd = malloc(sizeof(char *) * (ft_count_word(current) + 1));
+	(*cmd)->arg_cmd = ft_malloc(sizeof(char *) * (ft_count_word(current) + 1));
 	if ((*cmd)->arg_cmd == NULL)
 		return (1);
 	tmp = *current;
@@ -76,7 +76,7 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 {
 	t_files	*new;
 
-	new = malloc(sizeof(t_files));
+	new = ft_malloc(sizeof(t_files));
 	if (new == NULL)
 		return (1);
 	new->redir = ft_strdup((*current)->token);
