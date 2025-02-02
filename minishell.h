@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/31 04:45:31 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/01 23:55:39 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	ft_printaken(t_taken *taken);
 void	ft_printcmd(t_cmd *cmd);
 void	ft_printfiles(t_cmd *cmd);
 void	ft_printenv(t_env *my_env);
+
+		// FONCTION DE BUILTINS
 void	ft_print_export(t_global *global, t_taken *taken);
+void	ft_unset(t_taken *taken, t_global *global);
 
 		// FONCTION DE IF
 int		ft_space(char c);

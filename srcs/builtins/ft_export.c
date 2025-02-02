@@ -43,23 +43,22 @@ char	*ft_export_value(char *value, t_env *new, int *i)
 
 	j = *i;
 	count = 0;
+	while (value[*i] != '\0')
+	{
+		(*i)++;
+		count++;
+	}
+	new->value = malloc(sizeof(char) * (count + 1));
+	if (!new->value)
+		return (NULL);
+	count = 0;
 	while (value[j] != '\0')
 	{
+		new->value[count] = value[j];
 		j++;
 		count++;
 	}
-	new->value = malloc(sizeof(char) * count);
-	if (!new->value)
-		return (NULL);
-	j = 0;
-	(*i)++;
-	while (value[*i] != '\0')
-	{
-		new->value[j] = value[*i];
-		j++;
-		(*i)++;
-	}
-	new->value[j] = '\0';
+	new->value[count] = '\0';
 	return (new->value);
 }
 
@@ -70,8 +69,9 @@ int	ft_export_node(t_taken *taken, t_global *global)
 	int		i;
 
 	current = taken;
-	if (current->next && ft_strncmp(current->token, "export", 6) == 0)
-		current = current->next;
+	if (!current->next || ft_strncmp(current->token, "export", 6) != 0)
+		return (1);
+	current = current->next;
 	while (current)
 	{
 		new = calloc(1, sizeof(t_env));
@@ -85,6 +85,7 @@ int	ft_export_node(t_taken *taken, t_global *global)
 				return (1);
 			if (current->token[i] == '\0')
 				break ;
+			i++;
 			new->value = ft_export_value(current->token, new, &i);
 			if (!new->value)
 				return (1);
@@ -109,13 +110,18 @@ void	ft_print_export(t_global *global, t_taken *taken)
 			tmp = tmp->next;
 		}
 	}
+	// // 	return (1);
+	// else
 	if (ft_export_node(taken, global) == 0)
 	{
 		while (tmp)
 		{
-			ft_printf("%s=", tmp->key);
-			ft_printf("%s\n", tmp->value);
+			if (tmp->value)
+				ft_printf("%s=%s\n", tmp->key, tmp->value);
+			else
+				ft_printf("%s\n", tmp->key);
 			tmp = tmp->next;
 		}
 	}
+	// return (0);
 }
