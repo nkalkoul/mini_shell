@@ -78,4 +78,5 @@ void	ft_finishbag(t_garbage *garbage)
 		free(current);
 		current = garbage;
 	}
+	free(garbage);
 }
