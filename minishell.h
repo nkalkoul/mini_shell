@@ -104,5 +104,7 @@ void	ft_free_env(t_env *my_env);
 		// FONCTION DE GARBAGE
 void	*ft_malloc(size_t t);
 int		ft_lstbackadd_garbage(void *ptr, t_garbage **garbage);
+void	ft_killnode(t_garbage **garbage, void *ptr);
+
 
 #endif
