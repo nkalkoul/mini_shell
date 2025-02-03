@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/02/01 21:42:50 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/02 20:50:21 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	ft_printenv(t_env *my_env)
 	current = my_env;
 	while (current)
 	{
-		if (current->value)
-			printf("%s=%s\n", current->key, current->value);
+		// if (current->value)
+		printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 }

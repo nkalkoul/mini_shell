@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 06:02:55 by nas91             #+#    #+#             */
-/*   Updated: 2024/06/06 15:44:57 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:57:18 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(char const *s, char c)
 	int				count;
 
 	count = countw(s, c);
-	new = malloc(sizeof(char *) * (count + 1));
+	new = ft_malloc(sizeof(char *) * (count + 1));
 	if (new == NULL)
 		return (NULL);
 	new = ft_dothes(new, s, c, count);

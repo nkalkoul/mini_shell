@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 01:29:28 by nas91             #+#    #+#             */
-/*   Updated: 2024/11/02 14:15:47 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:57:18 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*before_line(char *line)
 		i++;
 	if (line[i] == '\n')
 		i++;
-	new = malloc(sizeof(char) * (i + 1));
+	new = ft_malloc(sizeof(char) * (i + 1));
 	if (new == NULL)
 		return (free(line), NULL);
 	fts_strlcpy(new, line, i + 1);
@@ -79,7 +79,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = fts_substr(save, 0, fts_strlen(save));
-	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buffer = ft_malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buffer || !line)
 		return (free(buffer), free(line), NULL);
 	return (ft_gnl(fd, buffer, save, line));

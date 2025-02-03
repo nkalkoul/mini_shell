@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 03:43:43 by nas91             #+#    #+#             */
-/*   Updated: 2024/11/02 14:15:15 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:57:18 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*fts_substr(char *s, size_t start, size_t len)
 	i = 0;
 	if (start >= fts_strlen(s))
 	{
-		new = malloc(sizeof(char) + 1);
+		new = ft_malloc(sizeof(char) + 1);
 		if (new == NULL)
 			return (NULL);
 		new[0] = '\0';
@@ -81,7 +81,7 @@ char	*fts_substr(char *s, size_t start, size_t len)
 	}
 	if (fts_strlen(s) - start < len)
 		len = fts_strlen(s) - start;
-	new = malloc(sizeof(char) * len + 1);
+	new = ft_malloc(sizeof(char) * len + 1);
 	if (new == NULL)
 		return (NULL);
 	while (i < len)

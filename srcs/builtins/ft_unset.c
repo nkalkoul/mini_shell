@@ -13,10 +13,10 @@ void	ft_free_node(t_taken *current, t_env *my_env)
 		if (ft_strcmp(current->token, tmp->key) == 0)
 		{
 			save = tmp->next;
-			free(tmp->key);
+			ft_free(tmp->key);
 			if (tmp->value)
-				free(tmp->value);
-			free(tmp);
+				ft_free(tmp->value);
+			ft_free(tmp);
 			tmp = save;
 			if (prev)
 				prev->next = tmp;

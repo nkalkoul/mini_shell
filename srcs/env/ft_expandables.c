@@ -54,7 +54,8 @@ char	*add_other_chars(char *token, int *i, char *result)
 	char	*temp;
 
 	j = 0;
-	while (token[*i + j] != '\0' && token[*i + j] != '$' && token[*i + j] != '\'')
+	while (token[*i + j] != '\0' && token[*i + j] != '$'
+		&& token[*i + j] != '\'')
 		++j;
 	temp = ft_substr(token, *i, j);
 	if (temp == NULL)
@@ -68,7 +69,7 @@ char	*add_other_chars(char *token, int *i, char *result)
 
 char	*get_dollar_key(char *token, int *i)
 {
-	int	j;
+	int		j;
 	char	*key;
 
 	++(*i);
@@ -185,7 +186,7 @@ int	ft_expandables(t_taken **taken, t_global *global)
 // 	char	*key;
 // 	int		j;
 
-// 	key = malloc(sizeof(char) * ft_count_dollar(dollar, i));
+// 	key = ft_malloc(sizeof(char) * ft_count_dollar(dollar, i));
 // 	if (!key)
 // 		return (NULL);
 // 	j = 0;
@@ -213,7 +214,7 @@ int	ft_expandables(t_taken **taken, t_global *global)
 // 		else
 // 			i++;
 // 	}
-// 	new = malloc(sizeof(char) * (i + 1));
+// 	new = ft_malloc(sizeof(char) * (i + 1));
 // 	if (!new)
 // 		return (NULL);		// free
 // 	i = 0;
@@ -251,7 +252,7 @@ int	ft_expandables(t_taken **taken, t_global *global)
 // 		++i;
 // 		count++;
 // 	}	
-// 	tmp = malloc(sizeof(char) * (count + 1));
+// 	tmp = ft_malloc(sizeof(char) * (count + 1));
 // 	if (!tmp)
 // 		return (NULL);
 // 	count = 0;

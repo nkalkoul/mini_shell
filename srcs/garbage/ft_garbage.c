@@ -1,8 +1,8 @@
 #include "../../minishell.h"
 
-t_garbage	*init_g(void)
-{
-}
+// t_garbage	*init_g(void)
+// {
+// }
 
 void	ft_free(void *ptr)
 {
