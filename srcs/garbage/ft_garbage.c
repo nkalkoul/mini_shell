@@ -6,8 +6,8 @@
 
 void	ft_free(void *ptr)
 {
-	static int			i = -1;
-	static t_garbage	*garbage;
+	static int				i = -1;
+	static t_garbage_head	*garbage;
 
 	if (ptr == ((void *) -1))
 	{
@@ -24,13 +24,14 @@ void	ft_free(void *ptr)
 		i++;
 		return ;
 	}
-	ft_killnode(&garbage, ptr);
+	else
+		ft_killnode(garbage, ptr);
 }
 
 void	*ft_malloc(long int l)
 {
-	static t_garbage	*garbage = NULL;
-	void				*ptr;
+	static t_garbage_head	*garbage = NULL;
+	void					*ptr;
 
 	if (l == -1)
 	{
@@ -39,16 +40,15 @@ void	*ft_malloc(long int l)
 	}
 	if (garbage == NULL)
 	{
-		garbage = malloc(sizeof(t_garbage));
+		garbage = malloc(sizeof(t_garbage_head));
 		if (garbage == NULL)
 			return (NULL);
-		garbage->ptr = NULL;
-		garbage->next = NULL;
+		memset(garbage, 0, sizeof(t_garbage_head));
 		ft_free(garbage);
 	}
 	ptr = malloc(l);
 	if (!ptr)
 		return (free(garbage), NULL);
-	ft_lstbackadd_garbage(ptr, &garbage);
+	ft_lstbackadd_garbage(ptr, garbage);
 	return (ptr);
 }

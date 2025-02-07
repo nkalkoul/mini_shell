@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/31 05:25:24 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/07 01:34:56 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ typedef struct s_garbage
 	void				*ptr;
 	struct s_garbage	*next;	
 }	t_garbage;
+
+typedef struct s_garbage_head
+{
+	struct s_garbage	*head;	
+}	t_garbage_head;
 
 typedef struct s_taken
 {
@@ -105,9 +110,9 @@ void	ft_free_env(t_env *my_env);
 
 		// FONCTION DE GARBAGE
 void	*ft_malloc(long int l);
-int		ft_lstbackadd_garbage(void *ptr, t_garbage **garbage);
-void	ft_killnode(t_garbage **garbage, void *ptr);
-void	ft_finishbag(t_garbage *garbage);
+int		ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage);
+void	ft_killnode(t_garbage_head *garbage, void *ptr);
+void	ft_finishbag(t_garbage_head *garbage);
 void	ft_free(void *ptr);
 
 #endif

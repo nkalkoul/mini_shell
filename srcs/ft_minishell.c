@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/02 21:04:32 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/07 01:13:51 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	minishell(t_global *global)
 			ft_printenv(global->my_env);
 		ft_print_export(global, taken);
 		if (taken->next && ft_strncmp(taken->token, "unset", 5) == 0)
+		{
 			ft_unset(taken, global);
+			continue;
+		}
 		if (taken == NULL)
 			continue ;
 		cmd = ft_parse_lst_taken(taken);

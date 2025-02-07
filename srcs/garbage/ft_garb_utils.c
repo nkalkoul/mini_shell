@@ -1,13 +1,15 @@
 #include "../../minishell.h"
 
-int	ft_lstbackadd_garbage(void *ptr, t_garbage **garbage)
+int	ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage)
 {
 	t_garbage	*temp;
 	t_garbage	*new;
 
-	if ((*garbage)->ptr == NULL)
+	if (garbage->head == NULL)
 	{
-		(*garbage)->ptr = ptr;
+		garbage->head = malloc(sizeof(t_garbage));
+		garbage->head->ptr = ptr;
+		garbage->head->next = NULL;
 		return (0);
 	}
 	new = malloc(sizeof(t_garbage));
@@ -15,18 +17,18 @@ int	ft_lstbackadd_garbage(void *ptr, t_garbage **garbage)
 		return (-1);
 	new->ptr = ptr;
 	new->next = NULL;
-	temp = *garbage;
+	temp = garbage->head;
 	while (temp->next)
 		temp = temp->next;
 	temp->next = new;
 	return (0);
 }
 
-int	ft_inthebag(t_garbage *garbage, void *ptr)
+int	ft_inthebag(t_garbage_head *garbage, void *ptr)
 {
 	t_garbage	*current;
 
-	current = garbage;
+	current = garbage->head;
 	while (current)
 	{
 		if (current->ptr == ptr)
@@ -36,47 +38,44 @@ int	ft_inthebag(t_garbage *garbage, void *ptr)
 	return (0);
 }
 
-void	ft_killnode(t_garbage **garbage, void *ptr)
+void	ft_killnode(t_garbage_head *garbage, void *ptr)
 {
 	t_garbage	*current;
 	t_garbage	*temp;
 
 	if (!garbage)
 		return ;
-	if (!ft_inthebag(*garbage, ptr))
+	if (!ft_inthebag(garbage, ptr))
 	{
 		free(ptr);
 		return ;
 	}
-	current = *garbage;
+	current = garbage->head;
 	while (current->ptr != ptr)
 	{
 		temp = current;
 		current = current->next;
 	}
-	if ((*garbage)->ptr == ptr)
-		(*garbage) = (*garbage)->next;
+	if (garbage->head->ptr == ptr)
+		garbage->head = garbage->head->next;
 	else
-	{
-		if (current->next)
-			temp->next = current->next;
-	}
+		temp->next = current->next;
 	(free(ptr), free(current));
 }
 
-void	ft_finishbag(t_garbage *garbage)
+void	ft_finishbag(t_garbage_head *garbage)
 {
 	t_garbage	*current;
 
-	if (!garbage)
+	if (!garbage->head)
 		return ;
-	current = garbage;
-	while (garbage)
+	current = garbage->head;
+	while (garbage->head)
 	{
-		garbage = garbage->next;
+		garbage->head = garbage->head->next;
 		free(current->ptr);
 		free(current);
-		current = garbage;
+		current = garbage->head;
 	}
-	free(garbage);
+	free(garbage->head);
 }

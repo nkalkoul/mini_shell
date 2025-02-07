@@ -1,15 +1,17 @@
 #include "../../minishell.h"
 
-void	ft_free_node(t_taken *current, t_env *my_env)
+void	ft_free_node(t_taken *current, t_global *global)
 {
 	t_env	*save;
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = my_env;
+	tmp = global->my_env;
 	prev = NULL;
 	while (tmp)
 	{
+		printf("current: %s\n", tmp->key);
+		printf("next: %s\n", tmp->next->key);
 		if (ft_strcmp(current->token, tmp->key) == 0)
 		{
 			save = tmp->next;
@@ -17,9 +19,11 @@ void	ft_free_node(t_taken *current, t_env *my_env)
 			if (tmp->value)
 				ft_free(tmp->value);
 			ft_free(tmp);
-			tmp = save;
 			if (prev)
-				prev->next = tmp;
+				prev->next = save;
+			else
+				global->my_env = save;
+			return ;
 		}
 		else
 		{
@@ -36,7 +40,7 @@ void	ft_unset(t_taken *taken, t_global *global)
 	current = taken->next;
 	while (current)
 	{
-		ft_free_node(current, global->my_env);
+		ft_free_node(current, global);
 		current = current->next;
 	}
 }
