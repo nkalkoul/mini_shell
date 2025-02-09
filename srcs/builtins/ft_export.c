@@ -1,16 +1,16 @@
 #include "../../minishell.h"
 
-int	ft_export(t_taken *taken)
-{
-	t_taken	*current;
+// int	ft_export(t_taken *taken)
+// {
+// 	t_taken	*current;
 
-	current = taken;
-	if (current->next != NULL)
-		return (1);
-	if (ft_strncmp(current->token, "export", 6) == 0)
-		return (0);
-	return (1);
-}
+// 	current = taken;
+// 	if (current->next != NULL)
+// 		return (1);
+// 	if (ft_strcmp(current->token, "export") == 0)
+// 		return (0);
+// 	return (1);
+// }
 
 int	ft_count_key_export(char *key)
 {
@@ -69,7 +69,7 @@ int	ft_export_node(t_taken *taken, t_global *global)
 	int		i;
 
 	current = taken;
-	if (!current->next || ft_strncmp(current->token, "export", 6) != 0)
+	if (!current->next || ft_strcmp(current->token, "export") != 0)
 		return (1);
 	current = current->next;
 	while (current)
@@ -96,29 +96,28 @@ int	ft_export_node(t_taken *taken, t_global *global)
 	return (0);
 }
 
-void	ft_print_export(t_global *global, t_taken *taken)
+void	ft_print_export(t_global *global)
 {
 	t_env	*tmp;
 
 	tmp = global->my_env;
-	if (ft_export(taken) == 0)
+	while (tmp)
 	{
-		while (tmp)
-		{
-			ft_printf("%s=", tmp->key);
-			ft_printf("%s\n", tmp->value);
-			tmp = tmp->next;
-		}
-	}
-	if (ft_export_node(taken, global) == 0)
-	{
-		while (tmp)
-		{
-			// if (tmp->value)
-			ft_printf("%s=%s\n", tmp->key, tmp->value);
-			// else
-			// 	ft_printf("%s\n", tmp->key);
-			tmp = tmp->next;
-		}
+		ft_printf("%s", tmp->key);
+		if (tmp->value)
+			ft_printf("=\"%s\"", tmp->value);
+		ft_printf("\n");
+		tmp = tmp->next;
 	}
 }
+	// if (ft_export_node(taken, global) == 0)
+	// {
+	// 	while (tmp)
+	// 	{
+	// 		// if (tmp->value)
+	// 		ft_printf("%s=\"%s\"\n", tmp->key, tmp->value);
+	// 		// else
+	// 		// 	ft_printf("%s\n", tmp->key);
+	// 		tmp = tmp->next;
+	// 	}
+	// }

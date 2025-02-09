@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/07 01:34:56 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:07:40 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct s_cmd
 	char			**arg_cmd;
 	struct s_files	*files;
 	struct s_cmd	*next;
-	struct s_cmd	*top;
+	struct s_cmd	*right;
+	struct s_cmd	*left;
 	int				type;
 }	t_cmd;
 
@@ -92,8 +93,11 @@ void	ft_printfiles(t_cmd *cmd);
 void	ft_printenv(t_env *my_env);
 
 		// FONCTION DE BUILTINS
-void	ft_print_export(t_global *global, t_taken *taken);
+void	ft_print_export(t_global *global);
+int		ft_export_node(t_taken *taken, t_global *global);
 void	ft_unset(t_taken *taken, t_global *global);
+void	ft_echo(t_taken *taken);
+int		ft_pwd(t_global *global);
 
 		// FONCTION DE IF
 int		ft_space(char c);

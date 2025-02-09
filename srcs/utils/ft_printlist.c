@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/02/02 20:50:21 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/09 19:11:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,6 @@ void	ft_printcmd(t_cmd *cmd)
 	}
 }
 
-void	ft_printenv(t_env *my_env)
-{
-	t_env	*current;
-	int		i;
-
-	i = 0;
-	current = my_env;
-	while (current)
-	{
-		// if (current->value)
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-}
-
 void	ft_printaken(t_taken *taken)
 {
 	t_taken	*current;
@@ -81,3 +66,34 @@ void	ft_printaken(t_taken *taken)
 	}
 }
 
+int	check_equal(char *key)
+{
+	int	i;
+
+	i = 0;
+	while(key[i])
+	{
+		if (key[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_printenv(t_env *my_env)
+{
+	t_env	*current;
+	int		i;
+
+	i = 0;
+	current = my_env;
+	while (current)
+	{
+		if (current->value)
+		{
+			ft_printf("%s=", current->key);
+			ft_printf("%s\n", current->value);
+		}
+		current = current->next;
+	}
+}

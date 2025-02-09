@@ -2,7 +2,7 @@ SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c) \
 		$(addprefix srcs/, ft_minishell.c) \
 		$(addprefix srcs/utils/, ft_free.c ft_is.c ft_lstbackadd.c ft_printlist.c) \
 		$(addprefix srcs/env/, ft_init_env.c ft_expandables.c) \
-		$(addprefix srcs/builtins/, ft_export.c ft_unset.c) \
+		$(addprefix srcs/builtins/, ft_export.c ft_unset.c ft_echo.c ft_pwd.c) \
 		$(addprefix srcs/garbage/, ft_garbage.c ft_garb_utils.c)
 
 CC =	cc -g3 #-Wall -Werror -Wextra
