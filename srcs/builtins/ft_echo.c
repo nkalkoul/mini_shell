@@ -28,6 +28,7 @@ void	ft_echo(t_taken *taken)
 {
 	t_taken	*current;
 
+	current = taken;
 	if (!current->next)
 		ft_printf("\n");
 	else if (ft_check_n(current->next->token) == 1)

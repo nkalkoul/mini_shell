@@ -111,12 +111,99 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 	return (result);
 }
 
+char	*ft_if_double(t_taken *current, int *i, char *result)
+{
+	char	*tmp;
+	int		j;
+
+	j = 0;
+	(*i)++;
+	while(current->token[*i + j] && current->token[*i + j] != '"')
+		j++;
+	tmp = ft_substr(current->token, *i, j - 1);
+	if (!tmp)
+		return (NULL);
+	result = ft_re_strjoin(result, tmp);
+	if (!result)
+		return (NULL);
+	*i += j;
+	return (result);
+}
+
+char	*ft_if_notdouble(t_taken *current, int *i, char *result)
+{
+	int		j;
+	char	*tmp;
+
+	j = 0;
+	while (current->token[*i +j] && current->token[*i + j] != '"')
+		j++;
+	tmp = ft_substr(current->token, *i, j);
+	if (!tmp)
+		return (NULL);
+	result = ft_re_strjoin(result, tmp);
+	if (!result)
+		return (NULL);
+	*i += j;
+	return (result);
+}
+
+int	ft_delete_double_quotes(t_taken *taken)
+{
+	t_taken	*current;
+	char	*result;
+	int		i;
+
+	current = taken;
+	result = ft_strdup("");
+	if (!result)
+		return (1);
+	i = 0;
+	while (current)
+	{
+		while (current->token[i])
+		{
+			if (current->token[i] == '"')
+				result = ft_if_double(current, &i, result);
+			else
+				result = ft_if_notdouble(current, &i, result);
+			if (result == NULL)
+				return (1);
+		}
+		current->token = result;
+		current = current->next;
+	}
+	return (0);
+}
+
+char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
+{
+	char	*tmp;
+	int		j;
+
+	j = 0;
+	(*i)++;
+	while (token[*i + j] != '"')
+	{
+		while (token[*i + j] && token[*i + j] != '$')
+			j++;
+		if (token[*i + j] == '"')
+		{
+			tmp = ft_substr(token, *i, j);
+		}
+		if (token[*i + j] == '$')
+			result = add_environment_variable(token, &i, result, global);
+	}
+}
+
 int	ft_expand_token(t_taken	*current, t_global *global)
 {
 	int		i;
 	char	*token;
 	char	*result;
 
+	// if (ft_delete_double_quotes(current) == 1)
+	// 	return (1);
 	i = 0;
 	result = ft_strdup("");
 	if (result == NULL)
@@ -205,7 +292,7 @@ int	ft_expandables(t_taken **taken, t_global *global)
 // 	int		index;
 // 	char	*tmp;
 
-// 	i = 0;
+// 	i = 0;r
 // 	count = 0;
 // 	while (token[i] != '$')
 // 	{

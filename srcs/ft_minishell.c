@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/09 18:09:51 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/11 17:29:10 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	minishell(t_global *global)
 			(exit(0));				/*ft_free(((void *) -1)),*/
 		if (taken == NULL || ft_expandables(&taken, global) == 1)
 		{
-			ft_putendl_fd("Error", 2);
+			ft_putendl_fd("Error\n", 2);
 			// ft_free(((void *) -1));
 			continue ;
 		}
@@ -58,7 +58,7 @@ void	minishell(t_global *global)
 			else
 			{
 				if (ft_export_node(taken, global) == 1)
-					ft_putendl_fd("Error", 2);   // free
+					ft_putendl_fd("Error\n", 2);   // free
 			}
 			continue ;
 		}
@@ -76,15 +76,19 @@ void	minishell(t_global *global)
 		if (ft_strcmp(taken->token, "pwd") == 0)
 		{
 			if (ft_pwd(global) == 1)
-				ft_putendl_fd("Error", 2);    // free
+				ft_putendl_fd("Error\n", 2);    // free
 			continue ;
 		}
-		// if (taken == NULL)
-		// 	continue ;
+		if (ft_strcmp(taken->token, "cd") == 0)
+		{
+			if (ft_cd(taken) == 1)
+				ft_putendl_fd("Error\n", 2);    // free
+			continue ;
+		}
 		cmd = ft_parse_lst_taken(taken);
 		if (cmd == NULL)
 		{
-			ft_putendl_fd("Error Parsing", 2);
+			ft_putendl_fd("Error Parsing\n", 2);
 			// ft_free(((void *) -1));
 			continue ;
 		}

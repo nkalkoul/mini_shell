@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/09 18:07:40 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/11 17:07:20 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		ft_export_node(t_taken *taken, t_global *global);
 void	ft_unset(t_taken *taken, t_global *global);
 void	ft_echo(t_taken *taken);
 int		ft_pwd(t_global *global);
+int		ft_cd(t_taken *taken);
 
 		// FONCTION DE IF
 int		ft_space(char c);
