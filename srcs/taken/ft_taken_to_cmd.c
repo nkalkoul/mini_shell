@@ -95,22 +95,25 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 
 int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 {
+	t_cmd	*new;
+
+	new = ft_calloc(1, sizeof(t_cmd));
 	while (*current && (*current)->type != PIPE
 		&& (*current)->type != OR && (*current)->type != AND)
 	{
 		if ((*current)->type == REDIR)
 		{
-			if (ft_token_to_files(current, cmd) == 1)
+			if (ft_token_to_files(current, &new) == 1)
 				return (1);
 		}
-		else if ((*current)->type == WORD && (*cmd)->arg_cmd == NULL)
+		else if ((*current)->type == WORD && new->arg_cmd == NULL)
 		{
-			if (ft_token_to_word(current, cmd) == 1)
+			if (ft_token_to_word(current, &new) == 1)
 				return (1);
 		}
 		*current = (*current)->next;
 	}
-	(*cmd)->next = NULL;
+	ft_lstbackadd_cmd(cmd, new);
 	return (0);
 }
 
@@ -123,7 +126,6 @@ int	ft_operator_to_cmd(t_cmd **tmp, t_taken **current)
 		return (1);
 	new->type = (*current)->type;
 	ft_lstbackadd_cmd(tmp, new);
-	(*tmp) = (*tmp)->next;
 	(*current) = (*current)->next;
 	return (0);
 }
@@ -132,26 +134,21 @@ t_cmd	*ft_parse_lst_taken(t_taken *taken)
 {
 	t_taken	*current;
 	t_cmd	*cmd;
-	t_cmd	*tmp;
 
 	if (ft_check_error_parse(taken) == 1)
 		return (NULL);
 	current = taken;
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	tmp = cmd;
+	cmd = NULL;
 	while (current != NULL)
 	{
-		if (ft_token_to_cmd(&current, &tmp) == 1)
+		if (ft_token_to_cmd(&current, &cmd) == 1)
 			return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
 		else if (current && (current->type == PIPE
 			|| current->type == OR || current->type == AND))
 		{
-			if (ft_operator_to_cmd(&tmp, &current) == 1)
+			if (ft_operator_to_cmd(&cmd, &current) == 1)
 				return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
 		}
 	}
-	ft_printcmd(cmd);
 	return (cmd);
 }

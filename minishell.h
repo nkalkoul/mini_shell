@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/11 17:07:20 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/13 23:40:28 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define CMD 0
 # define WORD 1
 # define PIPE 2
 # define REDIR 3
@@ -55,6 +56,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*right;
 	struct s_cmd	*left;
+	struct s_cmd	*top;
 	int				type;
 }	t_cmd;
 
@@ -119,5 +121,8 @@ int		ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage);
 void	ft_killnode(t_garbage_head *garbage, void *ptr);
 void	ft_finishbag(t_garbage_head *garbage);
 void	ft_free(void *ptr);
+
+
+t_cmd	*ft_ast(t_cmd *first);
 
 #endif

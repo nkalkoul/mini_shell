@@ -1,37 +1,41 @@
 #include "../../minishell.h"
 
-// int	ft_priority(t_cmd *current)
-// {
-// 	if (current->type == PIPE)
-// 		return (0);
-// 	if (current->type == OR || current->type == AND)
-// 		return (1);
-// 	return (-1);
-// }
-void	ft_priority(t_cmd *current)
+void	print_AST_test(t_cmd *command);
+
+t_cmd	*ast_recursive(t_cmd *left, t_cmd *top);
+
+t_cmd	*ft_ast(t_cmd *first)
 {
-	if (current->type == PIPE)
-	{
-		
-	}
+	t_cmd	*tmp;
+
+// ft_printcmd
+	tmp = ast_recursive(first, first->next);
+	print_AST_test(tmp);
+	return (tmp);
 }
 
-void	ft_ast(t_cmd *cmd)
-{
-	t_cmd	*current;
+t_cmd	*ast_recursive(t_cmd *left, t_cmd *top) {
 
-	current = cmd;
-	while (current)
-	{
-		if (current->type == AND || current->type == OR)
-		{
-			
-		}
-		if (current->type == PIPE)
-		{
-			
-		}
-		else
-			current = current->next
-	}
+	t_cmd	*right;
+
+	if (top == NULL)
+		return (left);
+	top->left = left;
+	left->top = top;
+
+	right = top->next;
+
+	top->right = right;
+	right->top = top;
+
+	return (ast_recursive(top, right->next));
 }
+
+//			  |
+//		    /  \
+//		  |	   cat
+//		/   \
+//	  ls	cat
+
+
+// ls | cat | cat
