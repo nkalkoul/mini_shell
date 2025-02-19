@@ -1,5 +1,70 @@
 #include "../../minishell.h"
 
+// char	*ft_if_double(t_taken *current, int *i, char *result)
+// {
+// 	char	*tmp;
+// 	int		j;
+
+// 	j = 0;
+// 	(*i)++;
+// 	while(current->token[*i + j] && current->token[*i + j] != '"')
+// 		j++;
+// 	tmp = ft_substr(current->token, *i, j - 1);
+// 	if (!tmp)
+// 		return (NULL);
+// 	result = ft_re_strjoin(result, tmp);
+// 	if (!result)
+// 		return (NULL);
+// 	*i += j;
+// 	return (result);
+// }
+
+// char	*ft_if_notdouble(t_taken *current, int *i, char *result)
+// {
+// 	int		j;
+// 	char	*tmp;
+
+// 	j = 0;
+// 	while (current->token[*i +j] && current->token[*i + j] != '"')
+// 		j++;
+// 	tmp = ft_substr(current->token, *i, j);
+// 	if (!tmp)
+// 		return (NULL);
+// 	result = ft_re_strjoin(result, tmp);
+// 	if (!result)
+// 		return (NULL);
+// 	*i += j;
+// 	return (result);
+// }
+
+// int	ft_delete_double_quotes(t_taken *taken)
+// {
+// 	t_taken	*current;
+// 	char	*result;
+// 	int		i;
+
+// 	current = taken;
+// 	result = ft_strdup("");
+// 	if (!result)
+// 		return (1);
+// 	i = 0;
+// 	while (current)
+// 	{
+// 		while (current->token[i])
+// 		{
+// 			if (current->token[i] == '"')
+// 				result = ft_if_double(current, &i, result);
+// 			else
+// 				result = ft_if_notdouble(current, &i, result);
+// 			if (result == NULL)
+// 				return (1);
+// 		}
+// 		current->token = result;
+// 		current = current->next;
+// 	}
+// 	return (0);
+// }
+
 void	skip_current(t_taken *previous, t_taken **taken)
 {
 	t_taken	*tmp;
@@ -111,88 +176,54 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 	return (result);
 }
 
-char	*ft_if_double(t_taken *current, int *i, char *result)
+char	*check_quote(char *token, int *i, char quote)
 {
-	char	*tmp;
+	char	*new;
 	int		j;
 
+	++(*i);
 	j = 0;
-	(*i)++;
-	while(current->token[*i + j] && current->token[*i + j] != '"')
+	while (token[*i + j] != quote)
 		j++;
-	tmp = ft_substr(current->token, *i, j - 1);
-	if (!tmp)
+	new = malloc(sizeof(char) * j);
+	if (!new)
 		return (NULL);
-	result = ft_re_strjoin(result, tmp);
-	if (!result)
-		return (NULL);
-	*i += j;
-	return (result);
-}
-
-char	*ft_if_notdouble(t_taken *current, int *i, char *result)
-{
-	int		j;
-	char	*tmp;
-
 	j = 0;
-	while (current->token[*i +j] && current->token[*i + j] != '"')
-		j++;
-	tmp = ft_substr(current->token, *i, j);
-	if (!tmp)
-		return (NULL);
-	result = ft_re_strjoin(result, tmp);
-	if (!result)
-		return (NULL);
-	*i += j;
-	return (result);
-}
-
-int	ft_delete_double_quotes(t_taken *taken)
-{
-	t_taken	*current;
-	char	*result;
-	int		i;
-
-	current = taken;
-	result = ft_strdup("");
-	if (!result)
-		return (1);
-	i = 0;
-	while (current)
+	while (token[*i] != quote)
 	{
-		while (current->token[i])
-		{
-			if (current->token[i] == '"')
-				result = ft_if_double(current, &i, result);
-			else
-				result = ft_if_notdouble(current, &i, result);
-			if (result == NULL)
-				return (1);
-		}
-		current->token = result;
-		current = current->next;
+		new[j] = token[*i];
+		j++;
+		(*i)++;
 	}
-	return (0);
+	new[j] = '\0';
 }
 
 char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
 {
 	char	*tmp;
-	int		j;
 
-	j = 0;
-	(*i)++;
+	tmp = check_quote(token, i, token[*i]);
+	if (!tmp)
+		return (NULL);
 	while (token[*i + j] != '"')
 	{
-		while (token[*i + j] && token[*i + j] != '$')
-			j++;
-		if (token[*i + j] == '"')
-		{
-			tmp = ft_substr(token, *i, j);
-		}
 		if (token[*i + j] == '$')
 			result = add_environment_variable(token, &i, result, global);
+	}
+}
+
+char	*delete_quote(char *current)
+{
+	char	*result;
+	int		i;
+
+	i = 0;
+	while (current[i])
+	{
+		if (current[i] == '"' || current[i] == "\'")
+		{
+			result = ft_substr(current)
+		}
 	}
 }
 
@@ -215,6 +246,8 @@ int	ft_expand_token(t_taken	*current, t_global *global)
 			result = add_simple_quotes(token, &i, result);
 		else if (token[i] == '$')
 			result = add_environment_variable(token, &i, result, global);
+		else if (token[i] == '"')
+			result = add_double_quote();
 		else
 			result = add_other_chars(token, &i, result);
 		if (result == NULL)
