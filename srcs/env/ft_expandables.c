@@ -103,7 +103,7 @@ char	*add_simple_quotes(char *token, int *i, char *result)
 	char	*quotes;
 
 	quotes_size = quotes_len(token, *i, '\'');
-	quotes = ft_substr(token, *i, quotes_size);
+	quotes = ft_substr(token, *i + 1, quotes_size - 2);
 	if (quotes == NULL)
 		return (NULL);
 	*i += quotes_size;
@@ -113,14 +113,13 @@ char	*add_simple_quotes(char *token, int *i, char *result)
 	return (result);
 }
 
-char	*add_other_chars(char *token, int *i, char *result)
+char	*add_other_chars(char *token, int *i, char *result, char *set)
 {
 	int		j;
 	char	*temp;
 
 	j = 0;
-	while (token[*i + j] != '\0' && token[*i + j] != '$'
-		&& token[*i + j] != '\'')
+	while (token[*i + j] != '\0' && ft_strchr(set, token[*i + j]) == NULL)
 		++j;
 	temp = ft_substr(token, *i, j);
 	if (temp == NULL)
@@ -176,55 +175,71 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 	return (result);
 }
 
-char	*check_quote(char *token, int *i, char quote)
-{
-	char	*new;
-	int		j;
+// char	*check_quote(char *token, int *i, char quote)
+// {
+// 	char	*new;
+// 	int		j;
 
-	++(*i);
-	j = 0;
-	while (token[*i + j] != quote)
-		j++;
-	new = malloc(sizeof(char) * j);
-	if (!new)
-		return (NULL);
-	j = 0;
-	while (token[*i] != quote)
-	{
-		new[j] = token[*i];
-		j++;
-		(*i)++;
-	}
-	new[j] = '\0';
-}
+// 	++(*i);
+// 	j = 0;
+// 	while (token[*i + j] != quote)
+// 		j++;
+// 	new = malloc(sizeof(char) * j);
+// 	if (!new)
+// 		return (NULL);
+// 	j = 0;
+// 	while (token[*i] != quote)
+// 	{
+// 		new[j] = token[*i];
+// 		j++;
+// 		(*i)++;
+// 	}
+// 	new[j] = '\0';
+// }
+
+// char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
+// {
+// 	char	*tmp;
+
+// 	tmp = check_quote(token, i, token[*i]);
+// 	if (!tmp)
+// 		return (NULL);
+// 	while (token[*i + j] != '"')
+// 	{
+// 		if (token[*i + j] == '$')
+// 			result = add_environment_variable(token, &i, result, global);
+// 	}
+// }
+
+// char	*delete_quote(char *current)
+// {
+// 	char	*result;
+// 	int		i;
+
+// 	i = 0;
+// 	while (current[i])
+// 	{
+// 		if (current[i] == '"' || current[i] == "\'")
+// 		{
+// 			result = ft_substr(current)
+// 		}
+// 	}
+// }
 
 char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
 {
-	char	*tmp;
-
-	tmp = check_quote(token, i, token[*i]);
-	if (!tmp)
-		return (NULL);
-	while (token[*i + j] != '"')
+	*i += 1;
+	while (token[*i] && token[*i] != '\"')
 	{
-		if (token[*i + j] == '$')
-			result = add_environment_variable(token, &i, result, global);
+		if (token[*i] == '$')
+			result = add_environment_variable(token, i, result, global);
+		else
+			result = add_other_chars(token, i, result, "$\"");
+		if (result == NULL)
+			return (NULL);
 	}
-}
-
-char	*delete_quote(char *current)
-{
-	char	*result;
-	int		i;
-
-	i = 0;
-	while (current[i])
-	{
-		if (current[i] == '"' || current[i] == "\'")
-		{
-			result = ft_substr(current)
-		}
-	}
+	*i += 1;
+	return (result);
 }
 
 int	ft_expand_token(t_taken	*current, t_global *global)
@@ -247,9 +262,9 @@ int	ft_expand_token(t_taken	*current, t_global *global)
 		else if (token[i] == '$')
 			result = add_environment_variable(token, &i, result, global);
 		else if (token[i] == '"')
-			result = add_double_quote();
+			result = add_double_quotes(token, &i, result, global);
 		else
-			result = add_other_chars(token, &i, result);
+			result = add_other_chars(token, &i, result, "$\"\'");
 		if (result == NULL)
 			return (EXIT_FAILURE);
 	}
