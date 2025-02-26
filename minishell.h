@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/13 23:40:28 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/26 01:59:54 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
+# include <sys/wait.h>
 
 # define CMD 0
 # define WORD 1
@@ -70,6 +72,7 @@ typedef struct s_env
 typedef struct s_global
 {
 	t_env	*my_env;
+	int		status;
 }	t_global;
 
 		// FONCTION DE TOKEN
@@ -122,7 +125,13 @@ void	ft_killnode(t_garbage_head *garbage, void *ptr);
 void	ft_finishbag(t_garbage_head *garbage);
 void	ft_free(void *ptr);
 
-
+		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
+pid_t	ft_fork(void);
+void	ft_isor(t_cmd *node, t_global *global);
+void	ft_isand(t_cmd *node, t_global *global);
+void	ft_isword(t_cmd *node, t_global *global);
+int		*ft_pipe(int *fd);
+void	ft_explore_ast(t_cmd *node, t_global *global);
 
 #endif

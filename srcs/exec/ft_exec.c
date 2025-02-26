@@ -1,24 +1,78 @@
 #include "../../minishell.h"
 
-void	ft_recursive_exec(t_cmd *top)
+int	ft_isbulsing(char **command)
 {
-	if (top == NULL)
-		return ;
-	if (top->type == WORD)
-	{
-		ft_execve();
-		return ;
-	}
-	else
-	{
-		
-	}
+	if (ft_strcmp(command[0], "exit") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "env") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "export") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "unset") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "echo") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "pwd") == 0)
+		return (true);
+	if (ft_strcmp(command[0], "cd") == 0)
+		return (true);
+	return (false);
 }
 
 void	ft_exec(t_cmd *cmd, t_global *global)
 {
-	t_cmd *current;
+	//etape 1 ouvrir les fichier 
 
-	current = ft_ast(cmd);
+	// etape 2 verifier les chemin
+
+	// etape 3 execve
+}
+void	ft_one_command(t_cmd *cmd, t_global *global)
+{
+	pid_t	pid;
+	int		status;
+
+	if (ft_isbulding(cmd->arg_cmd) == true)
+	{
+		//do bulding
+	}
+	else
+	{
+		pid = ft_fork();
+		if (pid == 0)
+		{
+			ft_exec(cmd, global);
+		}
+		waitpid(pid, &status, 0);
+	}
+}
+
+void	ft_explore_ast(t_cmd *node, t_global *global)
+{
+	if (node->type == AND)
+		ft_isand(node, global);
+	else if (node->type == OR)
+		ft_isor(node, global);
+	else if (node->type == PIPE)
+		ft_ispipe(node, global);
+	else if (node->type == WORD)
+		ft_isword(node, global);
+}
+
+void	ft_execution(t_cmd *cmd, t_global *global)
+{
+	cmd = ft_ast(cmd);
+	if (cmd->type == WORD)
+	{
+		ft_one_command(cmd, global);
+	}
+	else
+		ft_explore_ast(cmd, global);
+}
+
+void	ft_exec_command(t_cmd *command, t_global *emv)
+{
+	ft_pathfinder();
 
 }
+

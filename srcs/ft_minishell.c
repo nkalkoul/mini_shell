@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/13 23:15:34 by modavid          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:59:06 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	minishell(t_global *global)
 			// ft_free(((void *) -1));
 			continue ;
 		}
-		cmd = ft_ast(cmd);
+		ft_exec
+		ft_printcmd(cmd);
 		// ft_free(((void *) -1));
 	}
 }
