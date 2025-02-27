@@ -19,14 +19,42 @@ int	ft_isbulsing(char **command)
 	return (false);
 }
 
+void	ft_open_redirD(t_files *files)
+{
+	int	fd;
+
+	fd = open(files->path, O_WRONLY | O_CREAT | O_TRUNC, STDOUT_FILENO);
+	if (fd == -1)
+	{
+		perror(files->path);
+	}
+}
+
+void	ft_open_files(t_cmd *cmd)
+{
+	t_files *files;
+
+	files = cmd->files;
+	while (files)
+	{
+		if (files->type == REDIRD)
+			ft_open_redirD(files);
+		else if (files->type == REDIRDD)
+		else if (files->type == REDIRG)
+		else if (files->type == REDIRGG)
+		files = files->next;
+	}
+}
+
 void	ft_exec(t_cmd *cmd, t_global *global)
 {
-	//etape 1 ouvrir les fichier 
+	// etape 1 ouvrir les fichier 
 
 	// etape 2 verifier les chemin
 
 	// etape 3 execve
 }
+
 void	ft_one_command(t_cmd *cmd, t_global *global)
 {
 	pid_t	pid;

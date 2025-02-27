@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/26 01:59:54 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:19:39 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 # define CMD 0
 # define WORD 1
 # define PIPE 2
-# define REDIR 3
+# define REDIRD 3
+# define REDIRG 6
+# define REDIRDD 7
+# define REDIRGG 8
 # define OR 4
 # define AND 5
 
@@ -46,7 +49,7 @@ typedef struct s_taken
 
 typedef struct s_files
 {
-	char			*redir;
+	int				type;
 	char			*path;
 	struct s_files	*next;
 }	t_files;

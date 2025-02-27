@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/26 02:24:55 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/02/28 00:05:59 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_ispipe(t_cmd *node, t_global *global)
 		ft_dup2(fd[0], STDIN_FILENO);
 		ft_explore_ast(node->right, global);
 	}
+	(close(fd[0]), close(fd[1]));
 	waitpid(pidleft, &status, 0);
 	waitpid(pidright, &status, 0);
 }

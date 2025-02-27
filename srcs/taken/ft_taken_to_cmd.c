@@ -7,7 +7,7 @@ int	ft_check_error_parse(t_taken *current)
 	while (current != NULL)
 	{
 		if (current->type == PIPE && (current->next == NULL
-				|| current->next->type == PIPE))
+			|| current->next->type == PIPE))
 			return (1);
 		if (current->token[0] == '|' && current->token[1] == '|'
 			&& current->token[2] == '|')
@@ -18,8 +18,9 @@ int	ft_check_error_parse(t_taken *current)
 		if (current->token[0] == '<' && current->token[1] == '<'
 			&& current->token[2] == '<')
 			return (1);
-		if (current->type == REDIR && (current->next == NULL
-				|| current->next->type != WORD))
+		if (current->type == REDIRDD || current->type == REDIRGG
+			|| current->type == REDIRD || current->type == REDIRG
+			&& (current->next == NULL || current->next->type != WORD))
 			return (1);
 		current = current->next;
 	}
@@ -35,7 +36,8 @@ int	ft_count_word(t_taken **current)
 	tmp = *current;
 	while (tmp && tmp->type != PIPE)
 	{
-		if (tmp->type == REDIR)
+		if (tmp->type == REDIRDD || tmp->type == REDIRGG
+			|| tmp->type == REDIRD || tmp->type == REDIRG)
 			tmp = tmp->next;
 		else if (tmp->type == WORD)
 			i++;
@@ -57,7 +59,8 @@ int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 	while (tmp && tmp->type != PIPE
 		&& tmp->type != OR && tmp->type != AND)
 	{
-		if (tmp->type == REDIR)
+		if (tmp->type == REDIRDD || tmp->type == REDIRGG
+			|| tmp->type == REDIRD || tmp->type == REDIRG)
 			tmp = tmp->next;
 		else if (tmp->type == WORD)
 		{
@@ -76,12 +79,10 @@ int	ft_token_to_files(t_taken **current, t_cmd **cmd)
 {
 	t_files	*new;
 
-	new = ft_malloc(sizeof(t_files));
+	new = ft_calloc(1, sizeof(t_files));
 	if (new == NULL)
 		return (1);
-	new->redir = ft_strdup((*current)->token);
-	if (new->redir == NULL)
-		return (1);
+	new->type = (*current)->type;
 	if (!(*current)->next)
 		return (1);
 	*current = (*current)->next;
@@ -101,7 +102,8 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 	while (*current && (*current)->type != PIPE
 		&& (*current)->type != OR && (*current)->type != AND)
 	{
-		if ((*current)->type == REDIR)
+		if ((*current)->type == REDIRDD || (*current)->type == REDIRGG
+			|| (*current)->type == REDIRD || (*current)->type == REDIRG)
 		{
 			if (ft_token_to_files(current, &new) == 1)
 				return (1);
