@@ -6,33 +6,45 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/28 00:05:59 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/01 11:52:34 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+void	check_is_fork(t_cmd *node, t_global *global)
+{
+	pid_t	pid;
+	
+	if (node->type == WORD && ft_isbulding(node->arg_cmd) == false)
+	{
+		pid = ft_fork();
+		if (pid == 0)
+		ft_explore_ast(node, global);
+		waitpid(pid, &global->status, 0);
+	}
+	else
+	ft_explore_ast(node, global);
+}
+
 void	ft_isor(t_cmd *node, t_global *global)
 {
-	ft_explore_ast(node->left, global);
-	//checker si la gauche a rater, si sa a rater : faire la droite
+	check_is_fork(node->left, global);
+	if (global->status == 0)
+		return ;
 	ft_explore_ast(node->right, global);
-	// else quitter instantanemment
-
 }
 
 void	ft_isand(t_cmd *node, t_global *global)
 {
-	ft_explore_ast(node->left, global);
-	// if sa a reussi
-	ft_explore_ast(node->right, global);
-	// if sa a rater ENDGAME FREEE DOOMSDAY AGE OF ULTRON
-
+	check_is_fork(node, global);
+	if (global->status == 0)
+		ft_explore_ast(node->right, global);
 }
 
 void	ft_isword(t_cmd *node, t_global *global)
 {
-	if (ft_isbulsing(node->arg_cmd) == true)
+	if (ft_isbulding(node->arg_cmd) == true)
 	{
 		//execbulding
 	}
