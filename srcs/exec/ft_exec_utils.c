@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:10:44 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/26 01:24:43 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/02 07:42:51 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ pid_t	ft_fork(void)
 		(perror("FORK"), exit(-1));
 	}
 	return (pid);
+}
+
+void	ft_dup2(int fd1, int fd2)
+{
+	dup2(fd1, fd2);
+	close(fd1);
 }

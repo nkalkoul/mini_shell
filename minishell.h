@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/27 23:19:39 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/02 08:24:45 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ void	ft_free(void *ptr);
 		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
 pid_t	ft_fork(void);
-void	ft_isor(t_cmd *node, t_global *global);
-void	ft_isand(t_cmd *node, t_global *global);
-void	ft_isword(t_cmd *node, t_global *global);
+void	ft_isor(t_cmd *node, t_global *global, t_taken *taken);
+void	ft_isand(t_cmd *node, t_global *global, t_taken *taken);
+void	ft_isword(t_cmd *node, t_global *global, t_taken *taken);
 int		*ft_pipe(int *fd);
-void	ft_explore_ast(t_cmd *node, t_global *global);
+void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken);
 
 #endif

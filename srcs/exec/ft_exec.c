@@ -1,24 +1,5 @@
 #include "../../minishell.h"
 
-int	ft_isbulding(char **command)
-{
-	if (ft_strcmp(command[0], "exit") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "env") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "export") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "unset") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "echo") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "pwd") == 0)
-		return (true);
-	if (ft_strcmp(command[0], "cd") == 0)
-		return (true);
-	return (false);
-}
-
 int	ft_count_node_env(t_global *global)
 {
 	t_env	*env;
@@ -52,7 +33,7 @@ char	**ft_put_env2d(t_global *global)
 		tab[i] = ft_re_strjoin(tab[i], "=");
 		tab[i] = ft_re_strjoin(tab[i], env->value);
 		if (!tab[i])
-			return (NULL);		// free
+			return (ft_free2d(tab), NULL);		// free
 		env = env->next;
 		i++;
 	}
@@ -151,13 +132,13 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global)
 {
 	t_env	*env;
 
+	env = global->my_env;
+	if (!env)
+		return (NULL);		// free
 	if (!cmd->arg_cmd)
 		exit(1);			// free
 	if (access(cmd->arg_cmd[0], X_OK) == 0)
 		return (ft_strdup(cmd->arg_cmd[0]));
-	env = global->my_env;
-	if (!env)
-		return (NULL);		// free
 	while (env)
 	{
 		if (ft_strncmp(env->key, "PATH", 5) == 0)
@@ -187,12 +168,15 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	if (execve(path, cmd->arg_cmd, env) == -1)
 	{
 		perror(cmd->arg_cmd[0]);
+		ft_free2d(env);
+		ft_free2d(cmd->arg_cmd);
+		free(path);
 		//	free
 		exit(1);
 	}
 }
 
-void	ft_one_command(t_cmd *cmd, t_global *global)
+void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 {
 	pid_t	pid;
 	int		status;
@@ -212,32 +196,32 @@ void	ft_one_command(t_cmd *cmd, t_global *global)
 	}
 }
 
-void	ft_explore_ast(t_cmd *node, t_global *global)
+void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken)
 {
 	if (node->type == AND)
-		ft_isand(node, global);
+		ft_isand(node, global, taken);
 	else if (node->type == OR)
-		ft_isor(node, global);
+		ft_isor(node, global, taken);
 	else if (node->type == PIPE)
-		ft_ispipe(node, global);
+		ft_ispipe(node, global, taken);
 	else if (node->type == WORD)
-		ft_isword(node, global);
+		ft_isword(node, global, taken);
 }
 
-void	ft_execution(t_cmd *cmd, t_global *global)
+void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
 {
 	cmd = ft_ast(cmd);
 	if (cmd->type == WORD)
 	{
-		ft_one_command(cmd, global);
+		ft_one_command(cmd, global, taken);
 	}
 	else
-		ft_explore_ast(cmd, global);
+		ft_explore_ast(cmd, global, taken);
 }
 
-void	ft_exec_command(t_cmd *command, t_global *emv)
-{
-	ft_pathfinder();
+// void	ft_exec_command(t_cmd *command, t_global *emv)
+// {
+// 	ft_pathfinder();
 
-}
+// }
 
