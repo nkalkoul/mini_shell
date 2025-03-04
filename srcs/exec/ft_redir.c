@@ -1,8 +1,34 @@
 #include "../../minishell.h"
 
+char	**ft_newread(t_files *files)
+{
+	char	*redir;
+	char	*red;
+
+	redir = ft_strdup("");
+	if (redir == NULL)
+		return ;
+	while (1)
+	{
+		red = readline(">");
+		if (red == files->path)
+			break ;
+		redir = ft_re_strjoin(redir, red);
+		redir = ft_re_strjoin(redir, "\n");
+		if (redir == NULL)
+			return (NULL);
+	}
+	return (ft_split(redir, '\n'));
+}
+
 void	ft_open_redirGG(t_files *files)
 {
-	int	i;
+	int		i;
+	char	**finalred;
+
+	finalred = ft_newread(files);
+	if (finalred == NULL)
+		return ;
 }
 
 void	ft_open_redirG(t_files *files)
@@ -49,7 +75,7 @@ void	ft_open_redirD(t_files *files)
 
 void	ft_open_files(t_cmd *cmd)
 {
-	t_files *files;
+	t_files	*files;
 
 	files = cmd->files;
 	while (files)
@@ -60,8 +86,8 @@ void	ft_open_files(t_cmd *cmd)
 			ft_open_redirDD(files);
 		else if (files->type == REDIRG)
 			ft_open_redirG(files);
-		// else if (files->type == REDIRGG)
-		// 	ft_open_redirGG(files);
+		else if (files->type == REDIRGG)
+			ft_open_redirGG(files);
 		files = files->next;
 	}
 }

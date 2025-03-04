@@ -18,8 +18,8 @@ int	ft_check_error_parse(t_taken *current)
 		if (current->token[0] == '<' && current->token[1] == '<'
 			&& current->token[2] == '<')
 			return (1);
-		if (current->type == REDIRDD || current->type == REDIRGG
-			|| current->type == REDIRD || current->type == REDIRG
+		if ((current->type == REDIRDD || current->type == REDIRGG
+			|| current->type == REDIRD || current->type == REDIRG)
 			&& (current->next == NULL || current->next->type != WORD))
 			return (1);
 		current = current->next;

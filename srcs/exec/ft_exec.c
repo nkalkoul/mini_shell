@@ -9,7 +9,6 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	ft_open_files(cmd);
 	// etape 2 verifier les chemin
 	path = ft_pathfinder(cmd, global);
-	printf("path = %s\n", path);
 	if (!path)
 		return (perror(cmd->arg_cmd[0]), exit(127));		// free
 	// etape 3 execve
@@ -18,7 +17,6 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 		return (ft_putendl_fd("Error env", 2), exit(127));	// free
 	if (execve(path, cmd->arg_cmd, env) == -1)
 	{
-		printf("error exec\n");
 		perror(cmd->arg_cmd[0]);
 		ft_free2d(env);
 		ft_free2d(cmd->arg_cmd);
@@ -44,7 +42,6 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 	{
 		ft_exec(cmd, global);
 	}
-	printf("hello\n");
 	waitpid(pid, &global->status, 0);
 	// }
 }
@@ -64,7 +61,6 @@ void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken)
 void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
 {
 	cmd = ft_ast(cmd);
-	printf("type = %d\n", cmd->type);
 	if (cmd->type == CMD)
 	{
 		ft_one_command(cmd, global, taken);
