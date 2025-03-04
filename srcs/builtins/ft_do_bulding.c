@@ -35,4 +35,5 @@ int ft_do_bulding(t_taken *taken)
 		return (true);
 	else if (ft_strcmp(taken->token, "cd") == 0)
 		return (true);
+	return (false); 
 }

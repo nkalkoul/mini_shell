@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/02 08:24:45 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/02 10:35:45 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	ft_unset(t_taken *taken, t_global *global);
 void	ft_echo(t_taken *taken);
 int		ft_pwd(t_global *global);
 int		ft_cd(t_taken *taken);
+int		ft_isbulding(char **command);
 
 		// FONCTION DE IF
 int		ft_space(char c);
@@ -131,10 +132,17 @@ void	ft_free(void *ptr);
 		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
 pid_t	ft_fork(void);
+void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken);
 void	ft_isor(t_cmd *node, t_global *global, t_taken *taken);
 void	ft_isand(t_cmd *node, t_global *global, t_taken *taken);
 void	ft_isword(t_cmd *node, t_global *global, t_taken *taken);
 int		*ft_pipe(int *fd);
 void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken);
+void	ft_open_files(t_cmd *cmd);
+char	**ft_put_env2d(t_global *global);
+char	*ft_pathfinder(t_cmd *cmd, t_global *global);
+void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken);
+void	ft_exec(t_cmd *cmd, t_global *global);
+void	ft_dup2(int fd1, int fd2);
 
 #endif

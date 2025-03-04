@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/25 20:59:06 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/02 11:53:00 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	minishell(t_global *global)
 
 	while (1)
 	{
-		rd = readline("Mouninashell :");
+		rd = readline("Mouninashell ");
 		if (rd == NULL)
 			return ;
 		if (rd[0] == '\0')
@@ -38,53 +38,53 @@ void	minishell(t_global *global)
 		taken = ft_initaken(rd);
 		if (!taken)
 			continue ;
-		if (ft_strcmp(taken->token, "exit") == 0)
-			(exit(0));				/*ft_free(((void *) -1)),*/
-		if (taken == NULL || ft_expandables(&taken, global) == 1)
-		{
-			ft_putendl_fd("Error\n", 2);
-			// ft_free(((void *) -1));
-			continue ;
-		}
-		if (!taken->next && ft_strcmp(taken->token, "env") == 0)
-		{
-			ft_printenv(global->my_env);
-			continue ;
-		}
-		if (ft_strcmp(taken->token, "export") == 0)
-		{
-			if (taken->next == NULL)
-				ft_print_export(global);
-			else
-			{
-				if (ft_export_node(taken, global) == 1)
-					ft_putendl_fd("Error\n", 2);   // free
-			}
-			continue ;
-		}
-		// ft_print_export(global, taken);
-		if (taken->next && ft_strcmp(taken->token, "unset") == 0)
-		{
-			ft_unset(taken, global);
-			continue ;
-		}
-		if (ft_strcmp(taken->token, "echo") == 0)
-		{
-			ft_echo(taken);
-			continue ;
-		}
-		if (ft_strcmp(taken->token, "pwd") == 0)
-		{
-			if (ft_pwd(global) == 1)
-				ft_putendl_fd("Error\n", 2);    // free
-			continue ;
-		}
-		if (ft_strcmp(taken->token, "cd") == 0)
-		{
-			if (ft_cd(taken) == 1)
-				ft_putendl_fd("Error\n", 2);    // free
-			continue ;
-		}
+		// if (ft_strcmp(taken->token, "exit") == 0)
+		// 	(exit(0));				/*ft_free(((void *) -1)),*/
+		// if (taken == NULL || ft_expandables(&taken, global) == 1)
+		// {
+		// 	ft_putendl_fd("Error\n", 2);
+		// 	// ft_free(((void *) -1));
+		// 	continue ;
+		// }
+		// if (!taken->next && ft_strcmp(taken->token, "env") == 0)
+		// {
+		// 	ft_printenv(global->my_env);
+		// 	continue ;
+		// }
+		// if (ft_strcmp(taken->token, "export") == 0)
+		// {
+		// 	if (taken->next == NULL)
+		// 		ft_print_export(global);
+		// 	else
+		// 	{
+		// 		if (ft_export_node(taken, global) == 1)
+		// 			ft_putendl_fd("Error\n", 2);   // free
+		// 	}
+		// 	continue ;
+		// }
+		// // ft_print_export(global, taken);
+		// if (taken->next && ft_strcmp(taken->token, "unset") == 0)
+		// {
+		// 	ft_unset(taken, global);
+		// 	continue ;
+		// }
+		// if (ft_strcmp(taken->token, "echo") == 0)
+		// {
+		// 	ft_echo(taken);
+		// 	continue ;
+		// }
+		// if (ft_strcmp(taken->token, "pwd") == 0)
+		// {
+		// 	if (ft_pwd(global) == 1)
+		// 		ft_putendl_fd("Error\n", 2);    // free
+		// 	continue ;
+		// }
+		// if (ft_strcmp(taken->token, "cd") == 0)
+		// {
+		// 	if (ft_cd(taken) == 1)
+		// 		ft_putendl_fd("Error\n", 2);    // free
+		// 	continue ;
+		// }
 		cmd = ft_parse_lst_taken(taken);
 		if (cmd == NULL)
 		{
@@ -92,8 +92,8 @@ void	minishell(t_global *global)
 			// ft_free(((void *) -1));
 			continue ;
 		}
-		ft_exec
-		ft_printcmd(cmd);
+		ft_execution(cmd, global, taken);
+		// ft_printcmd(cmd);
 		// ft_free(((void *) -1));
 	}
 }

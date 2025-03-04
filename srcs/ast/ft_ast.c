@@ -9,7 +9,7 @@ t_cmd	*ft_ast(t_cmd *first)
 	t_cmd	*tmp;
 
 	tmp = ast_recursive(first, first->next, 0);
-	print_AST_test(tmp);
+	// print_AST_test(tmp);
 	return (tmp);
 }
 

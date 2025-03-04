@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/02 08:23:57 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/02 13:41:30 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 {
 	pid_t	pid;
 	
-	if (node->type == WORD && ft_isbulding(node->arg_cmd) == false)
+	if (node->type == CMD && ft_isbulding(node->arg_cmd) == false)
 	{
 		pid = ft_fork();
 		if (pid == 0)
-		ft_explore_ast(node, global, taken);
+			ft_explore_ast(node, global, taken);
 		waitpid(pid, &global->status, 0);
 	}
 	else
@@ -29,17 +29,29 @@ void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 
 void	ft_isor(t_cmd *node, t_global *global, t_taken *taken)
 {
+	pid_t	pid;
+
 	check_is_fork(node->left, global, taken);
 	if (global->status == 0)
 		return ;
-	ft_explore_ast(node->right, global, taken);
+	pid = ft_fork();
+	if (pid == 0)
+		ft_explore_ast(node->right, global, taken);
+	waitpid(pid, &global->status, 0);
 }
 
 void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
 {
-	check_is_fork(node, global, taken);
+	pid_t	pid;
+
+	check_is_fork(node->left, global, taken);
 	if (global->status == 0)
-		ft_explore_ast(node->right, global, taken);
+	{
+		pid = ft_fork();
+		if (pid == 0)
+			ft_explore_ast(node->right, global, taken);
+		waitpid(pid, &global->status, 0);
+	}
 }
 
 void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
@@ -75,6 +87,6 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 		ft_explore_ast(node->right, global, taken);
 	}
 	(close(fd[0]), close(fd[1]));
-	waitpid(pidleft, &status, 0);
-	waitpid(pidright, &status, 0);
+	waitpid(pidleft, &global->status, 0);
+	waitpid(pidright, &global->status, 0);
 }

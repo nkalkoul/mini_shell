@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 03:43:43 by nas91             #+#    #+#             */
-/*   Updated: 2025/02/02 20:57:18 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/02 11:51:21 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ char	*ft_re_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	if (!s2)
+	if (!s2 || !s1)
 		return (ft_free(s1), NULL);
 	new = ft_malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!new || !s1)
+	if (!new)
 		return (ft_free(s1), NULL);
 	while (s1[i])
 	{

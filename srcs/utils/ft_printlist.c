@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/02/13 23:51:22 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/02 10:34:13 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_printfiles(t_cmd *cmd)
 	current = cmd->files;
 	while (current)
 	{
-		printf("redir[%d] = '%s %s'\n", i, current->redir, current->path);
+		printf("redir[%d] = '%d %s'\n", i, current->type, current->path);
 		i++;
 		current = current->next;
 	}

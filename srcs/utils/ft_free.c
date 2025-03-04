@@ -37,8 +37,6 @@ void	ft_free_files(t_files **files)
 	while (tmp != NULL)
 	{
 		next = tmp->next;
-		if (tmp->redir != NULL)
-			free(tmp->redir);
 		if (tmp->path != NULL)
 			free(tmp->path);
 		free(tmp);
