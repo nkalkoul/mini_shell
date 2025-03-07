@@ -21,8 +21,8 @@ int	ft_isbulding(char **command)
 
 void ft_do_bulding(t_taken *taken, t_global *global)
 {
-	// if (ft_strcmp(cmd[0], "exit") == 0)
-	// 	return (true);
+	if (ft_strcmp(taken->token, "exit") == 0)
+		return (true);
 	if (ft_strcmp(taken->token, "env") == 0)
 		global->status = ft_printenv(taken, global);
 	else if (ft_strcmp(taken->token, "export") == 0)
