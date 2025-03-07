@@ -6,7 +6,7 @@
 /*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/04 09:57:32 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/07 07:41:38 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	minishell(t_global *global)
 		rd = readline("Mouninashell ");
 		if (rd == NULL)
 			return ;
+		if (ft_strcmp("exit", rd) == 0)
+		{
+			ft_free((void *) -1);
+			exit(0);
+		}
 		if (rd[0] == '\0')
 			continue ;
 		add_history(rd);
