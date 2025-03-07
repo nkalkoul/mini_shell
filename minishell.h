@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/02 10:35:45 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/07 07:42:02 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,15 @@ int		ft_expand_simple(char *token, char quote, int i);
 void	ft_printaken(t_taken *taken);
 void	ft_printcmd(t_cmd *cmd);
 void	ft_printfiles(t_cmd *cmd);
-void	ft_printenv(t_env *my_env);
 
 		// FONCTION DE BUILTINS
-void	ft_print_export(t_global *global);
+int		ft_printenv(t_taken *taken, t_global *global);
+int		ft_print_export(t_taken *taken, t_global *global);
 int		ft_export_node(t_taken *taken, t_global *global);
-void	ft_unset(t_taken *taken, t_global *global);
-void	ft_echo(t_taken *taken);
+int		ft_unset(t_taken *taken, t_global *global);
+int		ft_echo(t_taken *taken);
 int		ft_pwd(t_global *global);
-int		ft_cd(t_taken *taken);
+int		ft_cd(t_taken *taken, t_global *global);
 int		ft_isbulding(char **command);
 
 		// FONCTION DE IF

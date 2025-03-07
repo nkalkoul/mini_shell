@@ -24,7 +24,7 @@ void	ft_print_echo(t_taken *current)
 		ft_printf("%s ", current->token);
 }
 
-void	ft_echo(t_taken *taken)
+int	ft_echo(t_taken *taken)
 {
 	t_taken	*current;
 
@@ -50,6 +50,7 @@ void	ft_echo(t_taken *taken)
 			ft_print_echo(current);
 			current = current->next;
 		}
-		printf("\n");
+		ft_printf("\n");
 	}
+	return (0);
 }
