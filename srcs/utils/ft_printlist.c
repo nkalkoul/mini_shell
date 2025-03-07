@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/03/02 10:34:13 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/07 07:33:46 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,15 @@ int	check_equal(char *key)
 	return (0);
 }
 
-void	ft_printenv(t_env *my_env)
+int	ft_printenv(t_taken *taken, t_global *global)
 {
 	t_env	*current;
 	int		i;
 
 	i = 0;
-	current = my_env;
+	current = global->my_env;
+	if (taken->next)
+		return (perror("taken->next"), 1);
 	while (current)
 	{
 		if (current->value)
@@ -97,4 +99,5 @@ void	ft_printenv(t_env *my_env)
 		}
 		current = current->next;
 	}
+	return (0);
 }

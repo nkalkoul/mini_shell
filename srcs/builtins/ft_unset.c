@@ -43,4 +43,5 @@ void	ft_unset(t_taken *taken, t_global *global)
 		ft_free_node(current, global);
 		current = current->next;
 	}
+	return (0);
 }
