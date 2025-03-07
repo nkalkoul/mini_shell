@@ -1,34 +1,65 @@
 #include "../../minishell.h"
 
+char	**ft_addtab(char **tab, char *red)
+{
+	char	**new;
+	int		i;
+
+	i = 0;
+	if (!tab)
+	{
+		tab = ft_malloc(sizeof(char *) * 1);
+		tab[0] = 0;
+	}
+	new = ft_malloc(sizeof(char *) * (ft_countdouble(tab) + 2));
+	if (!new)
+		return (NULL);
+	while (tab[i])
+	{
+		new[i] = ft_strdup(tab[i]);
+		if (!new[i])
+			return (NULL);
+		i++;
+	}
+	new[i] = ft_strdup(red);
+	new[++i] = 0;
+	return (new);
+}
+
 char	**ft_newread(t_files *files)
 {
-	char	*redir;
+	char	**redir;
 	char	*red;
+	int		i;
 
-	redir = ft_strdup("");
-	if (redir == NULL)
-		return ;
+	i = 0;
+	redir = NULL;
 	while (1)
 	{
-		red = readline(">");
-		if (red == files->path)
+		red = readline("> ");
+		if (ft_strcmp(files->path, red) == 0)
 			break ;
-		redir = ft_re_strjoin(redir, red);
-		redir = ft_re_strjoin(redir, "\n");
+		redir = ft_addtab(redir, red);
 		if (redir == NULL)
 			return (NULL);
 	}
-	return (ft_split(redir, '\n'));
+	return (redir);
 }
 
 void	ft_open_redirGG(t_files *files)
 {
 	int		i;
 	char	**finalred;
+	int		fd[2];
 
 	finalred = ft_newread(files);
 	if (finalred == NULL)
 		return ;
+	ft_pipe(fd);
+	while (finalred[i])
+	{
+		
+	}
 }
 
 void	ft_open_redirG(t_files *files)
