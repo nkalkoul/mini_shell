@@ -31,19 +31,17 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 	pid_t	pid;
 	int		status;
 
-	// if (ft_isbulding(cmd->arg_cmd) == true)
-	// {
-	// 	//do bulding
-	// }
-	// else
-	// {
-	pid = ft_fork();
-	if (pid == 0)
+	if (ft_isbulding(cmd->arg_cmd) == true)
+		ft_do_bulding(cmd->arg_cmd, global);
+	else
 	{
-		ft_exec(cmd, global);
+		pid = ft_fork();
+		if (pid == 0)
+		{
+			ft_exec(cmd, global);
+		}
+		waitpid(pid, &global->status, 0);
 	}
-	waitpid(pid, &global->status, 0);
-	// }
 }
 
 void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken)

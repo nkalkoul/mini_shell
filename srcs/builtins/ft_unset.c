@@ -33,7 +33,7 @@ void	ft_free_node(t_taken *current, t_global *global)
 	}
 }
 
-void	ft_unset(t_taken *taken, t_global *global)
+int	ft_unset(t_taken *taken, t_global *global)
 {
 	t_taken	*current;
 

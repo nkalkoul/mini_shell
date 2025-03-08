@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/02 13:41:30 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:44:54 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 {
 	pid_t	pid;
-	
+
 	if (node->type == CMD && ft_isbulding(node->arg_cmd) == false)
 	{
 		pid = ft_fork();
@@ -34,10 +34,7 @@ void	ft_isor(t_cmd *node, t_global *global, t_taken *taken)
 	check_is_fork(node->left, global, taken);
 	if (global->status == 0)
 		return ;
-	pid = ft_fork();
-	if (pid == 0)
-		ft_explore_ast(node->right, global, taken);
-	waitpid(pid, &global->status, 0);
+	check_is_fork(node->right, global, taken);
 }
 
 void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
@@ -45,21 +42,15 @@ void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
 	pid_t	pid;
 
 	check_is_fork(node->left, global, taken);
+	printf("global->status : %d\n", global->status);
 	if (global->status == 0)
-	{
-		pid = ft_fork();
-		if (pid == 0)
-			ft_explore_ast(node->right, global, taken);
-		waitpid(pid, &global->status, 0);
-	}
+		check_is_fork(node->right, global, taken);
 }
 
 void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
 {
 	if (ft_isbulding(node->arg_cmd) == true)
-	{
-		//execbulding
-	}
+		ft_do_bulding(node->arg_cmd, global);
 	else
 		ft_exec(node, global);
 }
