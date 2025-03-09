@@ -13,8 +13,6 @@ int	ft_count_key_export(char *key)
 char	*ft_export_key(char *key, t_env *new, int *i)
 {
 	new->key = ft_malloc(sizeof(char) * (ft_count_key_export(key) + 1));
-	if (!new->key)
-		return (NULL);
 	while (key[*i] && key[*i] != '=')
 	{
 		new->key[*i] = key[*i];
@@ -37,8 +35,6 @@ char	*ft_export_value(char *value, t_env *new, int *i)
 		count++;
 	}
 	new->value = ft_malloc(sizeof(char) * (count + 1));
-	if (!new->value)
-		return (NULL);
 	count = 0;
 	while (value[j] != '\0')
 	{
@@ -50,48 +46,60 @@ char	*ft_export_value(char *value, t_env *new, int *i)
 	return (new->value);
 }
 
-int	ft_export_node(t_taken *taken, t_global *global)
-{
-	t_taken *current;
-	t_env	*new;
-	int		i;
-
-	current = taken;
-	if (!current->next || ft_strcmp(current->token, "export") != 0)
-		return (1);
-	current = current->next;
-	while (current)
-	{
-		new = ft_calloc(1, sizeof(t_env));
-		if (!new)
-			return (1);
-		i = 0;
-		while (current->token[i])
-		{
-			new->key = ft_export_key(current->token, new, &i);
-			if (!new->key)
-				return (1);
-			if (current->token[i] == '\0')
-				break ;
-			i++;
-			new->value = ft_export_value(current->token, new, &i);
-			if (!new->value)
-				return (1);
-		}
-		ft_lstbackadd_env(&(global->my_env), new);
-		current = current->next;
-	}
-	return (0);
-}
-
-int	ft_print_export(t_taken *taken, t_global *global)
+void	ft_unset_in_export(t_global *global, char *key)
 {
 	t_env	*env;
-	t_taken	*current;
+	t_env	*save;
+	t_env	*prev;
+
+	prev = NULL;
+	env = global->my_env;
+	while (env)
+	{
+		if (strcmp(env->key, key) == 0)
+		{
+			ft_replace_node(env, prev, global);
+			break ;
+		}
+		else
+		{
+			prev = env;
+			env = env->next;
+		}
+	}
+}
+
+void	ft_export_node(char **cmd, t_global *global)
+{
+	t_env	*new;
+	int		i;
+	int		j;
+
+	i = 1;
+	while (cmd[i])
+	{
+		new = ft_calloc(1, sizeof(t_env));
+		j = 0;
+		while (cmd[i][j])
+		{
+			new->key = ft_export_key(cmd[i], new, &j);
+			if (cmd[i][j] == '\0')
+				break ;
+			j++;
+			new->value = ft_export_value(cmd[i], new, &j);
+		}
+		ft_unset_in_export(global, new->key);
+		ft_lstbackadd_env(&(global->my_env), new);
+		i++;
+	}
+}
+
+int	ft_print_export(char **cmd, t_global *global)
+{
+	t_env	*env;
 
 	env = global->my_env;
-	current = taken;
-	if (!current->next)
+	if (!cmd[1])
 	{
 		while (env)
 		{
@@ -103,9 +111,6 @@ int	ft_print_export(t_taken *taken, t_global *global)
 		}
 	}
 	else
-	{
-		if (ft_export_node(taken, global) == 1)
-			return (ft_putendl_fd("Error Malloc", 2), 1);
-	}
+		ft_export_node(cmd, global);
 	return (0);
 }

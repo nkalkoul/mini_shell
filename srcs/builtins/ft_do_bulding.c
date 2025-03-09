@@ -19,20 +19,20 @@ int	ft_isbulding(char **command)
 	return (false);
 }
 
-void ft_do_bulding(t_taken *taken, t_global *global)
+void ft_do_bulding(char **cmd, t_global *global)
 {
-	if (ft_strcmp(taken->token, "exit") == 0)
-		return (true);
-	if (ft_strcmp(taken->token, "env") == 0)
-		global->status = ft_printenv(taken, global);
-	else if (ft_strcmp(taken->token, "export") == 0)
-		global->status = ft_print_export(taken, global);
-	else if (ft_strcmp(taken->token, "unset") == 0)
-		global->status = ft_unset(taken, global);
-	else if (ft_strcmp(taken->token, "echo") == 0)
-		global->status = ft_echo(taken);
-	else if (ft_strcmp(taken->token, "pwd") == 0)
+	// if (ft_strcmp(cmd[0], "exit") == 0)
+	// 	return (true);
+	if (ft_strcmp(cmd[0], "env") == 0)
+		global->status = ft_printenv(cmd, global);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		global->status = ft_print_export(cmd, global);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		global->status = ft_unset(cmd, global);
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		global->status = ft_echo(cmd);
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		global->status = ft_pwd(global);
-	else if (ft_strcmp(taken->token, "cd") == 0)
-		global->status = ft_cd(taken, global);
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		global->status = ft_cd(cmd, global);
 }

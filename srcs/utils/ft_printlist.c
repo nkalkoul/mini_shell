@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printlist.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/03/07 07:33:46 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:20:39 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,15 @@ int	check_equal(char *key)
 	return (0);
 }
 
-int	ft_printenv(t_taken *taken, t_global *global)
+int	ft_printenv(char **cmd, t_global *global)
 {
 	t_env	*current;
 	int		i;
 
 	i = 0;
 	current = global->my_env;
-	if (taken->next)
-		return (perror("taken->next"), 1);
+	if (cmd[1])
+		return (perror("cmd[1]"), 1);
 	while (current)
 	{
 		if (current->value)

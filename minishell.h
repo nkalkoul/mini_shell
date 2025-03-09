@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mounir <mounir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/07 07:42:02 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:15:21 by mounir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 # define CMD 0
 # define WORD 1
@@ -33,6 +34,7 @@ typedef struct s_garbage
 {
 	void				*ptr;
 	struct s_garbage	*next;	
+	int					lock;
 }	t_garbage;
 
 typedef struct s_garbage_head
@@ -50,6 +52,7 @@ typedef struct s_taken
 typedef struct s_files
 {
 	int				type;
+	char			**heredoc_content;
 	char			*path;
 	struct s_files	*next;
 }	t_files;
@@ -100,14 +103,16 @@ void	ft_printcmd(t_cmd *cmd);
 void	ft_printfiles(t_cmd *cmd);
 
 		// FONCTION DE BUILTINS
-int		ft_printenv(t_taken *taken, t_global *global);
-int		ft_print_export(t_taken *taken, t_global *global);
-int		ft_export_node(t_taken *taken, t_global *global);
-int		ft_unset(t_taken *taken, t_global *global);
-int		ft_echo(t_taken *taken);
+int		ft_printenv(char **cmd, t_global *global);
+int		ft_print_export(char **cmd, t_global *global);
+void	ft_export_node(char **cmd, t_global *global);
+void	ft_replace_node(t_env *tmp, t_env *prev, t_global *global);
+int		ft_unset(char **cmd, t_global *global);
+int		ft_echo(char **cmd);
 int		ft_pwd(t_global *global);
-int		ft_cd(t_taken *taken, t_global *global);
+int		ft_cd(char **cmd, t_global *global);
 int		ft_isbulding(char **command);
+void	ft_do_bulding(char **cmd, t_global *global);
 
 		// FONCTION DE IF
 int		ft_space(char c);
@@ -144,5 +149,6 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global);
 void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken);
 void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
+char	**ft_newread(t_files *files);
 
 #endif

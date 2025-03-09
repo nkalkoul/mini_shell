@@ -16,39 +16,38 @@ int	ft_check_n(char	*token)
 	return (0);
 }
 
-void	ft_print_echo(t_taken *current)
+void	ft_print_echo(char **cmd, char *arg_cmd, int *i)
 {
-	if (!current->next)
-		ft_printf("%s", current->token);
+	if (!cmd[*i + 1])
+		ft_printf("%s", arg_cmd);
 	else
-		ft_printf("%s ", current->token);
+		ft_printf("%s ", arg_cmd);
 }
 
-int	ft_echo(t_taken *taken)
+int	ft_echo(char **cmd)
 {
-	t_taken	*current;
+	int	i;
 
-	current = taken;
-	if (!current->next)
+	i = 1;
+	if (!cmd[1])
 		ft_printf("\n");
-	else if (ft_check_n(current->next->token) == 1)
+	else if (ft_check_n(cmd[i]) == 1)
 	{
-		current = current->next;
-		while (current && ft_check_n(current->token) == 1)
-			current = current->next;
-		while (current)
+		i++;
+		while (cmd[i] && ft_check_n(cmd[i]) == 1)
+			i++;
+		while (cmd[i])
 		{
-			ft_print_echo(current);
-			current = current->next;
+			ft_print_echo(cmd, cmd[i], &i);
+			i++;
 		}
 	}
 	else
 	{
-		current = current->next;
-		while (current)
+		while (cmd[i])
 		{
-			ft_print_echo(current);
-			current = current->next;
+			ft_print_echo(cmd, cmd[i], &i);
+			i++;
 		}
 		ft_printf("\n");
 	}

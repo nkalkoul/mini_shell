@@ -36,7 +36,9 @@ char	**ft_newread(t_files *files)
 	redir = NULL;
 	while (1)
 	{
-		red = readline("> ");
+		red = readline("heredoc> ");
+		if (red == NULL)
+			return (NULL);
 		if (ft_strcmp(files->path, red) == 0)
 			break ;
 		redir = ft_addtab(redir, red);
@@ -52,14 +54,19 @@ void	ft_open_redirGG(t_files *files)
 	char	**finalred;
 	int		fd[2];
 
-	finalred = ft_newread(files);
+	i = 0;
+	finalred = files->heredoc_content;
 	if (finalred == NULL)
 		return ;
 	ft_pipe(fd);
 	while (finalred[i])
 	{
-		
+		ft_putendl_fd(finalred[i], fd[1]);
+		i++;
 	}
+	ft_dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	close(fd[1]);
 }
 
 void	ft_open_redirG(t_files *files)
@@ -107,6 +114,7 @@ void	ft_open_redirD(t_files *files)
 void	ft_open_files(t_cmd *cmd)
 {
 	t_files	*files;
+	t_files	*tmp;
 
 	files = cmd->files;
 	while (files)

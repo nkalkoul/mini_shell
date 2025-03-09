@@ -1,6 +1,21 @@
 #include "../../minishell.h"
 
-void	ft_free_node(t_taken *current, t_global *global)
+void	ft_replace_node(t_env *tmp, t_env *prev, t_global *global)
+{
+	t_env	*save;
+
+	save = tmp->next;
+	ft_free(tmp->key);
+	if (tmp->value)
+		ft_free(tmp->value);
+	ft_free(tmp);
+	if (prev)
+		prev->next = save;
+	else
+		global->my_env = save;
+}
+
+void	ft_free_node(char *cmd, t_global *global)
 {
 	t_env	*save;
 	t_env	*tmp;
@@ -10,19 +25,9 @@ void	ft_free_node(t_taken *current, t_global *global)
 	prev = NULL;
 	while (tmp)
 	{
-		printf("current: %s\n", tmp->key);
-		printf("next: %s\n", tmp->next->key);
-		if (ft_strcmp(current->token, tmp->key) == 0)
+		if (ft_strcmp(cmd, tmp->key) == 0)
 		{
-			save = tmp->next;
-			ft_free(tmp->key);
-			if (tmp->value)
-				ft_free(tmp->value);
-			ft_free(tmp);
-			if (prev)
-				prev->next = save;
-			else
-				global->my_env = save;
+			ft_replace_node(tmp, prev, global);
 			return ;
 		}
 		else
@@ -33,15 +38,15 @@ void	ft_free_node(t_taken *current, t_global *global)
 	}
 }
 
-void	ft_unset(t_taken *taken, t_global *global)
+int	ft_unset(char **cmd, t_global *global)
 {
-	t_taken	*current;
+	int	i;
 
-	current = taken->next;
-	while (current)
+	i = 1;
+	while (cmd[i])
 	{
-		ft_free_node(current, global);
-		current = current->next;
+		ft_free_node(cmd[i], global);
+		i++;
 	}
 	return (0);
 }
