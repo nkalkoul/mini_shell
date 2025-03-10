@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 09:54:33 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:36:43 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	minishell(t_global *global)
 			continue ;
 		}
 		ft_execution(cmd, global, taken);
+		ft_clearbag(NULL);
 	}
 }
 

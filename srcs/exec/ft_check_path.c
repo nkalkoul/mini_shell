@@ -7,7 +7,7 @@ char	*ft_split_value(char *cmd, char *value)
 
 	tab = ft_split(value, ':');
 	if (!tab)
-		return (NULL);			// free
+		return (NULL);
 	i = -1;
 	while (tab[++i])
 	{
@@ -17,8 +17,8 @@ char	*ft_split_value(char *cmd, char *value)
 			break ;
 	}
 	if (tab[i] == NULL)
-		return (NULL);		// free
-	return (ft_strdup(tab[i]));		// free
+		return (NULL);
+	return (ft_strdup(tab[i]));
 }
 
 char	*ft_pathfinder(t_cmd *cmd, t_global *global)
@@ -27,9 +27,9 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global)
 
 	env = global->my_env;
 	if (!env)
-		return (NULL);		// free
+		return (NULL);
 	if (!cmd->arg_cmd)
-		exit(1);			// free
+		exit(1);
 	if (access(cmd->arg_cmd[0], X_OK) == 0)
 		return (ft_strdup(cmd->arg_cmd[0]));
 	while (env)
@@ -38,7 +38,7 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global)
 			break ;
 		env = env->next;
 		if (!env)
-			return (NULL);		// free
+			return (NULL);
 	}
 	return (ft_split_value(cmd->arg_cmd[0], env->value));
 }

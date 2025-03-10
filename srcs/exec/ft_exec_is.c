@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 07:32:24 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:52:54 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 		close(fd[0]);
 		ft_dup2(fd[1], STDOUT_FILENO);
 		ft_explore_ast(node->left, global, taken);
+		ft_free_and_exit(0);
 	}
 	pidright = ft_fork();
 	if (pidright == 0)
@@ -76,6 +77,7 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 		close(fd[1]);
 		ft_dup2(fd[0], STDIN_FILENO);
 		ft_explore_ast(node->right, global, taken);
+		ft_free_and_exit(0);
 	}
 	(close(fd[0]), close(fd[1]));
 	waitpid(pidleft, &global->status, 0);

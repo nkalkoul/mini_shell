@@ -30,9 +30,7 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 	{
 		pid = ft_fork();
 		if (pid == 0)
-		{
 			ft_exec(cmd, global);
-		}
 		waitpid(pid, &global->status, 0);
 	}
 }
