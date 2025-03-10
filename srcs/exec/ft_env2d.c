@@ -33,7 +33,7 @@ char	**ft_put_env2d(t_global *global)
 		tab[i] = ft_re_strjoin(tab[i], "=");
 		tab[i] = ft_re_strjoin(tab[i], env->value);
 		if (!tab[i])
-			return (ft_free2d(tab), NULL);		// free
+			return (NULL);		// free
 		env = env->next;
 		i++;
 	}

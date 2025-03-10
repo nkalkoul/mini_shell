@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initaken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/02/27 22:12:09 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 09:03:18 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_lst_ongbak(t_taken **taken, char *src)
 		return (ft_free_lst(taken), -1);
 	new->token = ft_malloc(sizeof(char) * (len + 1));
 	if (!new->token)
-		return (free(new), ft_free(taken), -1);
+		return (ft_free(new), ft_free(taken), -1);
 	i = -1;
 	while (++i < len)
 		new->token[i] = src[i];

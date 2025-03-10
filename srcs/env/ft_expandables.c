@@ -100,7 +100,7 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 	if (key == NULL)
 		return (NULL);
 	value = ft_getenv(key, global);
-	free(key);
+	ft_free(key);
 	if (value != NULL)
 	{
 		result = ft_re_strjoin(result, value);

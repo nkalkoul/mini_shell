@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 09:39:57 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 09:45:53 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,16 @@ void	minishell(t_global *global)
 			continue ;
 		add_history(rd);
 		taken = ft_initaken(rd);
-		// if (!taken || ft_expandables(&taken, global) == 1)
-		// 	continue ;
 		if (!taken)
+		{
+			ft_clearbag(NULL);
 			continue ;
+		}
+		if (!taken || ft_expandables(&taken, global) == 1)
+		{
+			ft_clearbag(NULL);
+			continue ;
+		}
 		cmd = ft_parse_lst_taken(taken);
 		if (cmd == NULL || ft_expandables(cmd, global) == 1)
 		{

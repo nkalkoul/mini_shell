@@ -54,7 +54,7 @@ void	ft_clearbag(t_garbage_head *garb)
 	{
 		temp = current;
 		current = current->next;
-		if (current->lock == 0)
+		if (temp->lock == 0)
 			ft_killnode(garbage, temp->ptr);
 	}
 }
