@@ -23,7 +23,7 @@ char	**ft_put_env2d(t_global *global)
 
 	env = global->my_env;
 	i = 0;
-	tab = malloc(sizeof(char *) * ft_count_node_env(global));
+	tab = ft_malloc(sizeof(char *) * ft_count_node_env(global));
 	if (!tab)
 		return (NULL);		// free
 	while (env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_double.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nas91 <kalkoul.nassim@gmail.com>           #+#  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-15 21:21:46 by nas91             #+#    #+#             */
-/*   Updated: 2024-11-15 21:21:46 by nas91            ###   ########.fr       */
+/*   Created: 2024/11/15 21:21:46 by nas91             #+#    #+#             */
+/*   Updated: 2025/03/10 10:04:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_free_double(char **str)
 	i = 0;
 	while (str[i] != NULL)
 	{
-		free(str[i]);
+		ft_free(str[i]);
 		i++;
 	}
-	free(str);
+	ft_free(str);
 	str = NULL;
 }

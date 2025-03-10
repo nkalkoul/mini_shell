@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_put.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:23:48 by nkalkoul          #+#    #+#             */
-/*   Updated: 2024/11/19 23:50:04 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:00:37 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_putintd(va_list carg)
 	str = ft_itoa(va_arg(carg, int));
 	count = ft_strlen(str);
 	ft_putstr_fd(str, 1);
-	free(str);
+	ft_free(str);
 	return (count);
 }
 

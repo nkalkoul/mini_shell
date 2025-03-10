@@ -1,0 +1,12 @@
+total 124
+drwxr-xr-x 6 modavid 2024_paris    143 Mar 10 10:07 .
+drwxr-xr-x 5 modavid 2024_paris     65 Mar  5 08:17 ..
+drwxr-xr-x 8 modavid 2024_paris    220 Mar 10 09:46 .git
+drwxr-xr-x 2 modavid 2024_paris   4096 Mar 10 10:04 libft
+-rw-r--r-- 1 modavid 2024_paris   1293 Mar 10 09:42 Makefile
+-rwxr-xr-x 1 modavid 2024_paris 105352 Mar 10 10:05 minishell
+-rw-r--r-- 1 modavid 2024_paris   4603 Mar 10 09:42 minishell.h
+-rw-r--r-- 1 modavid 2024_paris    277 Jan 26 19:23 minishell.supp
+-rw-r--r-- 1 modavid 2024_paris      0 Mar 10 10:07 out
+drwxr-xr-x 9 modavid 2024_paris    141 Mar 10 10:04 srcs
+drwxr-xr-x 2 modavid 2024_paris     27 Mar  5 07:49 .vscode

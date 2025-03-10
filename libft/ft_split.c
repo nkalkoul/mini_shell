@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 06:02:55 by nas91             #+#    #+#             */
-/*   Updated: 2025/03/05 08:21:20 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 10:03:53 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ char	**ft_dothes(char **new, const char *s, char c, int count)
 		if (new[i] == NULL)
 		{
 			while (i >= 0)
-				free(new[i--]);
-			free(new);
+				ft_free(new[i--]);
+			ft_free(new);
 			return (NULL);
 		}
 		i++;
