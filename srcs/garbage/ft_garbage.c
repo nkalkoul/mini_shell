@@ -45,6 +45,9 @@ void	*ft_malloc(long int l)
 			return (NULL);
 		memset(garbage, 0, sizeof(t_garbage_head));
 		ft_free(garbage);
+		ft_locks(NULL, garbage);
+		ft_unlocks(NULL, garbage);
+		ft_clearbag(garbage);
 	}
 	ptr = malloc(l);
 	if (!ptr)

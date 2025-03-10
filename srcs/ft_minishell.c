@@ -49,7 +49,7 @@ void	minishell(t_global *global)
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing\n", 2);
-			// ft_free(((void *) -1));
+			ft_clearbag(NULL);
 			continue ;
 		}
 		ft_execution(cmd, global, taken);

@@ -9,6 +9,7 @@ int	ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage)
 	{
 		garbage->head = malloc(sizeof(t_garbage));
 		garbage->head->ptr = ptr;
+		garbage->head->lock = 0;
 		garbage->head->next = NULL;
 		return (0);
 	}

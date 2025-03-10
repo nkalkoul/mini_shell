@@ -133,6 +133,9 @@ int		ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage);
 void	ft_killnode(t_garbage_head *garbage, void *ptr);
 void	ft_finishbag(t_garbage_head *garbage);
 void	ft_free(void *ptr);
+void	ft_locks(void *ptr, t_garbage_head *garb);
+void	ft_unlocks(void *ptr, t_garbage_head *garb);
+void	ft_clearbag(t_garbage_head *garb);
 
 		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
