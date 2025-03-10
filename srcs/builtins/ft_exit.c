@@ -37,4 +37,5 @@ int	ft_exit(char **cmd, t_global *global)
 		ft_putendl_fd("exit: too many arguments", 2);
 		global->status = 1;
 	}
+	return (0);
 }

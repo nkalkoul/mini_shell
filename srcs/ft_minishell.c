@@ -6,7 +6,7 @@
 /*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/08 23:36:37 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:08:10 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_my_env(t_global *global, char **env)
 {
-	memset(global, 0, sizeof(t_global));
+	ft_memset(global, 0, sizeof(t_global));
 	global->my_env = ft_take_myenv(env);
 	if (!global->my_env)
 		return (1);
@@ -41,10 +41,16 @@ void	minishell(t_global *global)
 			continue ;
 		add_history(rd);
 		taken = ft_initaken(rd);
-		if (!taken || ft_expandables(&taken, global) == 1)
-			continue ;
 		if (!taken)
+		{
+			ft_clearbag(NULL);
 			continue ;
+		}
+		if (!taken || ft_expandables(&taken, global) == 1)
+		{
+			ft_clearbag(NULL);
+			continue ;
+		}
 		cmd = ft_parse_lst_taken(taken);
 		if (cmd == NULL)
 		{

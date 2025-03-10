@@ -43,7 +43,7 @@ void	*ft_malloc(long int l)
 		garbage = malloc(sizeof(t_garbage_head));
 		if (garbage == NULL)
 			return (NULL);
-		memset(garbage, 0, sizeof(t_garbage_head));
+		ft_memset(garbage, 0, sizeof(t_garbage_head));
 		ft_free(garbage);
 		ft_locks(NULL, garbage);
 		ft_unlocks(NULL, garbage);

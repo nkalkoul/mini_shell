@@ -7,10 +7,10 @@ void	ft_free2d(char	**str)
 	i = 0;
 	while (str[i])
 	{
-		free(str[i]);
+		ft_free(str[i]);
 		i++;
 	}
-	free(str);
+	ft_free(str);
 }
 
 void	ft_free_lst(t_taken **taken)
@@ -22,8 +22,8 @@ void	ft_free_lst(t_taken **taken)
 	while (tmp != NULL)
 	{
 		next = tmp->next;
-		free(tmp->token);
-		free(tmp);
+		ft_free(tmp->token);
+		ft_free(tmp);
 		tmp = next;
 	}
 }
@@ -38,8 +38,8 @@ void	ft_free_files(t_files **files)
 	{
 		next = tmp->next;
 		if (tmp->path != NULL)
-			free(tmp->path);
-		free(tmp);
+			ft_free(tmp->path);
+		ft_free(tmp);
 		tmp = next;
 	}
 }
@@ -54,8 +54,8 @@ void	ft_free_cmd(t_cmd *cmd)
 	{
 		next = tmp->next;
 		if (tmp->arg_cmd != NULL)
-			ft_free2d(tmp->arg_cmd);
-		free(tmp);
+			ft_free(tmp->arg_cmd);
+		ft_free(tmp);
 		tmp = next;
 	}
 }
@@ -70,10 +70,10 @@ void	ft_free_env(t_env *my_env)
 	{
 		next = tmp->next;
 		if (tmp->key)
-			free(tmp->key);
+			ft_free(tmp->key);
 		if (tmp->value)
-			free(tmp->value);
-		free(tmp);
+			ft_free(tmp->value);
+		ft_free(tmp);
 		tmp = next;
 	}
 }

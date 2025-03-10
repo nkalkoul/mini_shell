@@ -17,7 +17,7 @@ char	*ft_split_value(char *cmd, char *value)
 			break ;
 	}
 	if (tab[i] == NULL)
-		return (ft_free2d(tab), NULL);		// free
+		return (NULL);		// free
 	return (ft_strdup(tab[i]));		// free
 }
 
