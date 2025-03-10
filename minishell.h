@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounir <mounir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/09 14:15:21 by mounir           ###   ########.fr       */
+/*   Updated: 2025/03/10 07:22:37 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	ft_free_files(t_files **files);
 void	ft_free_cmd(t_cmd *cmd);
 void	ft_free2d(char **str);
 void	ft_free_env(t_env *my_env);
+void	ft_free_and_exit(int status);
 
 		// FONCTION DE GARBAGE
 void	*ft_malloc(long int l);

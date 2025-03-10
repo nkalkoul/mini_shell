@@ -5,24 +5,17 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	char	*path;
 	char	**env;
 
-	// etape 1 ouvrir les fichier 
 	ft_open_files(cmd);
-	// etape 2 verifier les chemin
 	path = ft_pathfinder(cmd, global);
 	if (!path)
-		return (perror(cmd->arg_cmd[0]), exit(127));		// free
-	// etape 3 execve
+		return (perror(cmd->arg_cmd[0]), ft_free_and_exit(127));
 	env = ft_put_env2d(global);
 	if (!env)
-		return (ft_putendl_fd("Error env", 2), exit(127));	// free
+		return (ft_putendl_fd("Error env", 2), ft_free_and_exit(127));
 	if (execve(path, cmd->arg_cmd, env) == -1)
 	{
 		perror(cmd->arg_cmd[0]);
-		ft_free2d(env);
-		ft_free2d(cmd->arg_cmd);
-		free(path);
-		//	free
-		exit(1);
+		ft_free_and_exit(1);
 	}
 }
 
