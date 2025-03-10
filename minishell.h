@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 09:14:23 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 12:47:21 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,12 @@ int		ft_print_export(char **cmd, t_global *global);
 void	ft_export_node(char **cmd, t_global *global);
 void	ft_replace_node(t_env *tmp, t_env *prev, t_global *global);
 int		ft_unset(char **cmd, t_global *global);
-int		ft_echo(char **cmd);
+int		ft_echo(char **cmd, t_global *global);
 int		ft_pwd(t_global *global);
 int		ft_cd(char **cmd, t_global *global);
 int		ft_isbulding(char **command);
 void	ft_do_bulding(char **cmd, t_global *global);
+int		ft_exit(char **cmd, t_global *global);
 
 		// FONCTION DE IF
 int		ft_space(char c);

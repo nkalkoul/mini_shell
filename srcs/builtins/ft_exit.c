@@ -25,17 +25,19 @@ int	ft_exit(char **cmd, t_global *global)
 	ft_printf("exit\n");
 	if (!cmd[1])
 		ft_free_and_exit(0);
-	else if (ft_strlen(cmd[1]) >= 20 || ft_is_arg_num(cmd[1]) == 1)
+	else if (ft_strlen(cmd[1]) >= 20 || ft_is_arg_num(cmd[1]) == 0)
 	{
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(cmd[1], 2);
-		ft_putendl_fd("numeric argument necesitary", 2);
-		ft_free_and_exit(0);
+		ft_putendl_fd(" numeric argument required", 2);
+		ft_free_and_exit(2);
 	}
 	else if (ft_strlen(cmd[1]) < 20 && cmd[2])
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
 		return (1);
 	}
+	else
+		ft_free_and_exit(0);
 	return (0);
 }

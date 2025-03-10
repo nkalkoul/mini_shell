@@ -222,9 +222,9 @@ int	ft_expandables(t_cmd *cmd, t_global *global)
 		i = 0;
 		while (current->type == CMD && current->arg_cmd[i])
 		{
+			if (ft_strcmp(current->arg_cmd[i], "$?") == 0)
+				break ;
 			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
-			if (current->arg_cmd[i] == NULL)
-				return (1);
 			i++;
 		}
 		current = current->next;

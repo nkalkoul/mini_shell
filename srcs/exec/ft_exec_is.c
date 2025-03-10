@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 10:52:54 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/10 11:50:35 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
 	pid_t	pid;
 
 	check_is_fork(node->left, global, taken);
-	// printf("global->status : %d\n", global->status);
 	if (global->status == 0)
 		check_is_fork(node->right, global, taken);
 }

@@ -24,13 +24,15 @@ void	ft_print_echo(char **cmd, char *arg_cmd, int *i)
 		ft_printf("%s ", arg_cmd);
 }
 
-int	ft_echo(char **cmd)
+int	ft_echo(char **cmd, t_global *global)
 {
 	int	i;
 
 	i = 1;
 	if (!cmd[1])
 		ft_printf("\n");
+	else if (ft_strcmp(cmd[1], "$?") == 0)
+		ft_printf("%i\n", global->status);
 	else if (ft_check_n(cmd[i]) == 1)
 	{
 		i++;
