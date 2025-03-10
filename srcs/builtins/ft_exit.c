@@ -35,6 +35,7 @@ int	ft_exit(char **cmd, t_global *global)
 	else if (ft_strlen(cmd[1]) < 20 && cmd[2])
 	{
 		ft_putendl_fd("exit: too many arguments", 2);
-		global->status = 1;
+		return (1);
 	}
+	return (0);
 }

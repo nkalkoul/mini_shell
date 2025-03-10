@@ -126,61 +126,108 @@ char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
 	return (result);
 }
 
-int	ft_expand_token(t_taken	*current, t_global *global)
+// int	ft_expand_token(t_taken	*current, t_global *global)
+// {
+// 	int		i;
+// 	char	*token;
+// 	char	*result;
+
+// 	i = 0;
+// 	result = ft_strdup("");
+// 	if (result == NULL)
+// 		return (EXIT_FAILURE);
+// 	token = current->token;
+// 	while (token[i])
+// 	{
+// 		if (token[i] == '\'')
+// 			result = add_simple_quotes(token, &i, result);
+// 		else if (token[i] == '$')
+// 			result = add_environment_variable(token, &i, result, global);
+// 		else if (token[i] == '"')
+// 			result = add_double_quotes(token, &i, result, global);
+// 		else
+// 			result = add_other_chars(token, &i, result, "$\"\'");
+// 		if (result == NULL)
+// 			return (EXIT_FAILURE);
+// 	}
+// 	current->token = result;
+// 	return (0);
+// }
+
+// int	ft_expandables(t_taken **taken, t_global *global)
+// {
+// 	t_taken	*current;
+// 	t_taken	*previous;
+// 	t_taken	*tmp;
+
+// 	previous = NULL;
+// 	tmp = NULL;
+// 	current = *taken;
+// 	while (current != NULL)
+// 	{
+// 		if (ft_expand_token(current, global) == 1)
+// 			return (1);
+// 		if (current->token[0] == '\0')
+// 		{
+// 			skip_current(previous, taken);
+// 			tmp = current;
+// 			current = current->next;
+// 			ft_free(tmp);
+// 		}
+// 		else
+// 		{
+// 			previous = current;
+// 			current = current->next;
+// 		}
+// 	}
+// 	return (0);
+// }
+
+
+char	*ft_expand_token(char *arg, t_global *global)
 {
 	int		i;
 	char	*token;
 	char	*result;
 
-	// if (ft_delete_double_quotes(current) == 1)
-	// 	return (1);
 	i = 0;
 	result = ft_strdup("");
 	if (result == NULL)
-		return (EXIT_FAILURE);
-	token = current->token;
+		return (NULL);
+	token = arg;
 	while (token[i])
 	{
 		if (token[i] == '\'')
-			result = add_simple_quotes(token, &i, result);
+		result = add_simple_quotes(token, &i, result);
 		else if (token[i] == '$')
-			result = add_environment_variable(token, &i, result, global);
+		result = add_environment_variable(token, &i, result, global);
 		else if (token[i] == '"')
-			result = add_double_quotes(token, &i, result, global);
+		result = add_double_quotes(token, &i, result, global);
 		else
-			result = add_other_chars(token, &i, result, "$\"\'");
+		result = add_other_chars(token, &i, result, "$\"\'");
 		if (result == NULL)
-			return (EXIT_FAILURE);
+		return (NULL);
 	}
-	current->token = result;
-	return (0);
+	return (result);
 }
 
-int	ft_expandables(t_taken **taken, t_global *global)
+int	ft_expandables(t_cmd *cmd, t_global *global)
 {
-	t_taken	*current;
-	t_taken	*previous;
-	t_taken	*tmp;
+	int		i;
+	t_cmd	*current;
 
-	previous = NULL;
-	tmp = NULL;
-	current = *taken;
-	while (current != NULL)
+	current = cmd;
+	while (current)
 	{
-		if (ft_expand_token(current, global) == 1)
-			return (1);
-		if (current->token[0] == '\0')
+		i = 0;
+		while (current->type == CMD && current->arg_cmd[i])
 		{
-			skip_current(previous, taken);
-			tmp = current;
-			current = current->next;
-			ft_free(tmp);
+			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
+			if (current->arg_cmd[i] == NULL)
+				return (1);
+			i++;
 		}
-		else
-		{
-			previous = current;
-			current = current->next;
-		}
+		current = current->next;
 	}
 	return (0);
 }

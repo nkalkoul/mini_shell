@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/09 00:44:54 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/10 07:32:24 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
 	pid_t	pid;
 
 	check_is_fork(node->left, global, taken);
-	printf("global->status : %d\n", global->status);
+	// printf("global->status : %d\n", global->status);
 	if (global->status == 0)
 		check_is_fork(node->right, global, taken);
 }
@@ -70,7 +70,7 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 		ft_dup2(fd[1], STDOUT_FILENO);
 		ft_explore_ast(node->left, global, taken);
 	}
-	pidright = fork();
+	pidright = ft_fork();
 	if (pidright == 0)
 	{
 		close(fd[1]);

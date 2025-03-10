@@ -2,7 +2,8 @@
 
 int	ft_check_error_parse(t_taken *current)
 {
-	if (current->type == PIPE && current->type == OR && current->type == AND)
+	if (current && current->type == PIPE
+		&& current->type == OR && current->type == AND)
 		return (1);
 	while (current != NULL)
 	{
@@ -74,9 +75,6 @@ int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 	(*cmd)->arg_cmd[i] = NULL;
 	return (0);
 }
-
-void	ft_printfiles(t_cmd *cmd);
-
 
 int	ft_token_to_files(t_taken **current, t_cmd *cmd)
 {
@@ -157,5 +155,7 @@ t_cmd	*ft_parse_lst_taken(t_taken *taken)
 				return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
 		}
 	}
+	ft_printf("cmd = ");
+	ft_printcmd(cmd);
 	return (cmd);
 }
