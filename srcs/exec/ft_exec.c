@@ -24,6 +24,7 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 	pid_t	pid;
 	int		fd[2];
 
+	ft_expandables(cmd, global);
 	if (ft_isbulding(cmd->arg_cmd) == true)
 	{
 		fd[0] = dup(STDIN_FILENO);
@@ -38,7 +39,7 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 		pid = ft_fork();
 		if (pid == 0)
 			ft_exec(cmd, global);
-		waitpid(pid, &global->status, 0);
+		ft_waitpid(pid, &global->status, 0);
 	}
 }
 

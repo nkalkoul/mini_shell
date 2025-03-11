@@ -11,10 +11,17 @@ CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft
 LIBFT = $(DIRLIB)/libft.a
 NAME =	minishell
-OBJS =	$(SRCS:.c=.o)
 VMINI = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
 		--trace-children=yes -s --suppressions=minishell.supp \
         --track-fds=yes --quiet
+
+OBJS_DIR = .objets/
+
+SRCS_DIR = srcs/
+
+OBJS = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
+
+DIR_DUP = mkdir -p $(@D)
 
 all : $(NAME)
 
@@ -26,17 +33,18 @@ $(LIBFT) :
 	@make -sC $(DIRLIB)
 
 
-%.o : %.c
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
+	@$(DIR_DUP)
 	@$(CC) -c $< -o $@ 
 	@echo "compiling: $<"
 
 clean :
 	@make fclean -sC $(DIRLIB)
-	@rm -f $(OBJS)
+	@rm -rf $(OBJS_DIR)
 	@echo "refreeeesh baby"
 
 fclean : clean
-	@rm -f $(NAME)
+	@rm -rf $(NAME)
 
 re : fclean all
 

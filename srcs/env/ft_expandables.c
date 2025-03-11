@@ -7,8 +7,11 @@ char	*get_dollar_key(char *token, int *i)
 
 	++(*i);
 	j = 0;
-	while (ft_isalnum(token[*i + j]) == 1 || token[*i + j] == '_')
-		++j;
+	if (token[*i] == '?')
+		j++;
+	else
+		while (ft_isalnum(token[*i + j]) == 1 || token[*i + j] == '_')
+			++j;
 	if (j == 0)
 	{
 		key = ft_strdup("$");
@@ -51,7 +54,10 @@ char	*add_env_variable(char *token, int *i, char *result, t_global *global)
 	key = get_dollar_key(token, i);
 	if (key == NULL)
 		return (NULL);
-	value = ft_getenv(key, global);
+	if (ft_strcmp(key, "?") == 0)
+		value = ft_itoa(global->status);
+	else
+		value = ft_getenv(key, global);
 	ft_free(key);
 	if (value != NULL)
 		result = ft_re_strjoin(result, value);
@@ -72,13 +78,13 @@ char	*ft_expand_token(char *arg, t_global *global)
 	while (token[i])
 	{
 		if (token[i] == '\'')
-		result = add_simple_quotes(token, &i, result);
+			result = add_simple_quotes(token, &i, result);
 		else if (token[i] == '$')
-		result = add_env_variable(token, &i, result, global);
+			result = add_env_variable(token, &i, result, global);
 		else if (token[i] == '"')
-		result = add_double_quotes(token, &i, result, global);
+			result = add_double_quotes(token, &i, result, global);
 		else
-		result = add_other_chars(token, &i, result, "$\"\'");
+			result = add_other_chars(token, &i, result, "$\"\'");
 		if (result == NULL)
 			return (NULL);
 	}
@@ -96,14 +102,10 @@ int	ft_expandables(t_cmd *cmd, t_global *global)
 		i = 0;
 		while (current && current->arg_cmd[i])
 		{
-			if (ft_strcmp(current->arg_cmd[i], "$?") == 0)
-				i++;
-			else
-			{
-				current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
-				i++;
-			}
+			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
+			i++;
 		}
+		
 	// 	// current = current->next;
 	// }
 	return (0);

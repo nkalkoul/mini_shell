@@ -6,11 +6,20 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 12:56:52 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 14:42:02 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void ft_waitpid(int pid, int *status, int options)
+{
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
+		*status = 128 + WTERMSIG(*status);
+}
 
 void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 {
@@ -21,7 +30,7 @@ void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 		pid = ft_fork();
 		if (pid == 0)
 			ft_explore_ast(node, global, taken);
-		waitpid(pid, &global->status, 0);
+		ft_waitpid(pid, &global->status, 0);
 	}
 	else
 		ft_explore_ast(node, global, taken);
@@ -89,6 +98,6 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 		ft_free_and_exit(0);
 	}
 	(close(fd[0]), close(fd[1]));
-	waitpid(pidleft, &global->status, 0);
-	waitpid(pidright, &global->status, 0);
+	ft_waitpid(pidleft, &global->status, 0);
+	ft_waitpid(pidright, &global->status, 0);
 }

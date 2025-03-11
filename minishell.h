@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 11:53:01 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 14:42:23 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,6 @@ void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken);
 void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
 char	**ft_newread(t_files *files);
+void	ft_waitpid(int pid, int *status, int options);
 
 #endif
