@@ -91,18 +91,21 @@ int	ft_expandables(t_cmd *cmd, t_global *global)
 	t_cmd	*current;
 
 	current = cmd;
-	while (current)
-	{
+	// while (current)
+	// {
 		i = 0;
-		while (current->type == CMD && current->arg_cmd[i])
+		while (current && current->arg_cmd[i])
 		{
 			if (ft_strcmp(current->arg_cmd[i], "$?") == 0)
-				break ;
-			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
-			i++;
+				i++;
+			else
+			{
+				current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
+				i++;
+			}
 		}
-		current = current->next;
-	}
+	// 	// current = current->next;
+	// }
 	return (0);
 }
 

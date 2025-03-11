@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 12:37:36 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 12:56:52 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
 {
 	int		fd[2];
 
+	ft_expandables(node, global);
 	if (ft_isbulding(node->arg_cmd) == true)
 	{
 		fd[0] = dup(STDIN_FILENO);

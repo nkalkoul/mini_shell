@@ -6,7 +6,7 @@
 // /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 // /*                                                +#+#+#+#+#+   +#+           */
 // /*   Created: 2024/10/10 05:33:34 by ibaby             #+#    #+#             */
-// /*   Updated: 2025/03/11 11:31:33 by modavid          ###   ########.fr       */
+// /*   Updated: 2025/03/11 12:46:18 by modavid          ###   ########.fr       */
 // /*                                                                            */
 // /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 // void		print_command(t_cmd *command);
 // char		*operator_type_to_str(int type);
 // void		printTree(t_cmd *command, int depth, int isRight, int *branch);
+
+// // void	print_AST(t_cmd *command)
+// // {
+// // 	int array[1024] = {0};
+
+// // 	command = ast_top(command);
+// // 	printTree(command, 0, 0, array);
+// // }
 
 // void	print_AST_test(t_cmd *command)
 // {
@@ -27,6 +35,8 @@
 // void print_command(t_cmd *command)
 // {
 // 	int 	i;
+// 	// char	*infile = "STDIN";
+// 	// char	*outfile = "STDOUT";
 
 // 	i = -1;
 //     if (command->type == 0)

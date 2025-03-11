@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 09:32:31 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 12:56:13 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	minishell(t_global *global)
 			continue ;
 		}
 		cmd = ft_parse_lst_taken(taken);
-		if (cmd == NULL || ft_expandables(cmd, global) == 1)
+		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing\n", 2);
 			ft_clearbag(NULL);

@@ -66,11 +66,7 @@ char	*ft_getenv(char *key, t_global *global)
 	while (env)
 	{
 		if (env->key != NULL && ft_strcmp(key, env->key) == 0)
-		{
-			ft_printf("key = %s\n", key);
-			ft_printf("env->key = %s\n", env->key);
 			return (ft_strdup(env->value));
-		}
 		env = env->next;
 	}
 	return (NULL);
