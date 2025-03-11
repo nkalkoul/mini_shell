@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 11:50:35 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 12:37:36 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,17 @@ void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
 
 void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
 {
+	int		fd[2];
+
 	if (ft_isbulding(node->arg_cmd) == true)
+	{
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
+		ft_open_files(node);
 		ft_do_bulding(node->arg_cmd, global);
+		ft_dup2(fd[0], STDIN_FILENO);
+		ft_dup2(fd[1], STDOUT_FILENO);
+	}
 	else
 		ft_exec(node, global);
 }

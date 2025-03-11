@@ -25,7 +25,7 @@ char	**ft_put_env2d(t_global *global)
 	i = 0;
 	tab = ft_malloc(sizeof(char *) * ft_count_node_env(global));
 	if (!tab)
-		return (NULL);		// free
+		return (NULL);
 	while (env)
 	{
 		tab[i] = ft_strdup("");
@@ -33,7 +33,7 @@ char	**ft_put_env2d(t_global *global)
 		tab[i] = ft_re_strjoin(tab[i], "=");
 		tab[i] = ft_re_strjoin(tab[i], env->value);
 		if (!tab[i])
-			return (NULL);		// free
+			return (NULL);
 		env = env->next;
 		i++;
 	}

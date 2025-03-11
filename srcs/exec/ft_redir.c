@@ -1,54 +1,6 @@
 #include "../../minishell.h"
 
-char	**ft_addtab(char **tab, char *red)
-{
-	char	**new;
-	int		i;
-
-	i = 0;
-	if (!tab)
-	{
-		tab = ft_malloc(sizeof(char *) * 1);
-		tab[0] = 0;
-	}
-	new = ft_malloc(sizeof(char *) * (ft_countdouble(tab) + 2));
-	if (!new)
-		return (NULL);
-	while (tab[i])
-	{
-		new[i] = ft_strdup(tab[i]);
-		if (!new[i])
-			return (NULL);
-		i++;
-	}
-	new[i] = ft_strdup(red);
-	new[++i] = 0;
-	return (new);
-}
-
-char	**ft_newread(t_files *files)
-{
-	char	**redir;
-	char	*red;
-	int		i;
-
-	i = 0;
-	redir = NULL;
-	while (1)
-	{
-		red = readline("heredoc> ");
-		if (red == NULL)
-			return (NULL);
-		if (ft_strcmp(files->path, red) == 0)
-			break ;
-		redir = ft_addtab(redir, red);
-		if (redir == NULL)
-			return (NULL);
-	}
-	return (redir);
-}
-
-void	ft_open_redirGG(t_files *files)
+void	ft_open_redirgg(t_files *files)
 {
 	int		i;
 	char	**finalred;
@@ -69,7 +21,7 @@ void	ft_open_redirGG(t_files *files)
 	close(fd[1]);
 }
 
-void	ft_open_redirG(t_files *files)
+void	ft_open_redirg(t_files *files)
 {
 	int	fd;
 
@@ -83,7 +35,7 @@ void	ft_open_redirG(t_files *files)
 	close(fd);
 }
 
-void	ft_open_redirDD(t_files *files)
+void	ft_open_redirdd(t_files *files)
 {
 	int	fd;
 
@@ -97,7 +49,7 @@ void	ft_open_redirDD(t_files *files)
 	close(fd);
 }
 
-void	ft_open_redirD(t_files *files)
+void	ft_open_redird(t_files *files)
 {
 	int	fd;
 
@@ -114,19 +66,18 @@ void	ft_open_redirD(t_files *files)
 void	ft_open_files(t_cmd *cmd)
 {
 	t_files	*files;
-	t_files	*tmp;
 
 	files = cmd->files;
 	while (files)
 	{
 		if (files->type == REDIRD)
-			ft_open_redirD(files);
+			ft_open_redird(files);
 		else if (files->type == REDIRDD)
-			ft_open_redirDD(files);
+			ft_open_redirdd(files);
 		else if (files->type == REDIRG)
-			ft_open_redirG(files);
+			ft_open_redirg(files);
 		else if (files->type == REDIRGG)
-			ft_open_redirGG(files);
+			ft_open_redirgg(files);
 		files = files->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 22:47:42 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/08 23:21:59 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:03:23 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	ft_pwd(t_global *global)
 	if (pwd == NULL)
 		return (error_pwd(global), 1);
 	ft_printf("%s\n", pwd);
+	free(pwd);
 	return (0);
 }

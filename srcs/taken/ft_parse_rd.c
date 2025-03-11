@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 00:20:35 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/01/04 01:14:31 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:43:23 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,34 @@ int	ft_parse_quote(char *rd)
 				return (1);
 		}
 		i++;
+	}
+	return (0);
+}
+
+int	ft_check_error_parse(t_taken *current)
+{
+	if (current && current->type == PIPE
+		&& current->type == OR && current->type == AND)
+		return (1);
+	while (current != NULL)
+	{
+		if (current->type == PIPE && (current->next == NULL
+				|| current->next->type == PIPE))
+			return (1);
+		if (current->token[0] == '|' && current->token[1] == '|'
+			&& current->token[2] == '|')
+			return (1);
+		if (current->token[0] == '>' && current->token[1] == '>'
+			&& current->token[2] == '>')
+			return (1);
+		if (current->token[0] == '<' && current->token[1] == '<'
+			&& current->token[2] == '<')
+			return (1);
+		if ((current->type == REDIRDD || current->type == REDIRGG
+				|| current->type == REDIRD || current->type == REDIRG)
+			&& (current->next == NULL || current->next->type != WORD))
+			return (1);
+		current = current->next;
 	}
 	return (0);
 }

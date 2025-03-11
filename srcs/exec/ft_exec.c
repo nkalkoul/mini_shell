@@ -22,10 +22,17 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 {
 	pid_t	pid;
-	int		status;
+	int		fd[2];
 
 	if (ft_isbulding(cmd->arg_cmd) == true)
+	{
+		fd[0] = dup(STDIN_FILENO);
+		fd[1] = dup(STDOUT_FILENO);
+		ft_open_files(cmd);
 		ft_do_bulding(cmd->arg_cmd, global);
+		ft_dup2(fd[0], STDIN_FILENO);
+		ft_dup2(fd[1], STDOUT_FILENO);
+	}
 	else
 	{
 		pid = ft_fork();
@@ -55,10 +62,3 @@ void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
 	else
 		ft_explore_ast(cmd, global, taken);
 }
-
-// void	ft_exec_command(t_cmd *command, t_global *emv)
-// {
-// 	ft_pathfinder();
-
-// }
-

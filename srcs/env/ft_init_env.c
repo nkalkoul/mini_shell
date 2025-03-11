@@ -26,19 +26,13 @@ int	ft_init_env(char *env, t_env **my_env)
 	j = -1;
 	start = 0;
 	new = ft_malloc(sizeof(t_env));
-	if (!new)
-		return (ft_free(*my_env), 1);
 	ft_locks(new, NULL);
 	new->key = ft_malloc(sizeof(char) * (ft_count_key(env) + 1));
-	if (!new->key)
-		return (ft_free(new), ft_free(*my_env), 1);
 	ft_locks(new->key, NULL);
 	while (env[++j] != '=')
 		new->key[j] = env[j];
 	new->key[j] = '\0';
 	new->value = ft_malloc(sizeof(char) * ft_count_value(env, j));
-	if (!new->value)
-		return (ft_free(new), ft_free(*my_env), 1);
 	ft_locks(new->value, NULL);
 	while (env[++j] != '\0')
 		new->value[start++] = env[j];
@@ -72,7 +66,11 @@ char	*ft_getenv(char *key, t_global *global)
 	while (env)
 	{
 		if (env->key != NULL && ft_strcmp(key, env->key) == 0)
+		{
+			ft_printf("key = %s\n", key);
+			ft_printf("env->key = %s\n", env->key);
 			return (ft_strdup(env->value));
+		}
 		env = env->next;
 	}
 	return (NULL);

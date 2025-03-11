@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printlist.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/03/09 00:20:39 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:15:21 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_equal(char *key)
 	int	i;
 
 	i = 0;
-	while(key[i])
+	while (key[i])
 	{
 		if (key[i] == '=')
 			return (1);

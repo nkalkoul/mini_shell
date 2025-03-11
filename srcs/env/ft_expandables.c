@@ -1,71 +1,5 @@
 #include "../../minishell.h"
 
-void	skip_current(t_taken *previous, t_taken **taken)
-{
-	t_taken	*tmp;
-
-	if (previous == NULL)
-		*taken = (*taken)->next;
-	else
-	{
-		tmp = previous->next;
-		previous->next = previous->next->next;
-	}
-}
-
-int	ft_expand_simple(char *token, char quote, int i)
-{
-	i++;
-	while (token[i] && token[i] != quote)
-		i++;
-	return (i + 1);
-}
-
-int	quotes_len(char *token, int i, char quote)
-{
-	int	j;
-
-	j = 1;
-	while (token[i + j] && token[i + j] != quote)
-		++j;
-	return (j + 1);
-}
-
-char	*add_simple_quotes(char *token, int *i, char *result)
-{
-	int		quotes_start;
-	int		quotes_size;
-	char	*quotes;
-
-	quotes_size = quotes_len(token, *i, '\'');
-	quotes = ft_substr(token, *i + 1, quotes_size - 2);
-	if (quotes == NULL)
-		return (NULL);
-	*i += quotes_size;
-	result = ft_re_strjoin(result, quotes);
-	if (!result)
-		return (NULL);
-	return (result);
-}
-
-char	*add_other_chars(char *token, int *i, char *result, char *set)
-{
-	int		j;
-	char	*temp;
-
-	j = 0;
-	while (token[*i + j] != '\0' && ft_strchr(set, token[*i + j]) == NULL)
-		++j;
-	temp = ft_substr(token, *i, j);
-	if (temp == NULL)
-		return (NULL);
-	*i += j;
-	result = ft_re_strjoin(result, temp);
-	if (!result)
-		return (NULL);
-	return (result);
-}
-
 char	*get_dollar_key(char *token, int *i)
 {
 	int		j;
@@ -91,7 +25,25 @@ char	*get_dollar_key(char *token, int *i)
 	return (key);
 }
 
-char	*add_environment_variable(char *token, int *i, char *result, t_global *global)
+char	*add_other_chars(char *token, int *i, char *result, char *set)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (token[*i + j] != '\0' && ft_strchr(set, token[*i + j]) == NULL)
+		++j;
+	temp = ft_substr(token, *i, j);
+	if (temp == NULL)
+		return (NULL);
+	*i += j;
+	result = ft_re_strjoin(result, temp);
+	if (!result)
+		return (NULL);
+	return (result);
+}
+
+char	*add_env_variable(char *token, int *i, char *result, t_global *global)
 {
 	char	*key;
 	char	*value;
@@ -102,28 +54,56 @@ char	*add_environment_variable(char *token, int *i, char *result, t_global *glob
 	value = ft_getenv(key, global);
 	ft_free(key);
 	if (value != NULL)
-	{
 		result = ft_re_strjoin(result, value);
-		if (!result)
+	return (result);
+}
+
+char	*ft_expand_token(char *arg, t_global *global)
+{
+	int		i;
+	char	*token;
+	char	*result;
+
+	i = 0;
+	result = ft_strdup("");
+	if (result == NULL)
+		return (NULL);
+		token = arg;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+		result = add_simple_quotes(token, &i, result);
+		else if (token[i] == '$')
+		result = add_env_variable(token, &i, result, global);
+		else if (token[i] == '"')
+		result = add_double_quotes(token, &i, result, global);
+		else
+		result = add_other_chars(token, &i, result, "$\"\'");
+		if (result == NULL)
 			return (NULL);
 	}
 	return (result);
 }
 
-char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
+int	ft_expandables(t_cmd *cmd, t_global *global)
 {
-	*i += 1;
-	while (token[*i] && token[*i] != '\"')
+	int		i;
+	t_cmd	*current;
+
+	current = cmd;
+	while (current)
 	{
-		if (token[*i] == '$')
-			result = add_environment_variable(token, i, result, global);
-		else
-			result = add_other_chars(token, i, result, "$\"");
-		if (result == NULL)
-			return (NULL);
+		i = 0;
+		while (current->type == CMD && current->arg_cmd[i])
+		{
+			if (ft_strcmp(current->arg_cmd[i], "$?") == 0)
+				break ;
+			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
+			i++;
+		}
+		current = current->next;
 	}
-	*i += 1;
-	return (result);
+	return (0);
 }
 
 // int	ft_expand_token(t_taken	*current, t_global *global)
@@ -182,52 +162,3 @@ char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
 // 	}
 // 	return (0);
 // }
-
-
-char	*ft_expand_token(char *arg, t_global *global)
-{
-	int		i;
-	char	*token;
-	char	*result;
-
-	i = 0;
-	result = ft_strdup("");
-	if (result == NULL)
-		return (NULL);
-	token = arg;
-	while (token[i])
-	{
-		if (token[i] == '\'')
-		result = add_simple_quotes(token, &i, result);
-		else if (token[i] == '$')
-		result = add_environment_variable(token, &i, result, global);
-		else if (token[i] == '"')
-		result = add_double_quotes(token, &i, result, global);
-		else
-		result = add_other_chars(token, &i, result, "$\"\'");
-		if (result == NULL)
-		return (NULL);
-	}
-	return (result);
-}
-
-int	ft_expandables(t_cmd *cmd, t_global *global)
-{
-	int		i;
-	t_cmd	*current;
-
-	current = cmd;
-	while (current)
-	{
-		i = 0;
-		while (current->type == CMD && current->arg_cmd[i])
-		{
-			if (ft_strcmp(current->arg_cmd[i], "$?") == 0)
-				break ;
-			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
-			i++;
-		}
-		current = current->next;
-	}
-	return (0);
-}

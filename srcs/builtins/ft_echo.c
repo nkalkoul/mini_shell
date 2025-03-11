@@ -16,12 +16,16 @@ int	ft_check_n(char	*token)
 	return (0);
 }
 
-void	ft_print_echo(char **cmd, char *arg_cmd, int *i)
+void	ft_print_echo(char **cmd, int *i)
 {
-	if (!cmd[*i + 1])
-		ft_printf("%s", arg_cmd);
-	else
-		ft_printf("%s ", arg_cmd);
+	while (cmd[*i])
+	{
+		if (!cmd[*i + 1])
+			ft_printf("%s", cmd[*i]);
+		else
+			ft_printf("%s ", cmd[*i]);
+		(*i)++;
+	}
 }
 
 int	ft_echo(char **cmd, t_global *global)
@@ -38,19 +42,11 @@ int	ft_echo(char **cmd, t_global *global)
 		i++;
 		while (cmd[i] && ft_check_n(cmd[i]) == 1)
 			i++;
-		while (cmd[i])
-		{
-			ft_print_echo(cmd, cmd[i], &i);
-			i++;
-		}
+		ft_print_echo(cmd, &i);
 	}
 	else
 	{
-		while (cmd[i])
-		{
-			ft_print_echo(cmd, cmd[i], &i);
-			i++;
-		}
+		ft_print_echo(cmd, &i);
 		ft_printf("\n");
 	}
 	return (0);

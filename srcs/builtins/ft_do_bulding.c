@@ -19,7 +19,7 @@ int	ft_isbulding(char **command)
 	return (false);
 }
 
-void ft_do_bulding(char **cmd, t_global *global)
+void	ft_do_bulding(char **cmd, t_global *global)
 {
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		global->status = ft_exit(cmd, global);

@@ -1,33 +1,5 @@
 #include "../../minishell.h"
 
-int	ft_check_error_parse(t_taken *current)
-{
-	if (current && current->type == PIPE
-		&& current->type == OR && current->type == AND)
-		return (1);
-	while (current != NULL)
-	{
-		if (current->type == PIPE && (current->next == NULL
-			|| current->next->type == PIPE))
-			return (1);
-		if (current->token[0] == '|' && current->token[1] == '|'
-			&& current->token[2] == '|')
-			return (1);
-		if (current->token[0] == '>' && current->token[1] == '>'
-			&& current->token[2] == '>')
-			return (1);
-		if (current->token[0] == '<' && current->token[1] == '<'
-			&& current->token[2] == '<')
-			return (1);
-		if ((current->type == REDIRDD || current->type == REDIRGG
-			|| current->type == REDIRD || current->type == REDIRG)
-			&& (current->next == NULL || current->next->type != WORD))
-			return (1);
-		current = current->next;
-	}
-	return (0);
-}
-
 int	ft_count_word(t_taken **current)
 {
 	int		i;
@@ -120,42 +92,4 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 	}
 	ft_lstbackadd_cmd(cmd, new);
 	return (0);
-}
-
-int	ft_operator_to_cmd(t_cmd **tmp, t_taken **current)
-{
-	t_cmd	*new;
-
-	new = ft_calloc(1, sizeof(t_cmd));
-	if (!new)
-		return (1);
-	new->type = (*current)->type;
-	ft_lstbackadd_cmd(tmp, new);
-	(*current) = (*current)->next;
-	return (0);
-}
-
-t_cmd	*ft_parse_lst_taken(t_taken *taken)
-{
-	t_taken	*current;
-	t_cmd	*cmd;
-
-	if (ft_check_error_parse(taken) == 1)
-		return (NULL);
-	current = taken;
-	cmd = NULL;
-	while (current != NULL)
-	{
-		if (ft_token_to_cmd(&current, &cmd) == 1)
-			return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
-		else if (current && (current->type == PIPE
-			|| current->type == OR || current->type == AND))
-		{
-			if (ft_operator_to_cmd(&cmd, &current) == 1)
-				return (ft_free_files(&(cmd)->files), ft_free_cmd(cmd), NULL);
-		}
-	}
-	ft_printf("cmd = ");
-	ft_printcmd(cmd);
-	return (cmd);
 }

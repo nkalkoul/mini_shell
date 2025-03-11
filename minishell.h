@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/10 12:47:21 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:53:01 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ typedef struct s_global
 int		ft_parse_rd(char *rd);
 int		ft_parse_quote(char *rd);
 int		ft_parse_operator(char *rd);
+int		ft_check_error_parse(t_taken *current);
 t_taken	*ft_initaken(char *rd);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
 t_cmd	*ft_parse_lst_taken(t_taken *taken);
+int		ft_token_to_cmd(t_taken **current, t_cmd **cmd);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
 t_env	*ft_take_myenv(char **env);
@@ -95,7 +97,10 @@ void	ft_lstbackadd_env(t_env **lst, t_env *new);
 int		ft_expandables(t_cmd *cmd, t_global *global);
 char	*ft_getenv(char *key, t_global *global);
 char	*ft_expand_token(char *arg, t_global *global);
-int		ft_expand_simple(char *token, char quote, int i);
+char	*add_env_variable(char *token, int *i, char *result, t_global *global);
+char	*add_other_chars(char *token, int *i, char *result, char *set);
+char	*add_double_quotes(char *token, int *i, char *result, t_global *global);
+char	*add_simple_quotes(char *token, int *i, char *result);
 
 		// FONCTION DE PRINT
 void	ft_printaken(t_taken *taken);
