@@ -62,4 +62,5 @@ void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
 		ft_one_command(cmd, global, taken);
 	else
 		ft_explore_ast(cmd, global, taken);
+	ft_if_signal(global);
 }

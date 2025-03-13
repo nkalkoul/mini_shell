@@ -32,6 +32,8 @@ pid_t	ft_fork(void)
 		ft_free(((void *) -1));
 		(perror("FORK"), exit(-1));
 	}
+	if (pid == 0)
+		ft_signal_for_child();
 	return (pid);
 }
 

@@ -41,8 +41,10 @@ void	ft_isor(t_cmd *node, t_global *global, t_taken *taken)
 	pid_t	pid;
 
 	check_is_fork(node->left, global, taken);
-	if (global->status == 0)
+	if (global->status == 0 || global->status == 128 + SIGINT)
 		return ;
+	if (global->status == 128 + SIGQUIT)
+		ft_if_signal(global);
 	check_is_fork(node->right, global, taken);
 }
 
