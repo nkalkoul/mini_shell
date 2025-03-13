@@ -88,6 +88,9 @@ void	ft_export_node(char **cmd, t_global *global)
 			j++;
 			new->value = ft_export_value(cmd[i], new, &j);
 		}
+		ft_locks(new, NULL);
+		ft_locks(new->key, NULL);
+		ft_locks(new->value, NULL);
 		ft_unset_in_export(global, new->key);
 		ft_lstbackadd_env(&(global->my_env), new);
 		i++;

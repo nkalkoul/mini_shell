@@ -18,7 +18,7 @@ int	ft_lstbackadd_garbage(void *ptr, t_garbage_head *garbage)
 		return (-1);
 	new->ptr = ptr;
 	new->next = NULL;
-	new->lock = 1;
+	new->lock = 0;
 	temp = garbage->head;
 	while (temp->next)
 		temp = temp->next;
