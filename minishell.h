@@ -19,6 +19,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <signal.h>
 
 # define CMD 0
 # define WORD 1
@@ -29,6 +30,8 @@
 # define REDIRGG 8
 # define OR 4
 # define AND 5
+
+extern volatile __sig_atomic_t	g_sign;
 
 typedef struct s_garbage
 {
@@ -161,5 +164,11 @@ void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
 char	**ft_newread(t_files *files);
 void	ft_waitpid(int pid, int *status, int options);
+
+		// SIGNAL
+void	ft_signal_for_parent(void);
+void	ft_signal_for_child(void);
+void	ft_if_signal(t_global *glob);
+void	ft_signal_for_exec(void);
 
 #endif

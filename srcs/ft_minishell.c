@@ -12,6 +12,8 @@
 
 #include "../minishell.h"
 
+volatile sig_atomic_t g_sign = 0;
+
 int	init_my_env(t_global *global, char **env)
 {
 	ft_memset(global, 0, sizeof(t_global));
@@ -26,12 +28,25 @@ void	minishell(t_global *global)
 	t_taken	*taken;
 	t_cmd	*cmd;
 	char	*rd;
+	char	*nrd;
 
 	while (1)
 	{
+		ft_signal_for_parent();
 		rd = readline("Mouninashell ");
+		if (g_sign != 0)
+		{
+			global->status = g_sign;
+			g_sign = 0;
+			ft_clearbag(NULL);
+			free(rd);
+			continue ;
+		}
 		if (rd == NULL)
 			return (ft_free_and_exit(1));
+		nrd = ft_strdup(rd);
+		free(rd);
+		rd = nrd;
 		if (rd[0] == '\0')
 			continue ;
 		add_history(rd);
