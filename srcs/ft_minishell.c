@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 12:56:13 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:22:50 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	minishell(t_global *global)
 			continue ;
 		}
 		if (rd == NULL)
-			return (ft_free_and_exit(1));
+			return (ft_free_and_exit(global->status));
 		nrd = ft_strdup(rd);
 		free(rd);
 		rd = nrd;
@@ -56,7 +56,7 @@ void	minishell(t_global *global)
 			ft_clearbag(NULL);
 			continue ;
 		}
-		cmd = ft_parse_lst_taken(taken);
+		cmd = ft_parse_lst_taken(taken, global);
 		if (cmd == NULL)
 		{
 			ft_putendl_fd("Error Parsing\n", 2);

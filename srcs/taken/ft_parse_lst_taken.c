@@ -13,13 +13,16 @@ int	ft_operator_to_cmd(t_cmd **tmp, t_taken **current)
 	return (0);
 }
 
-t_cmd	*ft_parse_lst_taken(t_taken *taken)
+t_cmd	*ft_parse_lst_taken(t_taken *taken, t_global global)
 {
 	t_taken	*current;
 	t_cmd	*cmd;
 
 	if (ft_check_error_parse(taken) == 1)
+	{
+		global.status = 2;
 		return (NULL);
+	}
 	current = taken;
 	cmd = NULL;
 	while (current != NULL)

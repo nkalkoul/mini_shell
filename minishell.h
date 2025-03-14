@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 14:42:23 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:23:02 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		ft_parse_operator(char *rd);
 int		ft_check_error_parse(t_taken *current);
 t_taken	*ft_initaken(char *rd);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
-t_cmd	*ft_parse_lst_taken(t_taken *taken);
+t_cmd	*ft_parse_lst_taken(t_taken *taken,t_global global);
 int		ft_token_to_cmd(t_taken **current, t_cmd **cmd);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);

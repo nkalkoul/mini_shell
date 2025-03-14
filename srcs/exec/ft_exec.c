@@ -15,7 +15,7 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	if (execve(path, cmd->arg_cmd, env) == -1)
 	{
 		perror(cmd->arg_cmd[0]);
-		ft_free_and_exit(1);
+		ft_free_and_exit(2);
 	}
 }
 
@@ -57,6 +57,7 @@ void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken)
 
 void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
 {
+	ft_signal_for_exec();
 	cmd = ft_ast(cmd);
 	if (cmd->type == CMD)
 		ft_one_command(cmd, global, taken);

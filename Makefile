@@ -6,7 +6,7 @@ SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c ft
 		$(addprefix srcs/garbage/, ft_garbage.c ft_garb_utils.c ft_garb_locks.c) \
 		$(addprefix srcs/ast/, ft_ast.c tests_utils.c) \
 		$(addprefix srcs/exec/, ft_exec.c ft_exec_utils.c ft_exec_is.c ft_redir.c ft_env2d.c ft_check_path.c ft_heredoc.c) \
-		$(addprefix srcs/signal/, ft_signal.c)
+		$(addprefix srcs/signal/, ft_signal.c ft_signal_utils.c)
 
 CC =	cc -g3 #-Wall -Werror -Wextra
 DIRLIB = ./libft
