@@ -9,10 +9,10 @@ int	ft_print_export(char **cmd, t_global *global)
 	{
 		while (env)
 		{
-			ft_printf("%s", env->key);
+			ft_printf(1, "%s", env->key);
 			if (env->value)
-				ft_printf("=\"%s\"", env->value);
-			ft_printf("\n");
+				ft_printf(1, "=\"%s\"", env->value);
+			ft_printf(1, "\n");
 			env = env->next;
 		}
 	}

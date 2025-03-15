@@ -94,15 +94,14 @@ char	*fts_strlcpy(char *dest, char *src, size_t len_of_s1);
 
 /* ft_printf */
 
-int		ft_printf(const char *str, ...);
-int		ft_putintd(va_list carg);
-int		ft_putc(va_list carg);
-int		ft_puts(char *str);
-int		ft_putu(unsigned int n);
-int		ft_putptr(void *ptr);
-int		ft_putnbrbase(unsigned long nb, char *base);
-int		ft_putptr(void *ptr);
-int		ft_putnbrbase(unsigned long nb, char *base);
-int		ft_puthex(unsigned int nb, char format);
+int		ft_printf(int fd, const char *str, ...);
+int		ft_putintd(int fd, va_list carg);
+int		ft_putc(int fd, va_list carg);
+int		ft_puts(int fd, char *str);
+int		ft_putu(int fd, unsigned int n);
+int		ft_putptr(int fd, void *ptr);
+int		ft_putptr(int fd, void *ptr);
+int		ft_putnbrbase(int fd, unsigned long nb, char *base);
+int		ft_puthex(int fd, unsigned int nb, char format);
 
 #endif

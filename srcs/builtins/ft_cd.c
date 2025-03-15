@@ -43,13 +43,13 @@ int	ft_cd(char **cmd, t_global *global)
 	global->status = 0;
 	if (cmd[2])
 	{
-		ft_printf("Too many arguments\n");
+		ft_printf(2, "Too many arguments\n");
 		global->status = 1;
 	}
 	pwd = getcwd(NULL, 0);
 	if (chdir(cmd[1]) == -1)
 	{
-		ft_printf("%s: Not a directory\n", cmd[1]);
+		ft_printf(2, "%s: Not a directory\n", cmd[1]);
 		global->status = 1;
 	}
 	set_pwd(global);

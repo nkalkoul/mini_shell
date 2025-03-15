@@ -21,9 +21,9 @@ void	ft_print_echo(char **cmd, int *i)
 	while (cmd[*i])
 	{
 		if (!cmd[*i + 1])
-			ft_printf("%s", cmd[*i]);
+			ft_printf(1, "%s", cmd[*i]);
 		else
-			ft_printf("%s ", cmd[*i]);
+			ft_printf(1, "%s ", cmd[*i]);
 		(*i)++;
 	}
 }
@@ -34,9 +34,9 @@ int	ft_echo(char **cmd, t_global *global)
 
 	i = 1;
 	if (!cmd[1])
-		ft_printf("\n");
+		ft_putstr_fd("\n", 1);
 	else if (ft_strcmp(cmd[1], "$?") == 0)
-		ft_printf("%i\n", global->status);
+		ft_printf(1, "%i\n", global->status);
 	else if (ft_check_n(cmd[i]) == 1)
 	{
 		i++;
@@ -47,7 +47,7 @@ int	ft_echo(char **cmd, t_global *global)
 	else
 	{
 		ft_print_echo(cmd, &i);
-		ft_printf("\n");
+		ft_printf(1, "\n");
 	}
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_putintd(va_list carg)
+int	ft_putintd(int fd, va_list carg)
 {
 	int		count;
 	char	*str;
@@ -20,36 +20,36 @@ int	ft_putintd(va_list carg)
 	count = 0;
 	str = ft_itoa(va_arg(carg, int));
 	count = ft_strlen(str);
-	ft_putstr_fd(str, 1);
+	ft_putstr_fd(str, fd);
 	ft_free(str);
 	return (count);
 }
 
-int	ft_putc(va_list carg)
+int	ft_putc(int fd, va_list carg)
 {
-	ft_putchar_fd(va_arg(carg, int), 1);
+	ft_putchar_fd(va_arg(carg, int), fd);
 	return (1);
 }
 
-int	ft_puts(char *str)
+int	ft_puts(int fd, char *str)
 {
 	int		count;
 
 	if (!str)
-		return (write(1, "(null)", 6));
+		return (write(2, "(null)", 6));
 	count = ft_strlen(str);
-	ft_putstr_fd(str, 1);
+	ft_putstr_fd(str, fd);
 	return (count);
 }
 
-int	ft_putu(unsigned int n)
+int	ft_putu(int fd, unsigned int n)
 {
 	int	count;
 
 	count = 0;
 	if (n > 9)
-		count += ft_putu(n / 10);
+		count += ft_putu(fd, n / 10);
 	count++;
-	ft_putchar_fd((n % 10) + '0', 1);
+	ft_putchar_fd((n % 10) + '0', fd);
 	return (count);
 }

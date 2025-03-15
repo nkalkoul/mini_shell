@@ -30,7 +30,7 @@ int	ft_pwd(t_global *global)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 		return (error_pwd(global), 1);
-	ft_printf("%s\n", pwd);
+	ft_printf(1, "%s\n", pwd);
 	free(pwd);
 	return (0);
 }

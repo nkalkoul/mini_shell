@@ -1,5 +1,11 @@
 #include "../../minishell.h"
 
+void	ft_printerrord(int i, char *f)
+{
+	ft_printf(2, "mouniashell: warning: here-document at ligne %d", i);
+	ft_printf(2, " delimited by end-of-file (wanted'%s')\n", f);
+}
+
 char	**ft_addtab(char **tab, char *red)
 {
 	char	**new;
@@ -26,7 +32,7 @@ char	**ft_addtab(char **tab, char *red)
 	return (new);
 }
 
-char	**ft_newread(t_files *files)
+char	**ft_newread(t_files *files, t_global *g)
 {
 	char	**redir;
 	char	*red;
@@ -34,11 +40,20 @@ char	**ft_newread(t_files *files)
 
 	i = 0;
 	redir = NULL;
-	while (1)
+	while (++i)
 	{
 		red = readline("heredoc> ");
-		if (red == NULL)
+		if (g_sign != 0)
+		{
+			g->status = g_sign;
+			g_sign = 0;
 			return (NULL);
+		}
+		if (red == NULL)
+		{
+			ft_printerrord(i, files->path);
+			break ;
+		}
 		if (ft_strcmp(files->path, red) == 0)
 			break ;
 		redir = ft_addtab(redir, red);

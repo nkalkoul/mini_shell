@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_putnbrbase(unsigned long nb, char *base)
+int	ft_putnbrbase(int fd, unsigned long nb, char *base)
 {
 	size_t	lenb;
 	int		count;
@@ -21,39 +21,39 @@ int	ft_putnbrbase(unsigned long nb, char *base)
 	lenb = ft_strlen(base);
 	if (nb >= (unsigned long)lenb)
 	{
-		count += ft_putnbrbase(nb / lenb, base);
-		count += ft_putnbrbase(nb % lenb, base);
+		count += ft_putnbrbase(fd, nb / lenb, base);
+		count += ft_putnbrbase(fd, nb % lenb, base);
 	}
 	else
 	{
-		ft_putchar_fd(base[nb], 1);
+		ft_putchar_fd(base[nb], fd);
 		count++;
 	}
 	return (count);
 }
 
-int	ft_putptr(void *ptr)
+int	ft_putptr(int fd, void *ptr)
 {
 	int				count;
 	unsigned long	vaddr;
 
 	count = 0;
 	if (!ptr)
-		return (write(1, "(nil)", 5));
+		return (write(2, "(nil)", 5));
 	vaddr = (unsigned long long)ptr;
 	count += write(1, "0x", 2);
-	count += ft_putnbrbase(vaddr, "0123456789abcdef");
+	count += ft_putnbrbase(fd, vaddr, "0123456789abcdef");
 	return (count);
 }
 
-int	ft_puthex(unsigned int nb, char format)
+int	ft_puthex(int fd, unsigned int nb, char format)
 {
 	int	count;
 
 	count = 0;
 	if (format == 'x')
-		count += ft_putnbrbase(nb, "0123456789abcdef");
+		count += ft_putnbrbase(fd, nb, "0123456789abcdef");
 	if (format == 'X')
-		count += ft_putnbrbase(nb, "0123456789ABCDEF");
+		count += ft_putnbrbase(fd, nb, "0123456789ABCDEF");
 	return (count);
 }

@@ -82,6 +82,7 @@ typedef struct s_global
 {
 	t_env	*my_env;
 	int		status;
+	char	*name;
 }	t_global;
 
 		// FONCTION DE TOKEN
@@ -91,8 +92,8 @@ int		ft_parse_operator(char *rd);
 int		ft_check_error_parse(t_taken *current);
 t_taken	*ft_initaken(char *rd);
 void	ft_lstbackadd(t_taken **lst, t_taken *new);
-t_cmd	*ft_parse_lst_taken(t_taken *taken,t_global global);
-int		ft_token_to_cmd(t_taken **current, t_cmd **cmd);
+t_cmd	*ft_parse_lst_taken(t_taken *taken, t_global *global);
+int		ft_token_to_cmd(t_taken **current, t_cmd **cmd, t_global *global);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
 t_env	*ft_take_myenv(char **env);
@@ -162,7 +163,7 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global);
 void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken);
 void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
-char	**ft_newread(t_files *files);
+char	**ft_newread(t_files *files, t_global *g);
 void	ft_waitpid(int pid, int *status, int options);
 
 		// SIGNAL

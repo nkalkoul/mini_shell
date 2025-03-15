@@ -33,7 +33,7 @@ void	minishell(t_global *global)
 	while (1)
 	{
 		ft_signal_for_parent();
-		rd = readline("Mouninashell ");
+		rd = readline("mouninashell ");
 		if (g_sign != 0)
 		{
 			global->status = g_sign;
@@ -59,7 +59,6 @@ void	minishell(t_global *global)
 		cmd = ft_parse_lst_taken(taken, global);
 		if (cmd == NULL)
 		{
-			ft_putendl_fd("Error Parsing\n", 2);
 			ft_clearbag(NULL);
 			continue ;
 		}

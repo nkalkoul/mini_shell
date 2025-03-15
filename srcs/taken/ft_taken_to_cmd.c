@@ -48,7 +48,7 @@ int	ft_token_to_word(t_taken **current, t_cmd **cmd)
 	return (0);
 }
 
-int	ft_token_to_files(t_taken **current, t_cmd *cmd)
+int	ft_token_to_files(t_taken **current, t_cmd *cmd, t_global *g)
 {
 	t_files	*new;
 
@@ -64,12 +64,16 @@ int	ft_token_to_files(t_taken **current, t_cmd *cmd)
 		return (1);
 	new->next = NULL;
 	if (new->type == REDIRGG)
-		new->heredoc_content = ft_newread(new);
+	{
+		new->heredoc_content = ft_newread(new, g);
+		if (new->heredoc_content == NULL)
+			return (1);
+	}
 	ft_lstbackadd_files(&cmd->files, new);
 	return (0);
 }
 
-int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
+int	ft_token_to_cmd(t_taken **current, t_cmd **cmd, t_global *g)
 {
 	t_cmd	*new;
 
@@ -80,7 +84,7 @@ int	ft_token_to_cmd(t_taken **current, t_cmd **cmd)
 		if ((*current)->type == REDIRDD || (*current)->type == REDIRGG
 			|| (*current)->type == REDIRD || (*current)->type == REDIRG)
 		{
-			if (ft_token_to_files(current, new) == 1)
+			if (ft_token_to_files(current, new, g) == 1)
 				return (1);
 		}
 		else if ((*current)->type == WORD && new->arg_cmd == NULL)

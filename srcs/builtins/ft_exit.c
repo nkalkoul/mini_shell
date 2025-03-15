@@ -47,7 +47,7 @@ int	ft_is_arg_num(char *cmd)
 
 int	ft_exit(char **cmd, t_global *global)
 {
-	ft_printf("exit\n");
+	ft_printf(1, "exit\n");
 	if (!cmd[1])
 		ft_free_and_exit(0);
 	else if (ft_atol(cmd[1]) > 9223372036854775807

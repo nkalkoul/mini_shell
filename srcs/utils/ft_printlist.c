@@ -39,17 +39,17 @@ void	ft_printcmd(t_cmd *cmd)
 		while (current->arg_cmd && current->arg_cmd[i])
 		{
 			if (current->arg_cmd)
-				ft_printf("%s ", current->arg_cmd[i]);
+				ft_printf(1, "%s ", current->arg_cmd[i]);
 			i++;
 		}
 		if (current->type)
-			ft_printf("operator is %d\n", current->type);
+			ft_printf(1, "operator is %d\n", current->type);
 		else
-			ft_printf("\n");
+			ft_printf(1, "\n");
 		if (current->next)
 		{
-			printf(" |\n");
-			printf(" V\n");
+			ft_printf(1, " |\n");
+			ft_printf(1, " V\n");
 		}
 		current = current->next;
 	}
@@ -62,7 +62,7 @@ void	ft_printaken(t_taken *taken)
 	current = taken;
 	while (current != NULL)
 	{
-		ft_printf("\ntoken ==== %s$\n", current->token);
+		ft_printf(1, "\ntoken ==== %s$\n", current->token);
 		current = current->next;
 	}
 }
@@ -94,8 +94,8 @@ int	ft_printenv(char **cmd, t_global *global)
 	{
 		if (current->value)
 		{
-			ft_printf("%s=", current->key);
-			ft_printf("%s\n", current->value);
+			ft_printf(1, "%s=", current->key);
+			ft_printf(1, "%s\n", current->value);
 		}
 		current = current->next;
 	}
