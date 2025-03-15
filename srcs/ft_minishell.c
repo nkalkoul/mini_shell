@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 09:30:22 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/15 15:18:11 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ volatile sig_atomic_t	g_sign = 0;
 int	init_my_env(t_global *global, char **env)
 {
 	ft_memset(global, 0, sizeof(t_global));
-	global->my_env = ft_take_myenv(env);
+	global->my_env = ft_take_myenv(env, global);
 	if (!global->my_env)
 		return (1);
 	return (0);

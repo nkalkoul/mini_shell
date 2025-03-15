@@ -42,18 +42,37 @@ int	ft_init_env(char *env, t_env **my_env)
 	return (0);
 }
 
-t_env	*ft_take_myenv(char **env)
+t_env	*ft_take_myenv(char **env, t_global *g)
 {
 	int		i;
 	t_env	*my_env;
+	t_env	*pwd;
+	t_env	*shlvl;
 
 	i = 0;
-	my_env = NULL;
-	while (env[i])
+	if (!env)
 	{
-		if (ft_init_env(env[i], &my_env) == 1)
-			return (NULL);
-		i++;
+		pwd = ft_malloc(sizeof(t_env));
+		my_env->key = ft_strdup("PWD");
+		my_env->value = ft_pwd2(g);
+		pwd->next = NULL;
+		ft_lstbackadd_env(&my_env, pwd);
+		shlvl = ft_malloc(sizeof(t_env));
+		my_env = my_env->next;
+		my_env->key = ft_strdup("SHLVL");
+		my_env->value = ft_strdup("1");
+		shlvl->next = NULL;
+		ft_lstbackadd_env(&my_env, shlvl);
+		printf("HELLO\n");
+	}
+	else
+	{
+		while (env[i])
+		{
+			if (ft_init_env(env[i], &my_env) == 1)
+				return (NULL);
+			i++;
+		}
 	}
 	return (my_env);
 }
