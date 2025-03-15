@@ -21,7 +21,7 @@ void	ft_open_redirgg(t_files *files)
 	close(fd[1]);
 }
 
-void	ft_open_redirg(t_files *files)
+int	ft_open_redirg(t_files *files)
 {
 	int	fd;
 
@@ -29,13 +29,13 @@ void	ft_open_redirg(t_files *files)
 	if (fd == -1)
 	{
 		perror(files->path);
-		exit(1);
+		return (1);
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	ft_dup2(fd, STDIN_FILENO);
+	return (0);
 }
 
-void	ft_open_redirdd(t_files *files)
+int	ft_open_redirdd(t_files *files)
 {
 	int	fd;
 
@@ -43,13 +43,13 @@ void	ft_open_redirdd(t_files *files)
 	if (fd == -1)
 	{
 		perror(files->path);
-		exit(1);
+		return (1);
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	ft_dup2(fd, STDOUT_FILENO);
+	return (0);
 }
 
-void	ft_open_redird(t_files *files)
+int	ft_open_redird(t_files *files)
 {
 	int	fd;
 
@@ -57,27 +57,28 @@ void	ft_open_redird(t_files *files)
 	if (fd == -1)
 	{
 		perror(files->path);
-		exit(1);
+		return (1);
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	ft_dup2(fd, STDOUT_FILENO);
+	return (0);
 }
 
-void	ft_open_files(t_cmd *cmd)
+int	ft_open_files(t_cmd *cmd)
 {
 	t_files	*files;
 
 	files = cmd->files;
 	while (files)
 	{
-		if (files->type == REDIRD)
-			ft_open_redird(files);
-		else if (files->type == REDIRDD)
-			ft_open_redirdd(files);
-		else if (files->type == REDIRG)
-			ft_open_redirg(files);
+		if (files->type == REDIRD && ft_open_redird(files) == 1)
+			return (1);
+		else if (files->type == REDIRDD && ft_open_redirdd(files) == 1)
+			return (1);
+		else if (files->type == REDIRG && ft_open_redirg(files) == 1)
+			return (1);
 		else if (files->type == REDIRGG)
 			ft_open_redirgg(files);
 		files = files->next;
 	}
+	return (0);
 }

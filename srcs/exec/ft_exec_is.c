@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 09:25:04 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/15 10:49:18 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void	ft_isword(t_cmd *node, t_global *global)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
-		ft_open_files(node);
+		if (ft_open_files(node) == 1)
+		{
+			(close(fd[0]), close(fd[1]));
+			ft_free_and_exit(1);
+		}
 		ft_do_bulding(node->arg_cmd, global);
 		ft_dup2(fd[0], STDIN_FILENO);
 		ft_dup2(fd[1], STDOUT_FILENO);

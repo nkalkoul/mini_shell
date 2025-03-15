@@ -25,13 +25,20 @@ void	ft_one_command(t_cmd *cmd, t_global *global)
 	int		fd[2];
 
 	if (ft_verif(cmd) == 1)
+	{
+		global->status = 1;
 		return ;
+	}
 	ft_expandables(cmd, global);
 	if (ft_isbulding(cmd->arg_cmd) == true)
 	{
 		fd[0] = dup(STDIN_FILENO);
 		fd[1] = dup(STDOUT_FILENO);
-		ft_open_files(cmd);
+		if (ft_open_files(cmd) == 1)
+		{
+			(close(fd[0]), close(fd[1]));
+			return ;
+		}
 		ft_do_bulding(cmd->arg_cmd, global);
 		ft_dup2(fd[0], STDIN_FILENO);
 		ft_dup2(fd[1], STDOUT_FILENO);

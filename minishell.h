@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 09:24:31 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/15 10:47:34 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	ft_isand(t_cmd *node, t_global *global);
 void	ft_isword(t_cmd *node, t_global *global);
 int		*ft_pipe(int *fd);
 void	ft_explore_ast(t_cmd *node, t_global *global);
-void	ft_open_files(t_cmd *cmd);
+int		ft_open_files(t_cmd *cmd);
 char	**ft_put_env2d(t_global *global);
 char	*ft_pathfinder(t_cmd *cmd, t_global *global);
 void	ft_execution(t_cmd *cmd, t_global *global);

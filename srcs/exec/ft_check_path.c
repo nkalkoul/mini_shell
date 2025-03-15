@@ -29,7 +29,7 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global)
 	if (!env)
 		return (NULL);
 	if (!cmd->arg_cmd)
-		exit(1);
+		ft_free_and_exit(1);
 	if (access(cmd->arg_cmd[0], X_OK) == 0)
 		return (ft_strdup(cmd->arg_cmd[0]));
 	while (env)
