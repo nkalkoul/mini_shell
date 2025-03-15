@@ -11,6 +11,7 @@ void	set_oldpwd(t_global *global, char *pwd)
 		{
 			ft_free(env->value);
 			env->value = ft_strdup(pwd);
+			ft_locks(env->value, NULL);
 			return ;
 		}
 		env = env->next;
@@ -30,6 +31,7 @@ void	set_pwd(t_global *global)
 		{
 			ft_free(env->value);
 			env->value = ft_strdup(pwd);
+			ft_locks(env->value, NULL);
 			return ;
 		}
 		env = env->next;

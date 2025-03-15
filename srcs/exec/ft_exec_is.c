@@ -3,25 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/13 17:54:05 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/15 09:25:04 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void ft_waitpid(int pid, int *status, int options)
-{
-	waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
-		*status = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-		*status = 128 + WTERMSIG(*status);
-}
-
-void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
+void	check_is_fork(t_cmd *node, t_global *global)
 {
 	pid_t	pid;
 
@@ -29,38 +20,40 @@ void	check_is_fork(t_cmd *node, t_global *global, t_taken *taken)
 	{
 		pid = ft_fork();
 		if (pid == 0)
-			ft_explore_ast(node, global, taken);
+			ft_explore_ast(node, global);
 		ft_waitpid(pid, &global->status, 0);
 	}
 	else
-		ft_explore_ast(node, global, taken);
+		ft_explore_ast(node, global);
 }
 
-void	ft_isor(t_cmd *node, t_global *global, t_taken *taken)
+void	ft_isor(t_cmd *node, t_global *global)
 {
 	pid_t	pid;
 
-	check_is_fork(node->left, global, taken);
+	check_is_fork(node->left, global);
 	if (global->status == 0 || global->status == 128 + SIGINT)
 		return ;
 	if (global->status == 128 + SIGQUIT)
 		ft_if_signal(global);
-	check_is_fork(node->right, global, taken);
+	check_is_fork(node->right, global);
 }
 
-void	ft_isand(t_cmd *node, t_global *global, t_taken *taken)
+void	ft_isand(t_cmd *node, t_global *global)
 {
 	pid_t	pid;
 
-	check_is_fork(node->left, global, taken);
+	check_is_fork(node->left, global);
 	if (global->status == 0)
-		check_is_fork(node->right, global, taken);
+		check_is_fork(node->right, global);
 }
 
-void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
+void	ft_isword(t_cmd *node, t_global *global)
 {
 	int		fd[2];
 
+	if (ft_verif(node) == 1)
+		return ;
 	ft_expandables(node, global);
 	if (ft_isbulding(node->arg_cmd) == true)
 	{
@@ -75,7 +68,7 @@ void	ft_isword(t_cmd *node, t_global *global, t_taken *taken)
 		ft_exec(node, global);
 }
 
-void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
+void	ft_ispipe(t_cmd *node, t_global *global)
 {
 	int	fd[2];
 	int	pidleft;
@@ -88,7 +81,7 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 	{
 		close(fd[0]);
 		ft_dup2(fd[1], STDOUT_FILENO);
-		ft_explore_ast(node->left, global, taken);
+		ft_explore_ast(node->left, global);
 		ft_free_and_exit(0);
 	}
 	pidright = ft_fork();
@@ -96,7 +89,7 @@ void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken)
 	{
 		close(fd[1]);
 		ft_dup2(fd[0], STDIN_FILENO);
-		ft_explore_ast(node->right, global, taken);
+		ft_explore_ast(node->right, global);
 		ft_free_and_exit(0);
 	}
 	(close(fd[0]), close(fd[1]));

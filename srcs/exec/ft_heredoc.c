@@ -57,8 +57,6 @@ char	**ft_newread(t_files *files, t_global *g)
 		if (ft_strcmp(files->path, red) == 0)
 			break ;
 		redir = ft_addtab(redir, red);
-		if (redir == NULL)
-			return (NULL);
 	}
 	return (redir);
 }

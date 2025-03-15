@@ -19,11 +19,13 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	}
 }
 
-void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
+void	ft_one_command(t_cmd *cmd, t_global *global)
 {
 	pid_t	pid;
 	int		fd[2];
 
+	if (ft_verif(cmd) == 1)
+		return ;
 	ft_expandables(cmd, global);
 	if (ft_isbulding(cmd->arg_cmd) == true)
 	{
@@ -43,25 +45,25 @@ void	ft_one_command(t_cmd *cmd, t_global *global, t_taken *taken)
 	}
 }
 
-void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken)
+void	ft_explore_ast(t_cmd *node, t_global *global)
 {
 	if (node->type == AND)
-		ft_isand(node, global, taken);
+		ft_isand(node, global);
 	else if (node->type == OR)
-		ft_isor(node, global, taken);
+		ft_isor(node, global);
 	else if (node->type == PIPE)
-		ft_ispipe(node, global, taken);
+		ft_ispipe(node, global);
 	else if (node->type == CMD)
-		ft_isword(node, global, taken);
+		ft_isword(node, global);
 }
 
-void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken)
+void	ft_execution(t_cmd *cmd, t_global *global)
 {
 	ft_signal_for_exec();
 	cmd = ft_ast(cmd);
 	if (cmd->type == CMD)
-		ft_one_command(cmd, global, taken);
+		ft_one_command(cmd, global);
 	else
-		ft_explore_ast(cmd, global, taken);
+		ft_explore_ast(cmd, global);
 	ft_if_signal(global);
 }

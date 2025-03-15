@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/13 18:22:50 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/15 09:30:22 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-volatile sig_atomic_t g_sign = 0;
+volatile sig_atomic_t	g_sign = 0;
 
 int	init_my_env(t_global *global, char **env)
 {
@@ -23,9 +23,28 @@ int	init_my_env(t_global *global, char **env)
 	return (0);
 }
 
-void	minishell(t_global *global)
+t_cmd	*ft_parsing(t_global *global, char *rd)
 {
 	t_taken	*taken;
+	t_cmd	*cmd;
+
+	taken = ft_initaken(rd);
+	if (!taken)
+	{
+		ft_clearbag(NULL);
+		return (NULL);
+	}
+	cmd = ft_parse_lst_taken(taken, global);
+	if (cmd == NULL)
+	{
+		ft_clearbag(NULL);
+		return (NULL);
+	}
+	return (cmd);
+}
+
+void	minishell(t_global *global)
+{
 	t_cmd	*cmd;
 	char	*rd;
 	char	*nrd;
@@ -50,19 +69,10 @@ void	minishell(t_global *global)
 		if (rd[0] == '\0')
 			continue ;
 		add_history(rd);
-		taken = ft_initaken(rd);
-		if (!taken)
-		{
-			ft_clearbag(NULL);
+		cmd = ft_parsing(global, rd);
+		if (!cmd)
 			continue ;
-		}
-		cmd = ft_parse_lst_taken(taken, global);
-		if (cmd == NULL)
-		{
-			ft_clearbag(NULL);
-			continue ;
-		}
-		ft_execution(cmd, global, taken);
+		ft_execution(cmd, global);
 		ft_clearbag(NULL);
 	}
 }

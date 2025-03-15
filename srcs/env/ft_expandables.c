@@ -97,73 +97,11 @@ int	ft_expandables(t_cmd *cmd, t_global *global)
 	t_cmd	*current;
 
 	current = cmd;
-	// while (current)
-	// {
-		i = 0;
-		while (current && current->arg_cmd[i])
-		{
-			current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
-			i++;
-		}
-		
-	// 	// current = current->next;
-	// }
+	i = 0;
+	while (current && current->arg_cmd[i])
+	{
+		current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
+		i++;
+	}
 	return (0);
 }
-
-// int	ft_expand_token(t_taken	*current, t_global *global)
-// {
-// 	int		i;
-// 	char	*token;
-// 	char	*result;
-
-// 	i = 0;
-// 	result = ft_strdup("");
-// 	if (result == NULL)
-// 		return (EXIT_FAILURE);
-// 	token = current->token;
-// 	while (token[i])
-// 	{
-// 		if (token[i] == '\'')
-// 			result = add_simple_quotes(token, &i, result);
-// 		else if (token[i] == '$')
-// 			result = add_environment_variable(token, &i, result, global);
-// 		else if (token[i] == '"')
-// 			result = add_double_quotes(token, &i, result, global);
-// 		else
-// 			result = add_other_chars(token, &i, result, "$\"\'");
-// 		if (result == NULL)
-// 			return (EXIT_FAILURE);
-// 	}
-// 	current->token = result;
-// 	return (0);
-// }
-
-// int	ft_expandables(t_taken **taken, t_global *global)
-// {
-// 	t_taken	*current;
-// 	t_taken	*previous;
-// 	t_taken	*tmp;
-
-// 	previous = NULL;
-// 	tmp = NULL;
-// 	current = *taken;
-// 	while (current != NULL)
-// 	{
-// 		if (ft_expand_token(current, global) == 1)
-// 			return (1);
-// 		if (current->token[0] == '\0')
-// 		{
-// 			skip_current(previous, taken);
-// 			tmp = current;
-// 			current = current->next;
-// 			ft_free(tmp);
-// 		}
-// 		else
-// 		{
-// 			previous = current;
-// 			current = current->next;
-// 		}
-// 	}
-// 	return (0);
-// }

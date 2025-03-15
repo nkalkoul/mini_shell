@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:10:44 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/02 07:42:51 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/15 08:18:42 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,13 @@ void	ft_dup2(int fd1, int fd2)
 {
 	dup2(fd1, fd2);
 	close(fd1);
+}
+
+void	ft_waitpid(int pid, int *status, int options)
+{
+	waitpid(pid, status, 0);
+	if (WIFEXITED(*status))
+		*status = WEXITSTATUS(*status);
+	else if (WIFSIGNALED(*status))
+		*status = 128 + WTERMSIG(*status);
 }

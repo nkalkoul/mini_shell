@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/13 18:23:02 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/15 09:24:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	ft_free_cmd(t_cmd *cmd);
 void	ft_free2d(char **str);
 void	ft_free_env(t_env *my_env);
 void	ft_free_and_exit(int status);
+int		ft_verif(t_cmd *cmd);
 
 		// FONCTION DE GARBAGE
 void	*ft_malloc(long int l);
@@ -151,16 +152,16 @@ void	ft_clearbag(t_garbage_head *garb);
 		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
 pid_t	ft_fork(void);
-void	ft_ispipe(t_cmd *node, t_global *global, t_taken *taken);
-void	ft_isor(t_cmd *node, t_global *global, t_taken *taken);
-void	ft_isand(t_cmd *node, t_global *global, t_taken *taken);
-void	ft_isword(t_cmd *node, t_global *global, t_taken *taken);
+void	ft_ispipe(t_cmd *node, t_global *global);
+void	ft_isor(t_cmd *node, t_global *global);
+void	ft_isand(t_cmd *node, t_global *global);
+void	ft_isword(t_cmd *node, t_global *global);
 int		*ft_pipe(int *fd);
-void	ft_explore_ast(t_cmd *node, t_global *global, t_taken *taken);
+void	ft_explore_ast(t_cmd *node, t_global *global);
 void	ft_open_files(t_cmd *cmd);
 char	**ft_put_env2d(t_global *global);
 char	*ft_pathfinder(t_cmd *cmd, t_global *global);
-void	ft_execution(t_cmd *cmd, t_global *global, t_taken *taken);
+void	ft_execution(t_cmd *cmd, t_global *global);
 void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
 char	**ft_newread(t_files *files, t_global *g);
