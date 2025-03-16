@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:16:33 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 10:49:18 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 10:12:18 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_is_fork(t_cmd *node, t_global *global)
 
 	if (node->type == CMD && ft_isbulding(node->arg_cmd) == false)
 	{
-		pid = ft_fork();
+		pid = ft_fork(global);
 		if (pid == 0)
 			ft_explore_ast(node, global);
 		ft_waitpid(pid, &global->status, 0);
@@ -80,7 +80,7 @@ void	ft_ispipe(t_cmd *node, t_global *global)
 	int	status;
 
 	ft_pipe(fd);
-	pidleft = ft_fork();
+	pidleft = ft_fork(global);
 	if (pidleft == 0)
 	{
 		close(fd[0]);
@@ -88,7 +88,7 @@ void	ft_ispipe(t_cmd *node, t_global *global)
 		ft_explore_ast(node->left, global);
 		ft_free_and_exit(0);
 	}
-	pidright = ft_fork();
+	pidright = ft_fork(global);
 	if (pidright == 0)
 	{
 		close(fd[1]);

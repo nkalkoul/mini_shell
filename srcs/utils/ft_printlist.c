@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printlist.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 06:26:48 by nas91             #+#    #+#             */
-/*   Updated: 2025/03/11 11:15:21 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 09:24:23 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_printfiles(t_cmd *cmd)
 	current = cmd->files;
 	while (current)
 	{
-		printf("redir[%d] = '%d %s'\n", i, current->type, current->path);
+		ft_printf(1, "redir[%d] = '%d %s'\n", i, current->type, current->path);
 		i++;
 		current = current->next;
 	}

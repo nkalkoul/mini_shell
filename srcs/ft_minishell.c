@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:10:38 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 15:18:11 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 10:09:08 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,27 @@ t_cmd	*ft_parsing(t_global *global, char *rd)
 	return (cmd);
 }
 
+void	minishell_bis(t_global *global, char *rd)
+{
+	char	*nrd;
+	t_cmd	*cmd;
+
+	nrd = ft_strdup(rd);
+	free(rd);
+	rd = nrd;
+	if (rd[0] == '\0')
+		return ;
+	add_history(rd);
+	cmd = ft_parsing(global, rd);
+	if (!cmd)
+		return ;
+	ft_execution(cmd, global);
+	ft_clearbag(NULL);
+}
+
 void	minishell(t_global *global)
 {
-	t_cmd	*cmd;
 	char	*rd;
-	char	*nrd;
 
 	while (1)
 	{
@@ -62,18 +78,9 @@ void	minishell(t_global *global)
 			continue ;
 		}
 		if (rd == NULL)
-			return (ft_free_and_exit(global->status));
-		nrd = ft_strdup(rd);
-		free(rd);
-		rd = nrd;
-		if (rd[0] == '\0')
-			continue ;
-		add_history(rd);
-		cmd = ft_parsing(global, rd);
-		if (!cmd)
-			continue ;
-		ft_execution(cmd, global);
-		ft_clearbag(NULL);
+			return (ft_printf(2, "exit\n"), ft_free_and_exit(global->status));
+		minishell_bis(global, rd);
+		continue ;
 	}
 }
 

@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_env.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 11:07:19 by nkalkoul          #+#    #+#             */
+/*   Updated: 2025/03/16 11:23:50 by nkalkoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
-
-int	ft_count_key(char *env)
-{
-	int	j;
-
-	j = 0;
-	while (env[j] != '=')
-		j++;
-	return (j);
-}
-
-int	ft_count_value(char *env, int j)
-{
-	while (env[j] != '\0')
-		j++;
-	return (j - 1);
-}
 
 int	ft_init_env(char *env, t_env **my_env)
 {
@@ -42,37 +37,43 @@ int	ft_init_env(char *env, t_env **my_env)
 	return (0);
 }
 
+t_env	*ft_take_env_null(t_global *g)
+{
+	t_env	*my_env;
+	t_env	*pwd;
+
+	pwd = ft_malloc(sizeof(t_env));
+	ft_locks(pwd, NULL);
+	pwd->key = ft_strdup("PWD");
+	ft_locks(pwd->key, NULL);
+	pwd->value = ft_pwd2();
+	ft_locks(pwd->value, NULL);
+	pwd->next = NULL;
+	my_env = ft_malloc(sizeof(t_env));
+	ft_locks(my_env, NULL);
+	my_env->key = ft_strdup("SHLVL");
+	ft_locks(my_env->key, NULL);
+	my_env->value = ft_strdup(ft_itoa(++g->lvl));
+	ft_locks(my_env->value, NULL);
+	my_env->next = NULL;
+	pwd->next = my_env;
+	return (pwd);
+}
+
 t_env	*ft_take_myenv(char **env, t_global *g)
 {
 	int		i;
 	t_env	*my_env;
-	t_env	*pwd;
-	t_env	*shlvl;
 
 	i = 0;
-	if (!env)
+	my_env = NULL;
+	if (!*env)
+		return (ft_take_env_null(g));
+	while (env[i])
 	{
-		pwd = ft_malloc(sizeof(t_env));
-		my_env->key = ft_strdup("PWD");
-		my_env->value = ft_pwd2(g);
-		pwd->next = NULL;
-		ft_lstbackadd_env(&my_env, pwd);
-		shlvl = ft_malloc(sizeof(t_env));
-		my_env = my_env->next;
-		my_env->key = ft_strdup("SHLVL");
-		my_env->value = ft_strdup("1");
-		shlvl->next = NULL;
-		ft_lstbackadd_env(&my_env, shlvl);
-		printf("HELLO\n");
-	}
-	else
-	{
-		while (env[i])
-		{
-			if (ft_init_env(env[i], &my_env) == 1)
-				return (NULL);
-			i++;
-		}
+		if (ft_init_env(env[i], &my_env) == 1)
+			return (NULL);
+		i++;
 	}
 	return (my_env);
 }

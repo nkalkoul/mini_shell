@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:10:44 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 08:18:42 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 10:56:32 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	*ft_pipe(int *fd)
 	return (fd);
 }
 
-pid_t	ft_fork(void)
+pid_t	ft_fork(t_global *g)
 {
 	pid_t	pid;
 
@@ -33,7 +33,10 @@ pid_t	ft_fork(void)
 		(perror("FORK"), exit(-1));
 	}
 	if (pid == 0)
+	{
 		ft_signal_for_child();
+		ft_shlvlup(g);
+	}
 	return (pid);
 }
 

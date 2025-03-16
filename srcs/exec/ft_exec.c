@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exec.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 11:07:34 by nkalkoul          #+#    #+#             */
+/*   Updated: 2025/03/16 11:14:06 by nkalkoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	ft_exec(t_cmd *cmd, t_global *global)
@@ -19,6 +31,21 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	}
 }
 
+int	ft_one_command_bis(int *fd, t_cmd *cmd, t_global *global)
+{	
+	fd[0] = dup(STDIN_FILENO);
+	fd[1] = dup(STDOUT_FILENO);
+	if (ft_open_files(cmd) == 1)
+	{
+		(close(fd[0]), close(fd[1]));
+		return (1);
+	}
+	ft_do_bulding(cmd->arg_cmd, global);
+	ft_dup2(fd[0], STDIN_FILENO);
+	ft_dup2(fd[1], STDOUT_FILENO);
+	return (0);
+}
+
 void	ft_one_command(t_cmd *cmd, t_global *global)
 {
 	pid_t	pid;
@@ -32,20 +59,12 @@ void	ft_one_command(t_cmd *cmd, t_global *global)
 	ft_expandables(cmd, global);
 	if (ft_isbulding(cmd->arg_cmd) == true)
 	{
-		fd[0] = dup(STDIN_FILENO);
-		fd[1] = dup(STDOUT_FILENO);
-		if (ft_open_files(cmd) == 1)
-		{
-			(close(fd[0]), close(fd[1]));
+		if (ft_one_command_bis(fd, cmd, global) == 1)
 			return ;
-		}
-		ft_do_bulding(cmd->arg_cmd, global);
-		ft_dup2(fd[0], STDIN_FILENO);
-		ft_dup2(fd[1], STDOUT_FILENO);
 	}
 	else
 	{
-		pid = ft_fork();
+		pid = ft_fork(global);
 		if (pid == 0)
 			ft_exec(cmd, global);
 		ft_waitpid(pid, &global->status, 0);

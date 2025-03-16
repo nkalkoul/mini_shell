@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/15 15:17:03 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 12:03:10 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_global
 	t_env	*my_env;
 	int		status;
 	char	*pdw;
+	int		lvl;
 }	t_global;
 
 		// FONCTION DE TOKEN
@@ -96,7 +97,7 @@ t_cmd	*ft_parse_lst_taken(t_taken *taken, t_global *global);
 int		ft_token_to_cmd(t_taken **current, t_cmd **cmd, t_global *global);
 void	ft_lstbackadd_files(t_files **lst, t_files *new);
 void	ft_lstbackadd_cmd(t_cmd **lst, t_cmd *new);
-t_env	*ft_take_myenv(char **env, t_global *global);
+t_env	*ft_take_myenv(char **env, t_global *g);
 void	ft_lstbackadd_env(t_env **lst, t_env *new);
 int		ft_expandables(t_cmd *cmd, t_global *global);
 char	*ft_getenv(char *key, t_global *global);
@@ -119,7 +120,7 @@ void	ft_replace_node(t_env *tmp, t_env *prev, t_global *global);
 int		ft_unset(char **cmd, t_global *global);
 int		ft_echo(char **cmd, t_global *global);
 int		ft_pwd(t_global *global);
-char	*ft_pwd2(t_global *global);
+char	*ft_pwd2(void);
 int		ft_cd(char **cmd, t_global *global);
 int		ft_isbulding(char **command);
 void	ft_do_bulding(char **cmd, t_global *global);
@@ -139,6 +140,12 @@ void	ft_free2d(char **str);
 void	ft_free_env(t_env *my_env);
 void	ft_free_and_exit(int status);
 int		ft_verif(t_cmd *cmd);
+void	ft_shlvlup(t_global *g);
+int		ft_count_key(char *env);
+int		ft_count_value(char *env, int j);
+void	ft_errormsg(int m);
+int		ft_isimple(char rd);
+int		ft_isdouble(char rd);
 
 		// FONCTION DE GARBAGE
 void	*ft_malloc(long int l);
@@ -152,7 +159,7 @@ void	ft_clearbag(t_garbage_head *garb);
 
 		// EXEC
 t_cmd	*ft_ast(t_cmd *first);
-pid_t	ft_fork(void);
+pid_t	ft_fork(t_global *g);
 void	ft_ispipe(t_cmd *node, t_global *global);
 void	ft_isor(t_cmd *node, t_global *global);
 void	ft_isand(t_cmd *node, t_global *global);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expand_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 11:07:08 by nkalkoul          #+#    #+#             */
+/*   Updated: 2025/03/16 11:07:09 by nkalkoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 int	quotes_len(char *token, int i, char quote)
@@ -41,4 +53,20 @@ char	*add_double_quotes(char *token, int *i, char *result, t_global *global)
 	}
 	*i += 1;
 	return (result);
+}
+
+void	ft_shlvlup(t_global *g)
+{
+	t_env	*current;
+
+	current = g->my_env;
+	while (current)
+	{
+		if (ft_strcmp("SHLVL", current->key) == 0)
+		{
+			g->lvl = ft_atoi(current->value) + 1;
+			current->value = ft_itoa(g->lvl);
+		}
+		current = current->next;
+	}
 }

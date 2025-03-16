@@ -1,9 +1,0 @@
-total 132
-drwxr-xr-x  2 modavid 2024_paris   4096 Mar 15 08:17 libft
--rw-r--r--  1 modavid 2024_paris   1555 Mar 15 07:21 Makefile
--rwxr-xr-x  1 modavid 2024_paris 109360 Mar 15 08:37 minishell
--rw-r--r--  1 modavid 2024_paris   5216 Mar 15 08:29 minishell.h
--rw-r--r--  1 modavid 2024_paris    277 Jan 26 19:23 minishell.supp
--rw-r--r--  1 modavid 2024_paris     31 Mar 15 07:39 out
--rw-r--r--  1 modavid 2024_paris      0 Mar 15 08:40 out1
-drwxr-xr-x 10 modavid 2024_paris    133 Mar 15 07:21 srcs

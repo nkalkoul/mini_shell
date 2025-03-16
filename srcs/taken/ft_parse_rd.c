@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_rd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 00:20:35 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/11 11:43:23 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/16 12:14:06 by nkalkoul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_isimple(char rd)
-{
-	if (rd == '\'')
-		return (0);
-	return (1);
-}
-
-int	ft_isdouble(char rd)
-{
-	if (rd == '"')
-		return (0);
-	return (1);
-}
 
 int	ft_parse_redir(char *rd)
 {
@@ -82,29 +69,45 @@ int	ft_parse_quote(char *rd)
 	return (0);
 }
 
+void	ft_errormsg(int m)
+{
+	if (m == 1)
+		ft_printf(2, "shell : syntax error near unexpected token 'newline'\n");
+	if (m == 2)
+		ft_printf(2, "shell : syntax error near unexpected token '>'\n");
+	if (m == 3)
+		ft_printf(2, "shell : syntax error near unexpected token '|'\n");
+}
+
+int	ft_check_first_error(t_taken *current)
+{
+	if (current && current->type == OR
+		&& current->next->type == OR && current->type == AND)
+		return (1);
+	return (0);
+}
+
 int	ft_check_error_parse(t_taken *current)
 {
-	if (current && current->type == PIPE
-		&& current->type == OR && current->type == AND)
-		return (1);
 	while (current != NULL)
 	{
+
 		if (current->type == PIPE && (current->next == NULL
 				|| current->next->type == PIPE))
-			return (1);
+			return (ft_errormsg(3), 1);
 		if (current->token[0] == '|' && current->token[1] == '|'
 			&& current->token[2] == '|')
-			return (1);
+			return (ft_errormsg(3), 1);
 		if (current->token[0] == '>' && current->token[1] == '>'
 			&& current->token[2] == '>')
-			return (1);
+			return (ft_errormsg(2), 1);
 		if (current->token[0] == '<' && current->token[1] == '<'
 			&& current->token[2] == '<')
-			return (1);
+			return (ft_errormsg(1), 1);
 		if ((current->type == REDIRDD || current->type == REDIRGG
 				|| current->type == REDIRD || current->type == REDIRG)
 			&& (current->next == NULL || current->next->type != WORD))
-			return (1);
+			return (ft_errormsg(1), 1);
 		current = current->next;
 	}
 	return (0);

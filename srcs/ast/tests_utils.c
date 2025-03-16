@@ -1,29 +1,29 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   tests_utils.c                                      :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2024/10/10 05:33:34 by ibaby             #+#    #+#             */
-// /*   Updated: 2025/03/11 12:46:18 by modavid          ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 05:33:34 by ibaby             #+#    #+#             */
+/*   Updated: 2025/03/16 11:05:25 by nkalkoul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// #include "../../minishell.h"
+#include "../../minishell.h"
 
-// char		*type_to_str(int type);
-// void		print_command(t_cmd *command);
-// char		*operator_type_to_str(int type);
-// void		printTree(t_cmd *command, int depth, int isRight, int *branch);
+char		*type_to_str(int type);
+void		print_command(t_cmd *command);
+char		*operator_type_to_str(int type);
+void		printTree(t_cmd *command, int depth, int isRight, int *branch);
 
-// // void	print_AST(t_cmd *command)
-// // {
-// // 	int array[1024] = {0};
+// void	print_AST(t_cmd *command)
+// {
+// 	int array[1024] = {0};
 
-// // 	command = ast_top(command);
-// // 	printTree(command, 0, 0, array);
-// // }
+// 	command = ast_top(command);
+// 	printTree(command, 0, 0, array);
+// }
 
 // void	print_AST_test(t_cmd *command)
 // {
