@@ -21,7 +21,7 @@ void	check_is_fork(t_cmd *node, t_global *global)
 		pid = ft_fork(global);
 		if (pid == 0)
 			ft_explore_ast(node, global);
-		ft_waitpid(pid, &global->status, 0);
+		ft_waitpid(pid, global, 0);
 	}
 	else
 		ft_explore_ast(node, global);
@@ -97,6 +97,6 @@ void	ft_ispipe(t_cmd *node, t_global *global)
 		ft_free_and_exit(0);
 	}
 	(close(fd[0]), close(fd[1]));
-	ft_waitpid(pidleft, &global->status, 0);
-	ft_waitpid(pidright, &global->status, 0);
+	ft_waitpid(pidleft, global, 0);
+	ft_waitpid(pidright, global, 0);
 }

@@ -43,7 +43,7 @@ void	ft_signal_for_parent(void)
 
 void	ft_if_signal(t_global *glob)
 {
-	if (glob->status == 128 + SIGINT)
+	if (glob->status == 128 + SIGINT && glob->ext == 1)
 		ft_putendl_fd("", 2);
 	if (glob->status == 128 + SIGQUIT)
 		ft_putendl_fd("Quit (core dumped)", 2);

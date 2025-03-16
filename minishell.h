@@ -84,6 +84,7 @@ typedef struct s_global
 	int		status;
 	char	*pdw;
 	int		lvl;
+	int		ext;
 }	t_global;
 
 		// FONCTION DE TOKEN
@@ -173,7 +174,7 @@ void	ft_execution(t_cmd *cmd, t_global *global);
 void	ft_exec(t_cmd *cmd, t_global *global);
 void	ft_dup2(int fd1, int fd2);
 char	**ft_newread(t_files *files, t_global *g);
-void	ft_waitpid(int pid, int *status, int options);
+void	ft_waitpid(int pid, t_global *g, int options);
 
 		// SIGNAL
 void	ft_signal_for_parent(void);

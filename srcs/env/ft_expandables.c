@@ -86,7 +86,7 @@ char	*ft_expand_token(char *arg, t_global *global)
 	result = ft_strdup("");
 	if (result == NULL)
 		return (NULL);
-		token = arg;
+	token = arg;
 	while (token[i])
 	{
 		if (token[i] == '\'')

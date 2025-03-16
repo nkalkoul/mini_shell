@@ -47,7 +47,7 @@ void	set_pwd(t_global *global)
 			return ;
 		}
 		env = env->next;
-	}	
+	}
 }
 
 int	ft_cd(char **cmd, t_global *global)

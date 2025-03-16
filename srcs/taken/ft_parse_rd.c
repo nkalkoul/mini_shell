@@ -12,7 +12,6 @@
 
 #include "../../minishell.h"
 
-
 int	ft_parse_redir(char *rd)
 {
 	int	i;
@@ -91,7 +90,6 @@ int	ft_check_error_parse(t_taken *current)
 {
 	while (current != NULL)
 	{
-
 		if (current->type == PIPE && (current->next == NULL
 				|| current->next->type == PIPE))
 			return (ft_errormsg(3), 1);

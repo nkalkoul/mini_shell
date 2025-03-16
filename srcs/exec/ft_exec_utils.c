@@ -46,11 +46,14 @@ void	ft_dup2(int fd1, int fd2)
 	close(fd1);
 }
 
-void	ft_waitpid(int pid, int *status, int options)
+void	ft_waitpid(int pid, t_global *g, int options)
 {
-	waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
-		*status = WEXITSTATUS(*status);
-	else if (WIFSIGNALED(*status))
-		*status = 128 + WTERMSIG(*status);
+	waitpid(pid, &g->status, 0);
+	if (WIFEXITED(g->status))
+		g->status = WEXITSTATUS(g->status);
+	else if (WIFSIGNALED(g->status))
+	{
+		g->status = 128 + WTERMSIG(g->status);
+		g->ext = 1;
+	}
 }

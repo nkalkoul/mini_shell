@@ -32,7 +32,7 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 }
 
 int	ft_one_command_bis(int *fd, t_cmd *cmd, t_global *global)
-{	
+{
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
 	if (ft_open_files(cmd) == 1)
@@ -67,7 +67,7 @@ void	ft_one_command(t_cmd *cmd, t_global *global)
 		pid = ft_fork(global);
 		if (pid == 0)
 			ft_exec(cmd, global);
-		ft_waitpid(pid, &global->status, 0);
+		ft_waitpid(pid, global, 0);
 	}
 }
 
