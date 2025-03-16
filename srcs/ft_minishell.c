@@ -68,7 +68,7 @@ void	minishell(t_global *global)
 	while (1)
 	{
 		ft_signal_for_parent();
-		rd = readline("mouninashell ");
+		rd = readline("\x1b[34mmouninashell \033[0m");
 		if (g_sign != 0)
 		{
 			global->status = g_sign;

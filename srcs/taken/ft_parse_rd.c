@@ -80,9 +80,10 @@ void	ft_errormsg(int m)
 
 int	ft_check_first_error(t_taken *current)
 {
-	if (current && current->type == OR
-		&& current->next->type == OR && current->type == AND)
-		return (1);
+	if (current->token[0] == '&' && current->next->token[0] == '|')
+		return (ft_errormsg(3), 1);
+	if (current->token[0] == '|' && current->next->token[0] == '&')
+		return (ft_errormsg(3), 1);
 	return (0);
 }
 
@@ -90,6 +91,8 @@ int	ft_check_error_parse(t_taken *current)
 {
 	while (current != NULL)
 	{
+		if (ft_check_first_error(current) == 1)
+			return (1);
 		if (current->type == PIPE && (current->next == NULL
 				|| current->next->type == PIPE))
 			return (ft_errormsg(3), 1);
