@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:06:32 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:06:33 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:29:59 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_is_arg_num(char *cmd)
 	return (0);
 }
 
-int	ft_exit(char **cmd, t_global *global)
+int	ft_exit(char **cmd)
 {
 	ft_printf(1, "exit\n");
 	if (!cmd[1])

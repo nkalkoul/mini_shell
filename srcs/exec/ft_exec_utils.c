@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 01:10:44 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 10:56:32 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:31:22 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_dup2(int fd1, int fd2)
 
 void	ft_waitpid(int pid, t_global *g, int options)
 {
-	waitpid(pid, &g->status, 0);
+	waitpid(pid, &g->status, options);
 	if (WIFEXITED(g->status))
 		g->status = WEXITSTATUS(g->status);
 	else if (WIFSIGNALED(g->status))

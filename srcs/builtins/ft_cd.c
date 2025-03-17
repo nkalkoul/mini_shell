@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:06:41 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:06:46 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:17:44 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	set_oldpwd(t_global *global, char *pwd)
 		{
 			ft_free(env->value);
 			env->value = ft_strdup(pwd);
+			free(pwd);
 			ft_locks(env->value, NULL);
 			return ;
 		}
 		env = env->next;
 	}
+	free(pwd);
 }
 
 void	set_pwd(t_global *global)
@@ -43,11 +45,13 @@ void	set_pwd(t_global *global)
 		{
 			ft_free(env->value);
 			env->value = ft_strdup(pwd);
+			free(pwd);
 			ft_locks(env->value, NULL);
 			return ;
 		}
 		env = env->next;
 	}
+	free(pwd);
 }
 
 int	ft_cd(char **cmd, t_global *global)

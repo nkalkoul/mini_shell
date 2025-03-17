@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:39 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:07:40 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:20:56 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ char	**ft_newread(t_files *files, t_global *g)
 
 	i = 0;
 	redir = NULL;
+	files->path = ft_expand_token(files->path, g);
 	while (++i)
 	{
 		red = readline("heredoc> ");
 		if (g_sign != 0)
 		{
-			g->status = g_sign;
-			g_sign = 0;
+			ft_reset_signal(g);
 			return (NULL);
 		}
 		if (red == NULL)

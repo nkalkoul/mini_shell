@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:06:19 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:06:20 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:29:32 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*ft_export_value(char *value, t_env *new, int *i)
 void	ft_unset_in_export(t_global *global, char *key)
 {
 	t_env	*env;
-	t_env	*save;
 	t_env	*prev;
 
 	prev = NULL;

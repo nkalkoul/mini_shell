@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_lst_taken.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:08:51 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:08:52 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:34:08 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,5 @@ t_cmd	*ft_parse_lst_taken(t_taken *taken, t_global *global)
 				return (NULL);
 		}
 	}
-	ft_printf(1, "cmd = ");
-	ft_printcmd(cmd);
 	return (cmd);
 }

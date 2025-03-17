@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:34 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:14:06 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:15:55 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	ft_exec(t_cmd *cmd, t_global *global)
 	ft_open_files(cmd);
 	path = ft_pathfinder(cmd, global);
 	if (!path)
-		return (perror(cmd->arg_cmd[0]), ft_free_and_exit(127));
+	{
+		ft_printf(2, "shell: %s: command not found\n", cmd->arg_cmd[0]);
+		ft_free_and_exit(127);
+	}
 	env = ft_put_env2d(global);
 	if (!env)
 		return (ft_putendl_fd("Error env", 2), ft_free_and_exit(127));
@@ -51,12 +54,12 @@ void	ft_one_command(t_cmd *cmd, t_global *global)
 	pid_t	pid;
 	int		fd[2];
 
+	ft_expandables(cmd, global);
 	if (ft_verif(cmd) == 1)
 	{
 		global->status = 1;
 		return ;
 	}
-	ft_expandables(cmd, global);
 	if (ft_isbulding(cmd->arg_cmd) == true)
 	{
 		if (ft_one_command_bis(fd, cmd, global) == 1)
@@ -85,6 +88,9 @@ void	ft_explore_ast(t_cmd *node, t_global *global)
 
 void	ft_execution(t_cmd *cmd, t_global *global)
 {
+	struct termios term;
+	
+	tcgetattr(STDOUT_FILENO, &term);
 	ft_signal_for_exec();
 	cmd = ft_ast(cmd);
 	if (cmd->type == CMD)
@@ -92,4 +98,5 @@ void	ft_execution(t_cmd *cmd, t_global *global)
 	else
 		ft_explore_ast(cmd, global);
 	ft_if_signal(global);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &term);
 }

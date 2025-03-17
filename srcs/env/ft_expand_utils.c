@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:08 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:07:09 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:29:20 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	quotes_len(char *token, int i, char quote)
 
 char	*add_simple_quotes(char *token, int *i, char *result)
 {
-	int		quotes_start;
 	int		quotes_size;
 	char	*quotes;
 

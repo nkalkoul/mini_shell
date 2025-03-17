@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 20:11:23 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 12:03:10 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:10:37 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <signal.h>
+# include <termios.h>
 
 # define CMD 0
 # define WORD 1
@@ -108,6 +109,13 @@ char	*add_other_chars(char *token, int *i, char *result, char *set);
 char	*add_double_quotes(char *token, int *i, char *result, t_global *global);
 char	*add_simple_quotes(char *token, int *i, char *result);
 
+		// FONCTION DE CHECK TOKEN
+int		ft_check_second_operator(t_taken *current);
+int		ft_check_second_noob(t_taken *current);
+int		ft_check_redirfirst(t_taken *current);
+int		ft_check_redir(t_taken *current);
+int		ft_check_first_error(t_taken *current);
+
 		// FONCTION DE PRINT
 void	ft_printaken(t_taken *taken);
 void	ft_printcmd(t_cmd *cmd);
@@ -125,7 +133,7 @@ char	*ft_pwd2(void);
 int		ft_cd(char **cmd, t_global *global);
 int		ft_isbulding(char **command);
 void	ft_do_bulding(char **cmd, t_global *global);
-int		ft_exit(char **cmd, t_global *global);
+int		ft_exit(char **cmd);
 
 		// FONCTION DE IF
 int		ft_space(char c);
@@ -181,5 +189,6 @@ void	ft_signal_for_parent(void);
 void	ft_signal_for_child(void);
 void	ft_if_signal(t_global *glob);
 void	ft_signal_for_exec(void);
+void	ft_reset_signal(t_global *g);
 
 #endif

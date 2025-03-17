@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:06:10 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:06:11 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:29:42 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_replace_node(t_env *tmp, t_env *prev, t_global *global)
 
 void	ft_free_node(char *cmd, t_global *global)
 {
-	t_env	*save;
 	t_env	*tmp;
 	t_env	*prev;
 

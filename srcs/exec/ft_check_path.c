@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:22 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:07:23 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:31:27 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_pathfinder(t_cmd *cmd, t_global *global)
 		return (NULL);
 	if (!cmd->arg_cmd)
 		ft_free_and_exit(1);
-	if (access(cmd->arg_cmd[0], X_OK) == 0)
+	if (ft_strchr(cmd->arg_cmd[0], '/') && access(cmd->arg_cmd[0], X_OK) == 0)
 		return (ft_strdup(cmd->arg_cmd[0]));
 	while (env)
 	{

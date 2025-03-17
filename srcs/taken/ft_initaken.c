@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initaken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:21:03 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 12:27:05 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 22:06:50 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_lencopy(char *src)
 			i = ft_findquote(src, i);
 		if (ft_isoperator(src[i]) == 1 || (src[i] == '&' && src[i + 1] == '&'))
 			return (i);
-		if (ft_isprint(src[i]) == 0)
+		if (src[i] == ' ' || src[i] == '\t')
 			return (i);
 		i++;
 	}

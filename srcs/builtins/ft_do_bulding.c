@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_do_bulding.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:06:14 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:06:23 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:30:31 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_isbulding(char **command)
 void	ft_do_bulding(char **cmd, t_global *global)
 {
 	if (ft_strcmp(cmd[0], "exit") == 0)
-		global->status = ft_exit(cmd, global);
+		global->status = ft_exit(cmd);
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		global->status = ft_printenv(cmd, global);
 	else if (ft_strcmp(cmd[0], "export") == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expandables.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkalkoul <nkalkoul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:14 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/16 11:07:15 by nkalkoul         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:52:12 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,20 @@ int	ft_expandables(t_cmd *cmd, t_global *global)
 {
 	int		i;
 	t_cmd	*current;
+	t_files	*files;
 
 	current = cmd;
 	i = 0;
-	while (current && current->arg_cmd[i])
+	while (current && current->arg_cmd && current->arg_cmd[i])
 	{
 		current->arg_cmd[i] = ft_expand_token(current->arg_cmd[i], global);
 		i++;
+	}
+	files = current->files;
+	while (files)
+	{
+		files->path = ft_expand_token(files->path, global);
+		files = files->next;
 	}
 	return (0);
 }

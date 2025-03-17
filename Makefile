@@ -1,4 +1,4 @@
-SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c ft_parse_lst_taken.c) \
+SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c ft_parse_lst_taken.c ft_parse_operator.c) \
 		$(addprefix srcs/, ft_minishell.c) \
 		$(addprefix srcs/utils/, ft_free.c ft_is.c ft_lstbackadd.c ft_printlist.c ft_utils.c) \
 		$(addprefix srcs/env/, ft_init_env.c ft_expandables.c ft_expand_utils.c) \
@@ -8,12 +8,12 @@ SRCS =	$(addprefix srcs/taken/, ft_initaken.c ft_parse_rd.c ft_taken_to_cmd.c ft
 		$(addprefix srcs/exec/, ft_exec.c ft_exec_utils.c ft_exec_is.c ft_redir.c ft_env2d.c ft_check_path.c ft_heredoc.c) \
 		$(addprefix srcs/signal/, ft_signal.c ft_signal_utils.c)
 
-CC =	cc -g3 #-Wall -Werror -Wextra
+CC =	cc -Wall -Werror -Wextra -g3
 DIRLIB = ./libft
 LIBFT = $(DIRLIB)/libft.a
 NAME =	minishell
 VMINI = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-		--trace-children=yes -s --suppressions=minishell.supp \
+		--trace-children=yes --suppressions=minishell.supp \
         --track-fds=yes --quiet
 
 OBJS_DIR = .objets/
