@@ -6,7 +6,7 @@
 /*   By: modavid <modavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:07:34 by nkalkoul          #+#    #+#             */
-/*   Updated: 2025/03/17 22:15:55 by modavid          ###   ########.fr       */
+/*   Updated: 2025/03/18 13:08:23 by modavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	ft_explore_ast(t_cmd *node, t_global *global)
 
 void	ft_execution(t_cmd *cmd, t_global *global)
 {
-	struct termios term;
-	
+	struct termios	term;
+
 	tcgetattr(STDOUT_FILENO, &term);
 	ft_signal_for_exec();
 	cmd = ft_ast(cmd);
